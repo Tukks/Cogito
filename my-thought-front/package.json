@@ -1,5 +1,5 @@
 {
-  "name": "my-thought",
+  "name": "my-thought-front",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -18,7 +18,6 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
-    "link-preview-js": "^3.0.4",
     "ng-zorro-antd": "^14.1.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

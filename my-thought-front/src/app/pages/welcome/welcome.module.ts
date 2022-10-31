@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 
-import { WelcomeRoutingModule } from 'src/app/pages/welcome/welcome-routing.module';
+import { WelcomeRoutingModule } from './welcome-routing.module';
 
-import { WelcomeComponent } from 'src/app/pages/welcome/welcome.component';
-import {NzCardModule} from "ng-zorro-antd/card";
-import {NgForOf} from "@angular/common";
+import { WelcomeComponent } from './welcome.component';
 
 
 @NgModule({
-  imports: [WelcomeRoutingModule, NzCardModule, NgForOf],
+  imports: [WelcomeRoutingModule],
   declarations: [WelcomeComponent],
   exports: [WelcomeComponent]
 })

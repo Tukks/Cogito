@@ -1,6 +1,7 @@
 <nz-layout class="app-layout">
   <nz-sider class="menu-sidebar"
             nzCollapsible
+            nzWidth="256px"
             nzBreakpoint="md"
             [(nzCollapsed)]="isCollapsed"
             [nzTrigger]="null">
@@ -47,4 +48,7 @@
     <nz-content>
       <div class="inner-content">
         <router-outlet></router-outlet>
-
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
