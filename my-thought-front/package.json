@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cdk": "^14.2.6",
     "@angular/common": "^14.0.0",
     "@angular/core": "^14.0.0",
     "@angular/forms": "^14.0.0",

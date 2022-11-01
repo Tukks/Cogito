@@ -1,16 +1,36 @@
-.card {
-  width: 25%;
-}
 
-.card-container {
-  overflow: auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+cdk-virtual-scroll-viewport {
+  height: 100%;
+  width: 100%;
 }
 
 .search-bar {
   display: flex;
   align-items: center;
+}
+
+
+ion-content {
+  ion-col {
+    display: flex;
+  }
+}
+
+ion-card {
+  img {
+    margin: 10px auto;
+    height: 25vh !important;
+    width: auto !important;
+    max-width: 85%;
+    align-items: center;
+  }
+
+  ion-card-content {
+    padding: 0 !important;
+
+    ion-card-title {
+      padding-top: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+  }
 }
