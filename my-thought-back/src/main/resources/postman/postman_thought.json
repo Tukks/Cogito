@@ -1,0 +1,56 @@
+{
+	"info": {
+		"_postman_id": "d88e74a2-042a-4e41-88eb-bcaf4d5ebe0f",
+		"name": "Thought",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "817076"
+	},
+	"item": [
+		{
+			"name": "All thoughts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/thoughts",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"thoughts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Link",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"www.google.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/thoughts/link",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"thoughts",
+						"link"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
