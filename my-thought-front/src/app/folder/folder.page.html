@@ -1,0 +1,25 @@
+<div class="search-bar">
+  <ion-searchbar (ionChange)="search($event)"></ion-searchbar>
+  <ion-button>
+    <ion-icon name="add-circle-outline"></ion-icon>
+  </ion-button>
+</div>
+<div class="card-container">
+  <ion-card *ngFor="let cardLink of cardsLink" class="card">
+    <ng-container *ngIf="cardLink.type === cardsType.LINK">
+      <img alt="{{cardLink.imageAlt}}" src="{{cardLink.image}}"/>
+      <ion-card-header>
+        <ion-card-title>{{cardLink.title}}</ion-card-title>
+        <ion-card-subtitle>{{cardLink.url}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{cardLink.desc}}
+      </ion-card-content>
+
+      <ion-button fill="clear" href="{{cardLink.url}}" target="_blank">Open link</ion-button>
+    </ng-container>
+    <ng-container *ngIf="cardLink.type === cardsType.TWEET">
+      {{cardLink.url}}
+    </ng-container>
+  </ion-card>
+</div>

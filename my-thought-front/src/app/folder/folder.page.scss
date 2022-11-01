@@ -1,0 +1,16 @@
+.card {
+  width: 25%;
+}
+
+.card-container {
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
