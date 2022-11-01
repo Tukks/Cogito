@@ -20,5 +20,8 @@ describe('MarkdownCardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    const REGEX_TWITTER: RegExp = /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)/;
+    expect(REGEX_TWITTER.test("https://twitter.com/Foone/status/1587144406096052226")).toBeTruthy();
   });
+
 });

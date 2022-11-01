@@ -19,7 +19,12 @@
       <ion-button fill="clear" href="{{cardLink.url}}" target="_blank">Open link</ion-button>
     </ng-container>
     <ng-container *ngIf="cardLink.type === cardsType.TWEET">
+      <app-twitter-card></app-twitter-card>
       {{cardLink.url}}
+    </ng-container>
+
+    <ng-container *ngIf="cardLink.type === cardsType.MARKDOWN">
+      <app-markdown-card [content]="cardLink.desc"></app-markdown-card>
     </ng-container>
   </ion-card>
 </div>

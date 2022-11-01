@@ -8,7 +8,7 @@ import {map} from "rxjs/operators";
   providedIn: 'root'
 })
 export class ThoughtsService {
-  REGEX_TWITTER: RegExp = /((https?):\/\/)?(www.)?twitter\.com(\/@?(\w){1,15})\/status\/[0-9]{19}\?/;
+  REGEX_TWITTER: RegExp = /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)/;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -17,7 +17,6 @@ export class ThoughtsService {
     return this.httpClient.get<CardsLink[]>("/api/thoughts").pipe(map(values => {
       values.map(value => {
         if (this.REGEX_TWITTER.test(value.url) === true) {
-          console.log("TWEET");
           value.type = CardsType.TWEET;
         } else if (value.url === null) {
           value.type = CardsType.MARKDOWN;
