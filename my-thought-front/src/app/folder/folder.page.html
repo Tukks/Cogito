@@ -10,7 +10,7 @@
 
   <cdk-virtual-scroll-viewport [itemSize]="471" class="ion-content-scroll-host" [minBufferPx]="3000" maxBufferPx="3000">
     <ion-grid>
-      <ion-row *cdkVirtualFor="let cardLinks of mapCardsLink" style="min-height: 471px">
+      <ion-row *cdkVirtualFor="let cardLinks of mapCardsLink" style="min-height: 471px" class="center-row">
         <ion-col size="12" size-sm="3" *ngFor="let cardLink of cardLinks">
           <ion-card>
             <ng-container *ngIf="cardLink.type === cardsType.LINK">
