@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cdk": "^14.2.6",
     "@angular/common": "^14.0.0",
     "@angular/core": "^14.0.0",
     "@angular/forms": "^14.0.0",
@@ -27,7 +28,7 @@
     "@ionic/angular": "^6.1.9",
     "@stackoverflow/stacks-editor": "^0.8.2",
     "ionicons": "^6.0.3",
-    "rxjs": "~6.6.0",
+    "rxjs": "~7.4.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
   },
