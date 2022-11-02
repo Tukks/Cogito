@@ -7,12 +7,11 @@
   </div>
 </ion-toolbar>
 <ion-content>
-  <!--  itemSize = 150 car on a 3 cartes par ligne, donc on divise la taille des cartes par 3 -->
-  <cdk-virtual-scroll-viewport [itemSize]="150" class="ion-content-scroll-host" [minBufferPx]="3000" maxBufferPx="3000">
-    <ion-grid>
-      <ion-row>
 
-        <ion-col size="12" size-sm="3" *cdkVirtualFor="let cardLink of cardsLink">
+  <cdk-virtual-scroll-viewport [itemSize]="471" class="ion-content-scroll-host" [minBufferPx]="3000" maxBufferPx="3000">
+    <ion-grid>
+      <ion-row *cdkVirtualFor="let cardLinks of mapCardsLink" style="min-height: 471px">
+        <ion-col size="12" size-sm="3" *ngFor="let cardLink of cardLinks">
           <ion-card>
             <ng-container *ngIf="cardLink.type === cardsType.LINK">
               <img alt="{{cardLink.imageAlt}}" src="{{cardLink.image}}"/>
@@ -36,9 +35,9 @@
             </ng-container>
           </ion-card>
         </ion-col>
-
       </ion-row>
     </ion-grid>
+
   </cdk-virtual-scroll-viewport>
 
 </ion-content>

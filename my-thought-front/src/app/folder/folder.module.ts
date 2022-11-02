@@ -16,7 +16,7 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
     IonicModule,
     FolderPageRoutingModule,
     ReactiveFormsModule,
-    ScrollingModule
+    ScrollingModule,
   ],
   declarations: [FolderPage],
 })
