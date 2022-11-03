@@ -1,18 +1,33 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {RouteReuseStrategy} from '@angular/router';
 
-import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-
-import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BoardComponent} from './board/board.component';
+import {CardComponent} from './card/card.component';
+import {ScrollingModule} from "@angular/cdk/scrolling";
 import {HttpClientModule} from "@angular/common/http";
+import {MarkdownCardComponent} from "./editors/markdown-card/markdown-card.component";
+import {QuickEditorComponent} from './editors/quick-editor/quick-editor.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
-  bootstrap: [AppComponent],
+  declarations: [
+    AppComponent,
+    BoardComponent,
+    CardComponent,
+    MarkdownCardComponent,
+    QuickEditorComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ScrollingModule,
+    HttpClientModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

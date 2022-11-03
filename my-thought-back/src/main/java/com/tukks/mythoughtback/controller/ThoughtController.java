@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tukks.mythoughtback.dto.request.LinkRequest;
-import com.tukks.mythoughtback.entity.LinkEntity;
 import com.tukks.mythoughtback.repository.LinkRepository;
-import com.tukks.mythoughtback.repository.ThoughRepository;
+import com.tukks.mythoughtback.repository.ThingsRepository;
 import com.tukks.mythoughtback.service.LinkService;
+import com.tukks.mythoughtback.service.SaveNote;
 
 import lombok.AllArgsConstructor;
 
@@ -21,18 +21,24 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ThoughtController {
 
-	private final ThoughRepository thoughRepository;
-
 	private final LinkRepository linkRepository;
 	private final LinkService linkService;
 
+	private final ThingsRepository thingsRepository;
+	private final SaveNote saveNote;
+
 	@GetMapping("/thoughts")
-	public List<LinkEntity> getAllThoughts() {
-		return linkRepository.getAll();
+	public List<Object> getAllThoughts() {
+		return thingsRepository.getAll();
 	}
 
 	@PostMapping("/thoughts/link")
 	public void saveLinkg(@RequestBody LinkRequest linkRequest) {
 		linkService.addLinkWithPreview(linkRequest);
+	}
+
+	@PostMapping("/save")
+	public void save(@RequestBody String note) {
+		saveNote.save(note);
 	}
 }

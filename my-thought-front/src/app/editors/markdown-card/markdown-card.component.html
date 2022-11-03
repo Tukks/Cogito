@@ -1,3 +1,4 @@
-<div id="editor-container"></div>
+<textarea id="content" name="content" class="d-none"></textarea>
+<div #editorContainer class="js-tables-enabled little card" [ngClass]="cardMode ? 'little' : '' "></div>
 
-<ion-button (click)="save()">test</ion-button>
+<button (click)="save()">test</button>

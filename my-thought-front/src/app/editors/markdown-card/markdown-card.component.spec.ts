@@ -1,5 +1,4 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {IonicModule} from '@ionic/angular';
 
 import {MarkdownCardComponent} from './markdown-card.component';
 
@@ -10,7 +9,7 @@ describe('MarkdownCardComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [MarkdownCardComponent],
-      imports: [IonicModule.forRoot()]
+      imports: []
     }).compileComponents();
 
     fixture = TestBed.createComponent(MarkdownCardComponent);

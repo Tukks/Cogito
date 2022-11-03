@@ -1,22 +1,22 @@
 import {NgModule} from '@angular/core';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
+import {BoardComponent} from "./board/board.component";
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/thoughts',
+    redirectTo: 'board',
     pathMatch: 'full'
   },
   {
-    path: 'folder/thoughts',
-    loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
+    path: 'board',
+    component: BoardComponent,
+    // loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
   }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
