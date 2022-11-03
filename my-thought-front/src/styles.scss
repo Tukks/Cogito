@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+@import "@stackoverflow/stacks-editor/dist/styles.css";
+
+@import "@stackoverflow/stacks/dist/css/stacks.css";
+
+
+//.d-flex {
+//  display: flex !important;
+//  flex-wrap: wrap;
+//  justify-content: center;
+//}
+//.s-editor-resizable[style*="height"] {
+//  height: 400px !important;
+//}
+.little {
+  .s-input, .s-textarea {
+    max-height: 400px;
+    height: 400px;
+  }
+
+  .is-readonly {
+    .ai-center {
+      display: none !important;
+    }
+  }
+}
+
+
+.card {
+  height: 400px;
+  margin: 0px auto;
+  background-color: white;
+  box-shadow: 0px 5px 20px #555;
+}
+
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+}

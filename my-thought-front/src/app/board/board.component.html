@@ -1,0 +1,8 @@
+<input style="width: 100%"/>
+<div class="container">
+  <!--  <app-quick-editor></app-quick-editor>-->
+  <app-markdown-card [cardMode]="true"></app-markdown-card>
+  <app-card *ngFor="let cardLink of cardsLink" [card]="cardLink">
+  </app-card>
+</div>
+

@@ -1,13 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {StacksEditor} from "@stackoverflow/stacks-editor";
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {EditorType, StacksEditor} from "@stackoverflow/stacks-editor";
 import "@stackoverflow/stacks";
+import {ThoughtsService} from "../../../service/thoughts.service";
 
 @Component({
   selector: 'app-markdown-card',
   templateUrl: './markdown-card.component.html',
   styleUrls: ['./markdown-card.component.scss'],
 })
-export class MarkdownCardComponent implements OnInit {
+export class MarkdownCardComponent implements AfterViewInit {
 
   @Input()
   readonly: boolean = false;
@@ -15,18 +16,25 @@ export class MarkdownCardComponent implements OnInit {
   @Input()
   content: string = "";
 
-  stackEditor: StacksEditor;
+  @Input()
+  cardMode: boolean = true;
+
+  stackEditor: StacksEditor | undefined;
+
+  @ViewChild('editorContainer') editorContainer!: ElementRef;
 
   /**
    * TODO image uploader
    */
-  constructor() {
+  constructor(private service: ThoughtsService) {
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    console.log(this.editorContainer)
     this.stackEditor = new StacksEditor(
-      document.querySelector("#editor-container"),
-      this.content, {placeholderText: 'enter your markdown here'}
+      // @ts-ignore
+      this.editorContainer?.nativeElement!,
+      this.content, {placeholderText: 'enter your markdown here or a link', classList: ['md-size'], defaultView: EditorType.RichText}
     );
 
     if (this.readonly) {
@@ -35,6 +43,6 @@ export class MarkdownCardComponent implements OnInit {
   }
 
   save() {
-    console.log(this.stackEditor.content);
+    this.service.save(this.stackEditor?.content!).subscribe();
   }
 }

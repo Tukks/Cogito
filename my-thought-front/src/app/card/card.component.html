@@ -1,0 +1,14 @@
+<div class="card" *ngIf="card.thingType === cardsType.LINK">
+  <!-- Image à la une -->
+  <div class="card-image flex-vertical">
+    <img src="{{card.image}}" alt="{{card.imageAlt}}" style="max-height: 50%; object-fit: scale-down;"/>
+    <p>{{card.desc}}</p>
+  </div>
+  <div>{{card.url}}</div>
+
+  <!-- Fin du corp de notre carte -->
+</div>
+
+<ng-container *ngIf="card.thingType === cardsType.MARKDOWN">
+  <app-markdown-card [readonly]="true" [cardMode]="true" [content]="card.markdown"></app-markdown-card>
+</ng-container>

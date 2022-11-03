@@ -1,7 +1,0 @@
-{
-  "name": "my-thought-front",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}

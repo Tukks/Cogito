@@ -7,11 +7,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import com.tukks.mythoughtback.entity.LinkEntity;
+import com.tukks.mythoughtback.entity.NoteEntity;
 
 @Service
-public interface LinkRepository extends CrudRepository<LinkEntity, Long> {
+public interface NoteRepository extends CrudRepository<NoteEntity, Long> {
 
-	@Query("select p from LinkEntity p")
+	@Query("select p from NoteEntity p")
 	List<LinkEntity> getAll();
 
 }
