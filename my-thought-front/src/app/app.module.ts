@@ -8,7 +8,6 @@ import {CardComponent} from './card/card.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {HttpClientModule} from "@angular/common/http";
 import {MarkdownCardComponent} from "./editors/markdown-card/markdown-card.component";
-import {QuickEditorComponent} from './editors/quick-editor/quick-editor.component';
 import {FormsModule} from "@angular/forms";
 
 @NgModule({
@@ -17,7 +16,6 @@ import {FormsModule} from "@angular/forms";
     BoardComponent,
     CardComponent,
     MarkdownCardComponent,
-    QuickEditorComponent
   ],
   imports: [
     BrowserModule,

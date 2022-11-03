@@ -1,4 +1,4 @@
 <textarea id="content" name="content" class="d-none"></textarea>
 <div #editorContainer class="js-tables-enabled little card" [ngClass]="cardMode ? 'little' : '' "></div>
 
-<button (click)="save()">test</button>
+<button (click)="save()" *ngIf="!readonly">Envoyer</button>
