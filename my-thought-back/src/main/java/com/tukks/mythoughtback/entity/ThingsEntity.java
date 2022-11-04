@@ -10,6 +10,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import com.tukks.mythoughtback.dto.ThingType;
+import com.tukks.mythoughtback.entity.superclass.BaseTable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ThingsEntity {
+public class ThingsEntity extends BaseTable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,4 +34,5 @@ public class ThingsEntity {
 	private String title;
 
 	private String comment;
+
 }

@@ -3,13 +3,11 @@ package com.tukks.mythoughtback.entity;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "LINK")
 @NoArgsConstructor
 @Data
 @DiscriminatorValue("LINK")
