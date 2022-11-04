@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {EditorType, StacksEditor} from "@stackoverflow/stacks-editor";
 import "@stackoverflow/stacks";
 import {ThoughtsService} from "../../../service/thoughts.service";
@@ -22,10 +22,7 @@ export class MarkdownCardComponent implements AfterViewInit {
   @Input()
   cardMode: boolean = true;
 
-  @Output()
-  savedEvent = new EventEmitter();
-
-  stackEditor: StacksEditor | undefined;
+  public stackEditor: StacksEditor | undefined;
 
   @ViewChild('editorContainer') editorContainer!: ElementRef;
 
@@ -36,24 +33,17 @@ export class MarkdownCardComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.editorContainer)
     this.stackEditor = new StacksEditor(
       // @ts-ignore
       this.editorContainer?.nativeElement!,
       this.content, {placeholderText: 'enter your markdown here or a link', classList: ['md-size'], defaultView: EditorType.RichText}
     );
-
     if (this.readonly) {
       this.stackEditor.disable();
     }
   }
 
-  saveOrEdit() {
-    if (this.id) {
-      this.service.editMarkdown(this.id, this.stackEditor?.content!).subscribe();
-    } else {
-      this.service.save(this.stackEditor?.content!).subscribe();
-    }
-    this.savedEvent.emit();
+  create() {
+    this.service.save(this.stackEditor?.content!).subscribe();
   }
 }
