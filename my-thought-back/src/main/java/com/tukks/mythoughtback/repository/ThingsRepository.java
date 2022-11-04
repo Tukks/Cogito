@@ -14,4 +14,6 @@ public interface ThingsRepository extends CrudRepository<ThingsEntity, Long> {
 	@Query("select p from ThingsEntity p order by p.modified desc")
 	List<Object> getAll();
 
+	ThingsEntity getById(Long id);
+
 }

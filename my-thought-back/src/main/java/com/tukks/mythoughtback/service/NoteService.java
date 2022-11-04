@@ -3,6 +3,7 @@ package com.tukks.mythoughtback.service;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,8 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tukks.mythoughtback.dto.ThingType;
+import com.tukks.mythoughtback.dto.request.ThingsEditRequest;
 import com.tukks.mythoughtback.entity.LinkEntity;
 import com.tukks.mythoughtback.entity.NoteEntity;
+import com.tukks.mythoughtback.entity.ThingsEntity;
+import com.tukks.mythoughtback.entity.tag.Tag;
 import com.tukks.mythoughtback.repository.LinkRepository;
 import com.tukks.mythoughtback.repository.NoteRepository;
 import com.tukks.mythoughtback.repository.ThingsRepository;
@@ -56,10 +60,43 @@ public class NoteService {
 	}
 
 	@Transactional
-	public void editMarkdown(final Long id, final String note) {
-		NoteEntity noteEntity = noteRepository.getById(id);
-		noteEntity.setMarkdown(note);
-		noteRepository.save(noteEntity);
+	public void editThings(final Long id, final ThingsEditRequest thingsEditRequest) {
+		ThingsEntity thingsEntity = thingsRepository.getById(id);
+
+		if (thingsEntity.getThingType() == ThingType.MARKDOWN) {
+			NoteEntity noteEntity = noteRepository.getById(id);
+			noteEntity.setMarkdown(thingsEditRequest.getNote());
+			if (thingsEditRequest.getTags() != null) { // TODO on les renvoie tous tout le temps?
+				noteEntity.setTags(createTagsEntityFromString(thingsEditRequest.getTags()));
+			}
+			if (thingsEditRequest.getComment() != null) {
+				noteEntity.setComment(thingsEditRequest.getComment());
+			}
+			if (thingsEditRequest.getTitle() != null) {
+				noteEntity.setTitle(thingsEditRequest.getTitle());
+			}
+			noteRepository.save(noteEntity);
+		} else {
+			if (thingsEditRequest.getTitle() != null) {
+				thingsEntity.setTitle(thingsEditRequest.getTitle());
+			}
+			if (thingsEditRequest.getTags() != null) { // TODO on les renvoie tous tout le temps?
+				thingsEntity.setTags(createTagsEntityFromString(thingsEditRequest.getTags()));
+			}
+			if (thingsEditRequest.getComment() != null) {
+				thingsEntity.setComment(thingsEditRequest.getComment());
+			}
+			thingsRepository.save(thingsEntity);
+		}
+
+	}
+
+	private static List<Tag> createTagsEntityFromString(List<String> tags) {
+		return tags.stream().map(s -> {
+			Tag tag = new Tag();
+			tag.setTag(s);
+			return tag;
+		}).toList();
 	}
 
 	public boolean isTwitterUrl(String url) {

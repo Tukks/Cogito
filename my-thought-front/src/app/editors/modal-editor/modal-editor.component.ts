@@ -23,7 +23,15 @@ export class ModalEditorComponent implements OnInit {
 
   update(): void {
     if (this.data.card.thingType === this.cardsType.MARKDOWN) {
-      this.thoughtService.editMarkdown(this.data.card.id, this.markdownCardComponent.stackEditor?.content!).subscribe();
+      this.thoughtService.editThing(this.data.card.id, {
+        note: this.markdownCardComponent.stackEditor?.content!
+      }).subscribe();
+      this.dialogRef.close();
+    } else {
+      this.thoughtService.editThing(this.data.card.id, {
+          comment: "un commentaire"
+        }
+      ).subscribe();
       this.dialogRef.close();
     }
   }

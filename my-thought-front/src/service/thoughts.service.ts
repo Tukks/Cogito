@@ -32,8 +32,8 @@ export class ThoughtsService {
     }))
   }
 
-  public editMarkdown(id: number, note: string): Observable<any> {
-    return this.httpClient.patch(`/api/${id}`, note).pipe(tap(() => {
+  public editThing(id: number, thingRequest: { title?: string, note?: string, tags?: string[], comment?: string }): Observable<any> {
+    return this.httpClient.patch(`/api/${id}`, thingRequest).pipe(tap(() => {
       this.getAllthougts().subscribe(value => this.subject.next(value));
     }))
   }
