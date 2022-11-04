@@ -1,11 +1,6 @@
 .container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
   grid-gap: 20px;
-  justify-content: center;
-
-  > * {
-
-  }
+  grid-template-columns: repeat(auto-fit, 19%);
 }
+

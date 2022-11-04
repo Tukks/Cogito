@@ -1,21 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@stackoverflow/stacks-editor/dist/styles.css";
-
 @import "@stackoverflow/stacks/dist/css/stacks.css";
+@import "~@angular/cdk/overlay-prebuilt.css";
 
-
-//.d-flex {
-//  display: flex !important;
-//  flex-wrap: wrap;
-//  justify-content: center;
-//}
-//.s-editor-resizable[style*="height"] {
-//  height: 400px !important;
-//}
 .little {
   .s-input, .s-textarea {
     max-height: 400px;
     height: 400px;
+  }
+
+  .s-textarea.is-readonly {
+    cursor: unset;
   }
 
   .is-readonly {
@@ -25,6 +20,12 @@
   }
 }
 
+.big {
+  .s-input, .s-textarea {
+    max-height: 70vh;
+    height: 70vh;
+  }
+}
 
 .card {
   height: 400px;

@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {CardsLink, CardsType} from "../../types/cards-link";
+import {Dialog} from "@angular/cdk/dialog";
+import {ModalEditorComponent} from "../editors/modal-editor/modal-editor.component";
 
 @Component({
   selector: 'app-card',
@@ -7,12 +9,25 @@ import {CardsLink, CardsType} from "../../types/cards-link";
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent implements OnInit {
+  @HostListener('click', ['$event.target'])
+  onClick() {
+    this.dialog.open(
+      ModalEditorComponent, {
+        height: '80%',
+        width: '80%',
+        data: {
+          card: this.card,
+        },
+      });
+
+  }
+
   public cardsType: typeof CardsType = CardsType;
 
   @Input()
   public card: CardsLink = {} as CardsLink;
 
-  constructor() {
+  constructor(public dialog: Dialog) {
   }
 
   ngOnInit(): void {

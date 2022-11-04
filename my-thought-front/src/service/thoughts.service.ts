@@ -26,4 +26,16 @@ export class ThoughtsService {
     }))
   }
 
+  public delete(id: number): Observable<any> {
+    return this.httpClient.delete(`/api/${id}`).pipe(tap(() => {
+      this.getAllthougts().subscribe(value => this.subject.next(value));
+    }))
+  }
+
+  public editMarkdown(id: number, note: string): Observable<any> {
+    return this.httpClient.patch(`/api/${id}`, note).pipe(tap(() => {
+      this.getAllthougts().subscribe(value => this.subject.next(value));
+    }))
+  }
+
 }

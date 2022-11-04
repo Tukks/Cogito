@@ -1,4 +1,4 @@
 <textarea id="content" name="content" class="d-none"></textarea>
-<div #editorContainer class="js-tables-enabled little card" [ngClass]="cardMode ? 'little' : '' "></div>
+<div #editorContainer class="js-tables-enabled" [ngClass]="cardMode ? 'little card' : 'big'"></div>
 
-<button (click)="save()" *ngIf="!readonly">Envoyer</button>
+<button (click)="saveOrEdit()" *ngIf="!readonly">{{id === undefined ? 'Créer' : 'Sauvegarder'}}</button>

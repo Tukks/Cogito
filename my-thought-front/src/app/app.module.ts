@@ -9,6 +9,8 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
 import {HttpClientModule} from "@angular/common/http";
 import {MarkdownCardComponent} from "./editors/markdown-card/markdown-card.component";
 import {FormsModule} from "@angular/forms";
+import {ModalEditorComponent} from './editors/modal-editor/modal-editor.component';
+import {DialogModule} from "@angular/cdk/dialog";
 
 @NgModule({
   declarations: [
@@ -16,13 +18,15 @@ import {FormsModule} from "@angular/forms";
     BoardComponent,
     CardComponent,
     MarkdownCardComponent,
+    ModalEditorComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ScrollingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

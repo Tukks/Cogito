@@ -5,6 +5,7 @@ export enum CardsType {
 }
 
 export interface CardsLink {
+  id: number,
   url: string,
   title: string,
   desc: string,

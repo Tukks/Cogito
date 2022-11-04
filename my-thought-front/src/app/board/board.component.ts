@@ -20,14 +20,14 @@ export class BoardComponent implements OnInit {
     this.thoughtsService.getAllthougts().subscribe();
     this.thoughtsService.subject.subscribe(val => {
       this.cardsLink = val;
-      console.log(this.cardsLink)
+      // console.log(this.cardsLink)
       // pour tester un grand nombre de carte avec le virtual Scroll
       // for (let i = 0; i < 100; i++) {
       //   this.cardsLink = this.cardsLink.concat(val);
       // }
       // https://github.com/angular/components/issues/10114#issuecomment-704009955
 
-      let i: number, j: number, temparray: any[][] = [], chunk = 3;
+      let i: number, j: number, temparray: any[][] = [], chunk = 5;
       for (i = 0, j = this.cardsLink.length; i < j; i += chunk) {
         temparray.push(this.cardsLink.slice(i, i + chunk));
       }

@@ -1,0 +1,13 @@
+<ng-container *ngIf="data.card.thingType === cardsType.MARKDOWN">
+  <app-markdown-card [content]="data.card.markdown" [cardMode]="false" [id]="data.card.id" (savedEvent)="dialogRef.close()"></app-markdown-card>
+</ng-container>
+<ng-container *ngIf="data.card.thingType === cardsType.LINK">
+  <div style="display: flex; height: 100%">
+    <img src="{{data.card.image}}" alt="{{data.card.imageAlt}}" style="object-fit: scale-down;"/>
+    <div style="flex-direction: column">
+      <p>{{data.card.desc}}</p>
+      <p>{{data.card.url}}</p>
+    </div>
+  </div>
+</ng-container>
+<button (click)="delete(data.card.id)">Delete</button>
