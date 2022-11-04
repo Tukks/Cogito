@@ -10,5 +10,5 @@
 </div>
 
 <ng-container *ngIf="card.thingType === cardsType.MARKDOWN">
-  <app-markdown-card [readonly]="true" [cardMode]="true" [content]="card.markdown"></app-markdown-card>
+  <app-markdown-card [readonly]="true" [cardMode]="true" [content]="card.markdown" [id]="card.id"></app-markdown-card>
 </ng-container>

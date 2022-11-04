@@ -7,24 +7,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tukks.mythoughtback.dto.ThingType;
 import com.tukks.mythoughtback.entity.LinkEntity;
 import com.tukks.mythoughtback.entity.NoteEntity;
 import com.tukks.mythoughtback.repository.LinkRepository;
 import com.tukks.mythoughtback.repository.NoteRepository;
+import com.tukks.mythoughtback.repository.ThingsRepository;
 import com.tukks.mythoughtback.service.internal.LinkPreview;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class SaveNote {
+public class NoteService {
 
 	private final LinkPreview linkPreview;
 	private final LinkRepository linkRepository;
 
 	private final NoteRepository noteRepository;
+	private final ThingsRepository thingsRepository;
+
 	private final String REGEX_TWITTER = "^https?:\\/\\/twitter\\.com\\/(?:#!\\/)?(\\w+)\\/status(es)?\\/(\\d+)";
 
 	public void save(final String note) {
@@ -44,6 +48,18 @@ public class SaveNote {
 			noteEntity.setThingType(ThingType.MARKDOWN);
 			noteRepository.save(noteEntity);
 		}
+	}
+
+	@Transactional
+	public void delete(final Long id) {
+		thingsRepository.deleteById(id);
+	}
+
+	@Transactional
+	public void editMarkdown(final Long id, final String note) {
+		NoteEntity noteEntity = noteRepository.getById(id);
+		noteEntity.setMarkdown(note);
+		noteRepository.save(noteEntity);
 	}
 
 	public boolean isTwitterUrl(String url) {

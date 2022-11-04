@@ -2,17 +2,17 @@ package com.tukks.mythoughtback.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tukks.mythoughtback.dto.request.LinkRequest;
-import com.tukks.mythoughtback.repository.LinkRepository;
 import com.tukks.mythoughtback.repository.ThingsRepository;
-import com.tukks.mythoughtback.service.LinkService;
-import com.tukks.mythoughtback.service.SaveNote;
+import com.tukks.mythoughtback.service.NoteService;
 
 import lombok.AllArgsConstructor;
 
@@ -21,24 +21,26 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ThoughtController {
 
-	private final LinkRepository linkRepository;
-	private final LinkService linkService;
-
 	private final ThingsRepository thingsRepository;
-	private final SaveNote saveNote;
+	private final NoteService noteService;
 
 	@GetMapping("/thoughts")
 	public List<Object> getAllThoughts() {
 		return thingsRepository.getAll();
 	}
 
-	@PostMapping("/thoughts/link")
-	public void saveLinkg(@RequestBody LinkRequest linkRequest) {
-		linkService.addLinkWithPreview(linkRequest);
-	}
-
 	@PostMapping("/save")
 	public void save(@RequestBody String note) {
-		saveNote.save(note);
+		noteService.save(note);
+	}
+
+	@PatchMapping("/{id}")
+	public void editMarkdown(@PathVariable Long id, @RequestBody String note) {
+		noteService.editMarkdown(id, note);
+	}
+
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Long id) {
+		noteService.delete(id);
 	}
 }

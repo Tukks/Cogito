@@ -11,6 +11,9 @@ import {ThoughtsService} from "../../../service/thoughts.service";
 export class MarkdownCardComponent implements AfterViewInit {
 
   @Input()
+  id: number | undefined;
+
+  @Input()
   readonly: boolean = false;
 
   @Input()
@@ -19,7 +22,7 @@ export class MarkdownCardComponent implements AfterViewInit {
   @Input()
   cardMode: boolean = true;
 
-  stackEditor: StacksEditor | undefined;
+  public stackEditor: StacksEditor | undefined;
 
   @ViewChild('editorContainer') editorContainer!: ElementRef;
 
@@ -30,19 +33,17 @@ export class MarkdownCardComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.editorContainer)
     this.stackEditor = new StacksEditor(
       // @ts-ignore
       this.editorContainer?.nativeElement!,
       this.content, {placeholderText: 'enter your markdown here or a link', classList: ['md-size'], defaultView: EditorType.RichText}
     );
-
     if (this.readonly) {
       this.stackEditor.disable();
     }
   }
 
-  save() {
+  create() {
     this.service.save(this.stackEditor?.content!).subscribe();
   }
 }

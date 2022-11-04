@@ -1,8 +1,46 @@
 <input style="width: 100%"/>
-<div class="container">
-  <!--  <app-quick-editor></app-quick-editor>-->
+<div class="container example-viewport">
+
+  <!--<cdk-virtual-scroll-viewport [itemSize]="400"  class="example-viewport">-->
+
+
   <app-markdown-card [cardMode]="true"></app-markdown-card>
-  <app-card *ngFor="let cardLink of cardsLink" [card]="cardLink">
-  </app-card>
+  <ng-container *ngFor="let card of cardsLink">
+    <app-card [card]="card"></app-card>
+
+  </ng-container>
+
+  <!--</cdk-virtual-scroll-viewport>-->
 </div>
 
+
+<!--<input style="width: 100%"/>-->
+<!--<cdk-virtual-scroll-viewport [itemSize]="400"  class="example-viewport">-->
+
+<!--<div class="container example-viewport">-->
+
+
+<!--    <app-markdown-card [cardMode]="true"></app-markdown-card>-->
+<!--    <ng-container *cdkVirtualFor="let cardLink of mapCardsLink">-->
+<!--      <app-card *ngFor="let card of cardLink" [card]="card"></app-card>-->
+
+<!--    </ng-container>-->
+
+<!--</div>-->
+<!--</cdk-virtual-scroll-viewport>-->
+
+
+<!--<input style="width: 100%"/>-->
+<!--<div class="container example-viewport">-->
+
+<!--  &lt;!&ndash;<cdk-virtual-scroll-viewport [itemSize]="400"  class="example-viewport">&ndash;&gt;-->
+
+
+<!--  <app-markdown-card [cardMode]="true"></app-markdown-card>-->
+<!--  <ng-container *ngFor="let card of cardsLink">-->
+<!--    <app-card [card]="card"></app-card>-->
+
+<!--  </ng-container>-->
+
+<!--  &lt;!&ndash;</cdk-virtual-scroll-viewport>&ndash;&gt;-->
+<!--</div>-->
