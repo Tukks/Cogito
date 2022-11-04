@@ -19,4 +19,4 @@ All your ·notes· ·bookmarks·,
 ### Front
 
 - npm i
-- ionic serve
+- npm start
