@@ -32,7 +32,9 @@ public class LinkPreview {
 			if (!url.startsWith("http")) {
 				url = "http://" + url;
 			}
-			Document document = Jsoup.connect(url).get();
+			Document document = Jsoup.connect(url)
+				.userAgent("Mozilla")
+				.get();
 			String title = getMetaTagContent(document, "meta[name=title]");
 			String desc = getMetaTagContent(document, "meta[name=description]");
 			String ogUrl = StringUtils.defaultIfBlank(getMetaTagContent(document, "meta[property=og:url]"), url);

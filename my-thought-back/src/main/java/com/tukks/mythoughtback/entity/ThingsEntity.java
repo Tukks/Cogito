@@ -2,15 +2,7 @@ package com.tukks.mythoughtback.entity;
 
 import java.util.List;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.tukks.mythoughtback.dto.ThingType;
 import com.tukks.mythoughtback.entity.superclass.BaseTable;
@@ -18,7 +10,9 @@ import com.tukks.mythoughtback.entity.tag.Tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.extern.jackson.Jacksonized;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -27,6 +21,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Jacksonized
+@EqualsAndHashCode(callSuper = true)
 public class ThingsEntity extends BaseTable {
 
 	@Id
@@ -39,7 +35,7 @@ public class ThingsEntity extends BaseTable {
 
 	private String comment;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Tag> tags;
 
 }

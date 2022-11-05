@@ -12,3 +12,7 @@
   border: 3px solid #B8C3D3;
   cursor: pointer; // pour overrider stack exchange il faut le important
 }
+
+:host {
+  border-radius: 8px;
+}

@@ -15,7 +15,7 @@ public class ThingsEditRequest {
 
 	private String note; // Only for markdown
 
-	private List<String> tags;
+	private List<TagEditRequest> tags;
 
 	private String comment;
 

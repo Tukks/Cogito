@@ -5,12 +5,16 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.extern.jackson.Jacksonized;
 
 @Entity
 @NoArgsConstructor
 @Data
 @DiscriminatorValue("LINK")
+@EqualsAndHashCode(callSuper = true)
+@Jacksonized
 public class LinkEntity extends ThingsEntity {
 
 	@Column(name = "domain")
