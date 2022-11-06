@@ -11,6 +11,18 @@ import {MarkdownCardComponent} from "./editors/markdown-card/markdown-card.compo
 import {FormsModule} from "@angular/forms";
 import {ModalEditorComponent} from './editors/modal-editor/modal-editor.component';
 import {DialogModule} from "@angular/cdk/dialog";
+import {fr_FR, NZ_I18N} from 'ng-zorro-antd/i18n';
+import {registerLocaleData} from '@angular/common';
+import fr from '@angular/common/locales/fr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NzInputModule} from "ng-zorro-antd/input";
+import {NzButtonModule} from "ng-zorro-antd/button";
+import {CustomTagsInput} from "./components/custom-tags-input";
+import {NzTagModule} from "ng-zorro-antd/tag";
+import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzNoAnimationModule} from "ng-zorro-antd/core/no-animation";
+
+registerLocaleData(fr);
 
 @NgModule({
   declarations: [
@@ -19,6 +31,7 @@ import {DialogModule} from "@angular/cdk/dialog";
     CardComponent,
     MarkdownCardComponent,
     ModalEditorComponent,
+    CustomTagsInput
   ],
   imports: [
     BrowserModule,
@@ -26,9 +39,17 @@ import {DialogModule} from "@angular/cdk/dialog";
     ScrollingModule,
     HttpClientModule,
     FormsModule,
-    DialogModule
+    DialogModule,
+    BrowserAnimationsModule,
+    NzInputModule,
+    NzButtonModule,
+    NzTagModule,
+    NzIconModule,
+    NzNoAnimationModule
   ],
-  providers: [],
+  providers: [
+    {provide: NZ_I18N, useValue: fr_FR}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

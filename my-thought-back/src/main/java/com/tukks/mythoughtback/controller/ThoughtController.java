@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tukks.mythoughtback.dto.request.ThingsEditRequest;
 import com.tukks.mythoughtback.repository.ThingsRepository;
 import com.tukks.mythoughtback.service.NoteService;
 
@@ -35,8 +36,8 @@ public class ThoughtController {
 	}
 
 	@PatchMapping("/{id}")
-	public void editMarkdown(@PathVariable Long id, @RequestBody String note) {
-		noteService.editMarkdown(id, note);
+	public void editThings(@PathVariable Long id, @RequestBody ThingsEditRequest thingsEditRequest) {
+		noteService.editThings(id, thingsEditRequest);
 	}
 
 	@DeleteMapping("/{id}")

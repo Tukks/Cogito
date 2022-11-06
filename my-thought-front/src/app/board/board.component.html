@@ -1,4 +1,10 @@
-<input style="width: 100%"/>
+<nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton" class="search">
+  <input type="text" nz-input placeholder="input search text" class="input"/>
+</nz-input-group>
+
+<ng-template #suffixButton>
+  <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
+</ng-template>
 <div class="container example-viewport">
 
   <!--<cdk-virtual-scroll-viewport [itemSize]="400"  class="example-viewport">-->

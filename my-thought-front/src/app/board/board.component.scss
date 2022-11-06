@@ -1,6 +1,19 @@
 .container {
+  padding-top: 20px;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fit, 19%);
+}
+
+.search {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+
+  .input {
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+  }
 }
 

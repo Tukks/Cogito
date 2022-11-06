@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, Subject, tap} from "rxjs";
-import {CardsLink} from "../types/cards-link";
+import {CardsLink, Tag} from "../types/cards-link";
 import {map} from "rxjs/operators";
 
 @Injectable({
@@ -15,6 +15,7 @@ export class ThoughtsService {
 
   public getAllthougts(): Observable<CardsLink[]> {
     return this.httpClient.get<CardsLink[]>("/api/thoughts").pipe(map(values => {
+
       this.subject.next(values);
       return values;
     }));
@@ -32,8 +33,8 @@ export class ThoughtsService {
     }))
   }
 
-  public editMarkdown(id: number, note: string): Observable<any> {
-    return this.httpClient.patch(`/api/${id}`, note).pipe(tap(() => {
+  public editThing(id: number, thingRequest: { title?: string, note?: string, tags?: Tag[], comment?: string }): Observable<any> {
+    return this.httpClient.patch(`/api/${id}`, thingRequest).pipe(tap(() => {
       this.getAllthougts().subscribe(value => this.subject.next(value));
     }))
   }

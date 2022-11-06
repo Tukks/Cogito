@@ -4,6 +4,10 @@ export enum CardsType {
   MARKDOWN = "MARKDOWN"
 }
 
+export interface Tag {
+  tag: string;
+}
+
 export interface CardsLink {
   id: number,
   url: string,
@@ -12,5 +16,7 @@ export interface CardsLink {
   image: string,
   imageAlt: string
   thingType: CardsType,
-  markdown: string
+  markdown: string,
+  tags: Tag[],
+  comment: string,
 }

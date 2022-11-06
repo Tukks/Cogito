@@ -5,9 +5,10 @@ import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
 
 @Builder
-@Getter
 @Jacksonized
-public class LinkRequest {
+@Getter
+public class TagEditRequest {
 
-	String url;
+	private String tag;
+
 }

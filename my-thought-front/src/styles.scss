@@ -11,11 +11,14 @@
 
   .s-textarea.is-readonly {
     cursor: unset;
+    background-color: white;
+    color: black;
   }
 
   .is-readonly {
     .ai-center {
       display: none !important;
+      background-color: white;
     }
   }
 }
@@ -31,7 +34,8 @@
   height: 400px;
   margin: 0px auto;
   background-color: white;
-  box-shadow: 0px 5px 20px #555;
+  box-shadow: 0px 5px 5px #555;
+  border-radius: 8px;
 }
 
 .flex-vertical {

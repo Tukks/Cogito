@@ -3,17 +3,24 @@ package com.tukks.mythoughtback.service;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tukks.mythoughtback.dto.ThingType;
+import com.tukks.mythoughtback.dto.request.TagEditRequest;
+import com.tukks.mythoughtback.dto.request.ThingsEditRequest;
 import com.tukks.mythoughtback.entity.LinkEntity;
 import com.tukks.mythoughtback.entity.NoteEntity;
+import com.tukks.mythoughtback.entity.ThingsEntity;
+import com.tukks.mythoughtback.entity.tag.Tag;
 import com.tukks.mythoughtback.repository.LinkRepository;
 import com.tukks.mythoughtback.repository.NoteRepository;
+import com.tukks.mythoughtback.repository.TagRepository;
 import com.tukks.mythoughtback.repository.ThingsRepository;
 import com.tukks.mythoughtback.service.internal.LinkPreview;
 
@@ -28,6 +35,7 @@ public class NoteService {
 
 	private final NoteRepository noteRepository;
 	private final ThingsRepository thingsRepository;
+	private final TagRepository tagRepository;
 
 	private final String REGEX_TWITTER = "^https?:\\/\\/twitter\\.com\\/(?:#!\\/)?(\\w+)\\/status(es)?\\/(\\d+)";
 
@@ -55,11 +63,49 @@ public class NoteService {
 		thingsRepository.deleteById(id);
 	}
 
+	// TODO corriger la sauvegarde des tags en duplicate
 	@Transactional
-	public void editMarkdown(final Long id, final String note) {
-		NoteEntity noteEntity = noteRepository.getById(id);
-		noteEntity.setMarkdown(note);
-		noteRepository.save(noteEntity);
+	public void editThings(final Long id, final ThingsEditRequest thingsEditRequest) {
+		ThingsEntity thingsEntity = thingsRepository.getById(id);
+
+		if (thingsEntity.getThingType() == ThingType.MARKDOWN) {
+			NoteEntity noteEntity = noteRepository.getById(id);
+			noteEntity.setMarkdown(thingsEditRequest.getNote());
+			if (thingsEditRequest.getTags() != null) {
+				noteEntity.setTags(createTagsEntityFromString(thingsEditRequest.getTags()));
+			}
+			if (thingsEditRequest.getComment() != null) {
+				noteEntity.setComment(thingsEditRequest.getComment());
+			}
+			if (thingsEditRequest.getTitle() != null) {
+				noteEntity.setTitle(thingsEditRequest.getTitle());
+			}
+			noteRepository.save(noteEntity);
+		} else {
+			if (thingsEditRequest.getTitle() != null) {
+				thingsEntity.setTitle(thingsEditRequest.getTitle());
+			}
+			if (thingsEditRequest.getTags() != null) {
+				thingsEntity.setTags(createTagsEntityFromString(thingsEditRequest.getTags()));
+			}
+			if (thingsEditRequest.getComment() != null) {
+				thingsEntity.setComment(thingsEditRequest.getComment());
+			}
+			thingsRepository.save(thingsEntity);
+		}
+
+	}
+
+	private List<Tag> createTagsEntityFromString(List<TagEditRequest> tags) {
+		return tags.stream().map(s -> {
+			//			Tag existTag = tagRepository.getTagByTag(s.getTag());
+			//			if (existTag != null) {
+			//				return existTag;
+			//			}
+			Tag newTag = new Tag();
+			newTag.setTag(s.getTag());
+			return newTag;
+		}).collect(Collectors.toList());
 	}
 
 	public boolean isTwitterUrl(String url) {
