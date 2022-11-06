@@ -1,0 +1,48 @@
+2022-11-04 18:08:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "test1"
+Data conversion error converting "test1"; SQL statement:
+select tags0_.tag as tag1_0_0_, tags0_.tag as tag1_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-04 18:09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "test1"
+Data conversion error converting "test1"; SQL statement:
+select tags0_.tag as tag1_0_0_, tags0_.tag as tag1_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-05 08:43:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "sss"
+Data conversion error converting "sss"; SQL statement:
+select tags0_.tag as tag1_0_0_, tags0_.tag as tag1_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-05 08:43:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "sss"
+Data conversion error converting "sss"; SQL statement:
+select tags0_.tag as tag1_0_0_, tags0_.tag as tag1_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-05 08:44:19 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "sss"
+Data conversion error converting "sss"; SQL statement:
+select tags0_.tag as tag1_0_0_, tags0_.tag as tag1_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-05 08:44:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "sss"
+Data conversion error converting "sss"; SQL statement:
+select tags0_.tag as tag1_0_0_, tags0_.tag as tag1_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-05 08:45:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "sss"
+Data conversion error converting "sss"; SQL statement:
+select tags0_.tag as tag1_0_0_, tags0_.tag as tag1_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-05 08:46:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "sss"
+Data conversion error converting "sss"; SQL statement:
+select tags0_.tag as tag1_0_0_, tags0_.tag as tag1_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-05 08:46:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "sss"
+Data conversion error converting "sss"; SQL statement:
+select tags0_.tag as tag1_0_0_, tags0_.tag as tag1_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-05 09:12:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "test1"
+Data conversion error converting "test1"; SQL statement:
+select tags0_.tag as tag2_0_0_, tags0_.id as id1_0_0_, tags0_.id as id1_0_1_, tags0_.tag as tag2_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-05 09:14:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "test1"
+Data conversion error converting "test1"; SQL statement:
+select tags0_.tag as tag2_0_0_, tags0_.id as id1_0_0_, tags0_.id as id1_0_1_, tags0_.tag as tag2_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]
+2022-11-05 09:18:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "test1"
+Data conversion error converting "test1"; SQL statement:
+select tags0_.tag as tag2_0_0_, tags0_.id as id1_0_0_, tags0_.id as id1_0_1_, tags0_.tag as tag2_0_1_ from tag tags0_ where tags0_.tag=? [22018-214]

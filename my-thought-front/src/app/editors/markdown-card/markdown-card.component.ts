@@ -45,5 +45,6 @@ export class MarkdownCardComponent implements AfterViewInit {
 
   create() {
     this.service.save(this.stackEditor?.content!).subscribe();
+    this.stackEditor!.content = "";
   }
 }

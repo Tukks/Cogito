@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "startandroid": "npx cap run android",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -19,6 +20,9 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@capacitor/android": "^4.4.0",
+    "@capacitor/core": "^4.4.0",
+    "@capacitor/ios": "^4.4.0",
     "@stackoverflow/stacks-editor": "^0.8.2",
     "ng-zorro-antd": "^14.1.1",
     "rxjs": "~7.5.0",
@@ -29,6 +33,7 @@
     "@angular-devkit/build-angular": "^14.2.7",
     "@angular/cli": "~14.2.7",
     "@angular/compiler-cli": "^14.2.0",
+    "@capacitor/cli": "^4.4.0",
     "@types/jasmine": "~4.0.0",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
