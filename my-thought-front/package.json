@@ -24,6 +24,7 @@
     "@capacitor/core": "^4.4.0",
     "@capacitor/ios": "^4.4.0",
     "@stackoverflow/stacks-editor": "^0.8.2",
+    "flexsearch": "^0.7.31",
     "ng-zorro-antd": "^14.1.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

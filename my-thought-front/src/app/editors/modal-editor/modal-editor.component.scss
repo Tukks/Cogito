@@ -1,4 +1,5 @@
 :host {
+  position: relative;
   display: flex;
   height: 100%;
   width: 100%;
@@ -11,6 +12,8 @@
   width: 200px;
   display: flex;
   flex-direction: column;
+  height: 150px;
+  justify-content: space-between;
 }
 
 .modal-editor-left-column {
@@ -29,4 +32,12 @@
 .modal-editor-img-preview {
   object-fit: scale-down;
   height: 100%;
+}
+
+.modal-editor-actions {
+  position: absolute;
+  top: 90%;
+  right: 1%;
+  display: flex;
+  grid-gap: 10px;
 }

@@ -17,8 +17,9 @@
     <input nz-input placeholder="title" [(ngModel)]="title"/>
     <app-tags-input [(tags)]="tags"></app-tags-input>
     <input nz-input placeholder="comment" [(ngModel)]="comment"/>
-    <button nz-button (click)="update()">Update</button>
-    <button nz-button (click)="delete(data.card.id)">Delete</button>
   </div>
 </div>
-
+<div class="modal-editor-actions">
+  <button nz-button (click)="update()" nzType="primary" nzShape="circle"><span nz-icon nzType="save" nzTheme="outline"></span></button>
+  <button nz-button (click)="delete(data.card.id)" nzType="primary" nzDanger nzShape="circle"><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+</div>
