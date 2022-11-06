@@ -1,24 +1,24 @@
-<div style="display: flex; height: 100%;">
+<div class="modal-editor">
   <ng-container *ngIf="data.card.thingType === cardsType.MARKDOWN">
-    <app-markdown-card [content]="data.card.markdown" [cardMode]="false" [id]="data.card.id">
+    <app-markdown-card class="modal-editor-left-column" [content]="data.card.markdown" [cardMode]="false" [id]="data.card.id">
 
     </app-markdown-card>
   </ng-container>
   <ng-container *ngIf="data.card.thingType === cardsType.LINK">
-    <div style="display: flex; height: 100%">
-      <img src="{{data.card.image}}" alt="{{data.card.imageAlt}}" style="object-fit: scale-down;"/>
-      <div style="flex-direction: column">
+    <div class="modal-editor-left-column">
+      <img src="{{data.card.image}}" alt="{{data.card.imageAlt}}" class="modal-editor-img-preview"/>
+      <div>
         <p>{{data.card.desc}}</p>
         <p>{{data.card.url}}</p>
       </div>
     </div>
   </ng-container>
-  <div>
+  <div class="modal-editor-right-column">
     <input nz-input placeholder="title" [(ngModel)]="title"/>
     <app-tags-input [(tags)]="tags"></app-tags-input>
     <input nz-input placeholder="comment" [(ngModel)]="comment"/>
+    <button nz-button (click)="update()">Update</button>
+    <button nz-button (click)="delete(data.card.id)">Delete</button>
   </div>
 </div>
-<button nz-button (click)="update()">Update</button>
 
-<button nz-button (click)="delete(data.card.id)">Delete</button>

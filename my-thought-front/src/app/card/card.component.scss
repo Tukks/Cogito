@@ -1,6 +1,7 @@
 .card-image {
   width: 100%;
   height: 100%;
+  justify-content: space-around;
 }
 
 .card-excerpt {
@@ -14,5 +15,6 @@
 }
 
 :host {
+  border: 3px solid transparent;
   border-radius: 8px;
 }

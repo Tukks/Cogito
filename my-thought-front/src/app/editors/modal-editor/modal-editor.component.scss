@@ -1,8 +1,32 @@
 :host {
-  display: block;
+  display: flex;
   height: 100%;
   width: 100%;
   background: #fff;
   border-radius: 8px;
   padding: 8px 16px;
+}
+
+.modal-editor-right-column {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-editor-left-column {
+  flex-grow: 2;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.modal-editor {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.modal-editor-img-preview {
+  object-fit: scale-down;
+  height: 100%;
 }
