@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ThoughtsService} from "../../service/thoughts.service";
 import {CardsLink, CardsType} from "../../types/cards-link";
+import * as FlexSearch from "flexsearch";
 
 @Component({
   selector: 'app-board',
@@ -8,33 +9,56 @@ import {CardsLink, CardsType} from "../../types/cards-link";
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  public cardsLink: CardsLink[] = [];
-  public cardsType: typeof CardsType = CardsType;
+  public originalResult: CardsLink[] = [];
 
-  public mapCardsLink: any;
+  public filteredResult: CardsLink[] = [];
+  public cardsType: typeof CardsType = CardsType;
+  public searchValue: string = "";
+  public index: any;
 
   constructor(private thoughtsService: ThoughtsService) {
   }
 
   ngOnInit(): void {
+    // @ts-ignore
+    this.index = new FlexSearch.Document<CardsLink>({
+      preset: "match",
+      resolution: 1,
+      tokenize: "forward",
+      language: "fr",
+      document: {
+        id: "id",
+        index: ["markdown", "title", "url", "desc", "thingType", "tags[]:tag"],
+      },
+      store: true
+    });
     this.thoughtsService.getAllthougts().subscribe();
-    this.thoughtsService.subject.subscribe(val => {
-      this.cardsLink = val;
-      // console.log(this.cardsLink)
-      // pour tester un grand nombre de carte avec le virtual Scroll
-      // for (let i = 0; i < 100; i++) {
-      //   this.cardsLink = this.cardsLink.concat(val);
-      // }
-      // https://github.com/angular/components/issues/10114#issuecomment-704009955
-
-      let i: number, j: number, temparray: any[][] = [], chunk = 5;
-      for (i = 0, j = this.cardsLink.length; i < j; i += chunk) {
-        temparray.push(this.cardsLink.slice(i, i + chunk));
-      }
-      this.mapCardsLink = temparray;
-      console.log(this.mapCardsLink);
-
+    this.thoughtsService.subject.subscribe((val: CardsLink[]) => {
+      val.forEach(v => {
+        this.index.remove(v.id);
+        this.index.add(v);
+      });
+      this.originalResult = val;
+      this.filteredResult = val;
     })
   }
 
+  search($event: any) {
+    console.log($event)
+    if ($event !== "") {
+      const searched = this.index.search($event);
+      let ids: number[] = [];
+      searched.forEach((res: { field: string, result: number[] }) => {
+        console.log(res.result);
+        ids = ids.concat(res.result);
+      })
+      console.log(ids);
+      this.filteredResult = this.originalResult.filter(card => ids.includes(card.id));
+
+    } else {
+      this.filteredResult = this.originalResult;
+    }
+
+
+  }
 }
