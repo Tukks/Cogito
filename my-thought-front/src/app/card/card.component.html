@@ -1,9 +1,9 @@
 <div class="card" *ngIf="card.thingType === cardsType.LINK">
   <!-- Image à la une -->
   <div class="card-image flex-vertical">
-    <img src="{{card.image}}" alt="{{card.imageAlt}}" style="max-height: 50%; object-fit: scale-down;"/>
-    <p>{{card.desc}}</p>
-    <div>{{card.url}}</div>
+    <img src="{{card.image}}" alt="{{card.imageAlt}}" class="card-image-content">
+    <p nz-typography class="card-image-desc">{{card.desc}}</p>
+    <a nz-typography nzEllipsis href="{{card.url}}" (click)="$event.preventDefault()">{{card.url}}</a>
   </div>
 
   <!-- Fin du corp de notre carte -->

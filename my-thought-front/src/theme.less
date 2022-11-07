@@ -1,8 +1,30 @@
 // Custom Theming for NG-ZORRO
 // For more information: https://ng.ant.design/docs/customize-theme/en
-@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
-
+@import "ng-zorro-antd/ng-zorro-antd.less";
+@import "ng-zorro-antd/style/color/colors";
 // Override less variables to here
 // View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
 
-// @primary-color: #1890ff;
+
+@primary-color: @gold-6;
+@primary-color-hover: color(~`colorPalette('@{primary-color}', 5) `);
+@primary-color-active: color(~`colorPalette('@{primary-color}', 7) `);
+@primary-color-outline: fade(@primary-color, @outline-fade);
+
+@btn-circle-size: 64px;
+@btn-circle-size-lg: 64px;
+@btn-circle-size-sm: 64px;
+
+@body-background: #f5f5f5;
+@component-background: #f5f5f5;
+@label-color: #c2c2c2;
+
+.ant-btn-circle {
+  height: 48px;
+  width: 48px;
+
+  .anticon {
+    font-size: 24px;
+  }
+}
+

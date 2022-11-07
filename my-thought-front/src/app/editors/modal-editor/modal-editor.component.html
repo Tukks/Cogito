@@ -8,15 +8,24 @@
     <div class="modal-editor-left-column">
       <img src="{{data.card.image}}" alt="{{data.card.imageAlt}}" class="modal-editor-img-preview"/>
       <div>
-        <p>{{data.card.desc}}</p>
-        <p>{{data.card.url}}</p>
+        <p nz-typography>{{data.card.desc}}</p>
+        <a nz-typography nzEllipsis href="{{data.card.url}}" (click)="$event.preventDefault()">{{data.card.url}}</a>
       </div>
     </div>
   </ng-container>
   <div class="modal-editor-right-column">
+    <nz-form-label class="modal-editor-right-column-label">title</nz-form-label>
     <input nz-input placeholder="title" [(ngModel)]="title"/>
+    <nz-form-label class="modal-editor-right-column-label">Tags</nz-form-label>
     <app-tags-input [(tags)]="tags"></app-tags-input>
-    <input nz-input placeholder="comment" [(ngModel)]="comment"/>
+    <nz-form-item>
+      <nz-form-label class="modal-editor-right-column-label">Comment</nz-form-label>
+      <nz-form-control>
+        <nz-textarea-count [nzMaxCharacterCount]="100">
+          <textarea rows="4" [(ngModel)]="comment" placeholder="comment" nz-input></textarea>
+        </nz-textarea-count>
+      </nz-form-control>
+    </nz-form-item>
   </div>
 </div>
 <div class="modal-editor-actions">

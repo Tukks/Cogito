@@ -21,6 +21,8 @@ import {CustomTagsInput} from "./components/custom-tags-input";
 import {NzTagModule} from "ng-zorro-antd/tag";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzNoAnimationModule} from "ng-zorro-antd/core/no-animation";
+import {NzTypographyModule} from "ng-zorro-antd/typography";
+import {NzFormModule} from "ng-zorro-antd/form";
 
 registerLocaleData(fr);
 
@@ -45,7 +47,9 @@ registerLocaleData(fr);
     NzButtonModule,
     NzTagModule,
     NzIconModule,
-    NzNoAnimationModule
+    NzNoAnimationModule,
+    NzTypographyModule,
+    NzFormModule
   ],
   providers: [
     {provide: NZ_I18N, useValue: fr_FR}

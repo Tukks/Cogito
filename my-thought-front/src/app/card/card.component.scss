@@ -1,7 +1,17 @@
 .card-image {
   width: 100%;
   height: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
+
+  .card-image-content {
+    max-height: 50%;
+    object-fit: cover;
+    border-radius: 6px 6px 0px 0px;
+  }
+
+  .card-image-desc {
+    text-align: center;
+  }
 }
 
 .card-excerpt {
@@ -10,11 +20,11 @@
 }
 
 :host:hover {
-  border: 3px solid #B8C3D3;
+  border: 1px solid #B8C3D3;
   cursor: pointer; // pour overrider stack exchange il faut le important
 }
 
 :host {
-  border: 3px solid transparent;
+  border: 1px solid transparent;
   border-radius: 8px;
 }
