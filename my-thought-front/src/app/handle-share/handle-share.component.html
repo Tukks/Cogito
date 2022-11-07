@@ -1,1 +1,7 @@
-<p>handle-share works!</p>
+<h1 nz-typography>Sharing to My Thought...</h1>
+
+
+<button (click)="removeTimeout()" *ngIf="!showTagsAdd" nz-button nzType="primary" class="button-add-tag">add Tag</button>
+
+<app-tags-input *ngIf="showTagsAdd" [(tags)]="tags"></app-tags-input>
+

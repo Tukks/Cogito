@@ -14,7 +14,7 @@ export class MarkdownCardComponent implements AfterViewInit {
   id: number | undefined;
 
   @Input()
-  readonly: boolean = false;
+  readonly: boolean = true;
 
   @Input()
   content: string = "";

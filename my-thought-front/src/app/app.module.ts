@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {BoardComponent} from './board/board.component';
 import {CardComponent} from './card/card.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MarkdownCardComponent} from "./editors/markdown-card/markdown-card.component";
 import {FormsModule} from "@angular/forms";
 import {ModalEditorComponent} from './editors/modal-editor/modal-editor.component';
@@ -27,6 +27,8 @@ import {LayoutModule} from "@angular/cdk/layout";
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {HandleShareComponent} from './handle-share/handle-share.component';
+import {HttpErrorInterceptor} from "./http-error.interceptor";
+import {NzMessageModule} from "ng-zorro-antd/message";
 
 registerLocaleData(fr);
 
@@ -55,6 +57,7 @@ registerLocaleData(fr);
     NzNoAnimationModule,
     NzTypographyModule,
     NzFormModule,
+    NzMessageModule,
     LayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
@@ -64,7 +67,12 @@ registerLocaleData(fr);
     })
   ],
   providers: [
-    {provide: NZ_I18N, useValue: fr_FR}
+    {provide: NZ_I18N, useValue: fr_FR},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

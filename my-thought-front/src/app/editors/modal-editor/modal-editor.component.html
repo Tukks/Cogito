@@ -2,7 +2,7 @@
   <button nz-button (click)="close()" nzType="primary" class="close-button" nzShape="circle"><span nz-icon nzType="close" nzTheme="outline"></span></button>
 
   <ng-container *ngIf="data.card.thingType === cardsType.MARKDOWN">
-    <app-markdown-card class="modal-editor-left-column" [content]="data.card.markdown" [cardMode]="false" [id]="data.card.id">
+    <app-markdown-card class="modal-editor-left-column" [content]="data.card.markdown" [cardMode]="false" [id]="data.card.id" [readonly]="false">
 
     </app-markdown-card>
   </ng-container>

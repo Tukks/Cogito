@@ -7,7 +7,7 @@
 </ng-template>
 <div class="container example-viewport">
 
-  <app-markdown-card [cardMode]="true"></app-markdown-card>
+  <app-markdown-card [cardMode]="true" [readonly]="false"></app-markdown-card>
   <ng-container *ngFor="let card of filteredResult">
     <app-card [card]="card"></app-card>
 

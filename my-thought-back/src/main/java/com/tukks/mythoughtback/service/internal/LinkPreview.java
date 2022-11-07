@@ -3,19 +3,26 @@ package com.tukks.mythoughtback.service.internal;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.tukks.mythoughtback.entity.LinkEntity;
+import com.tukks.mythoughtback.entity.tag.Tag;
 
+/**
+ * utilisé crux ?? https://github.com/chimbori/crux
+ */
 @Service
 public class LinkPreview {
 
@@ -41,14 +48,36 @@ public class LinkPreview {
 			String ogUrl = StringUtils.defaultIfBlank(getUrl(document), url);
 			String ogImage = getImg(document, url);
 			String ogImageAlt = getMetaTagContent(document, "meta[property=og:image:alt]");
-
+			Boolean isArticle = isArticle(document);
 			String domain = new URL(ogUrl).getHost();
-			return new LinkEntity(domain, url, title, desc, ogImage, ogImageAlt);
+			LinkEntity linkEntity = new LinkEntity(domain, url, title, desc, ogImage, ogImageAlt);
+
+			if (isArticle) {
+				Tag tag = new Tag();
+				tag.setTag("read later");
+				linkEntity.setTags(List.of(tag));
+			}
+			return linkEntity;
 
 		} catch (IOException e) {
 			logger.warn("Unable to connect to extract domain name from : {}", url);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Problem parsing the link");
 		}
-		return null;
+	}
+
+	/**
+	 * determine si un lien et un site de news
+	 * pas sur que ça fonctionne comme ça
+	 *
+	 * @param document
+	 * @return
+	 */
+	private Boolean isArticle(Document document) {
+		Element article = document.select("article").first();
+		if (article != null) {
+			return true;
+		}
+		return false;
 	}
 
 	private String getTitle(Document document) {
