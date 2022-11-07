@@ -24,6 +24,9 @@ import {NzNoAnimationModule} from "ng-zorro-antd/core/no-animation";
 import {NzTypographyModule} from "ng-zorro-antd/typography";
 import {NzFormModule} from "ng-zorro-antd/form";
 import {LayoutModule} from "@angular/cdk/layout";
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
+import {HandleShareComponent} from './handle-share/handle-share.component';
 
 registerLocaleData(fr);
 
@@ -34,7 +37,8 @@ registerLocaleData(fr);
     CardComponent,
     MarkdownCardComponent,
     ModalEditorComponent,
-    CustomTagsInput
+    CustomTagsInput,
+    HandleShareComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,13 @@ registerLocaleData(fr);
     NzNoAnimationModule,
     NzTypographyModule,
     NzFormModule,
-    LayoutModule
+    LayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     {provide: NZ_I18N, useValue: fr_FR}

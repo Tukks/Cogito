@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {BoardComponent} from "./board/board.component";
+import {HandleShareComponent} from "./handle-share/handle-share.component";
 
 const routes: Routes = [
   {
@@ -11,6 +12,11 @@ const routes: Routes = [
   {
     path: 'board',
     component: BoardComponent,
+    // loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
+  },
+  {
+    path: 'handle-share',
+    component: HandleShareComponent,
     // loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
   }
 ];
