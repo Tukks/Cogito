@@ -3,7 +3,7 @@
   display: flex;
   height: 100%;
   width: 100%;
-  background: #fff;
+  background: #f5f5f5;
   border-radius: 8px;
 }
 
@@ -44,6 +44,22 @@
   display: flex;
   height: 100%;
   width: 100%;
+}
+
+@media only screen and (min-width: 992px) {
+  .close-button {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .modal-editor {
+    flex-direction: column;
+  }
+  .close-button {
+    position: absolute;
+    right: 1%;
+  }
 }
 
 .modal-editor-img-preview {

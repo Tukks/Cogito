@@ -23,6 +23,7 @@ import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzNoAnimationModule} from "ng-zorro-antd/core/no-animation";
 import {NzTypographyModule} from "ng-zorro-antd/typography";
 import {NzFormModule} from "ng-zorro-antd/form";
+import {LayoutModule} from "@angular/cdk/layout";
 
 registerLocaleData(fr);
 
@@ -49,7 +50,8 @@ registerLocaleData(fr);
     NzIconModule,
     NzNoAnimationModule,
     NzTypographyModule,
-    NzFormModule
+    NzFormModule,
+    LayoutModule
   ],
   providers: [
     {provide: NZ_I18N, useValue: fr_FR}

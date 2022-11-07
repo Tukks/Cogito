@@ -1,52 +1,37 @@
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-  .container {
-    grid-template-columns: repeat(auto-fit, 45%);
-  }
-
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .container {
-    grid-template-columns: repeat(auto-fit, 45%);
-  }
-
-}
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
+@media only screen and (max-width: 768px) {
   .container {
-    grid-template-columns: repeat(auto-fit, 30%);
+    grid-template-columns: repeat(auto-fit, 98%);
+    padding-left: 10px;
+
   }
 
 }
 
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .container {
+    grid-template-columns: repeat(auto-fit, 32%);
+    padding-left: 10px;
+  }
+}
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
   .container {
-    grid-template-columns: repeat(auto-fit, 19%);
-  }
-
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  .container {
+    padding-left: 10px;
     grid-template-columns: repeat(auto-fit, 19%);
   }
 
 }
 .container {
-  margin-left: 10px;
-  padding-top: 20px;
+  padding-top: 10px;
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 10px;
 }
 
 .search {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-top: 20px;
 
   .input {

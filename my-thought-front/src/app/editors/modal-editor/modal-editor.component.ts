@@ -40,7 +40,7 @@ export class ModalEditorComponent implements OnInit {
         title: this.title,
         tags: customTag
       }).subscribe();
-      this.dialogRef.close();
+      this.close();
     } else {
       this.thoughtService.editThing(this.data.card.id, {
           comment: this.comment,
@@ -48,12 +48,16 @@ export class ModalEditorComponent implements OnInit {
           tags: customTag
         }
       ).subscribe();
-      this.dialogRef.close();
+      this.close();
     }
   }
 
   delete(id: number): void {
     this.thoughtService.delete(id).subscribe();
     this.dialogRef.close();
+  }
+
+  close(): void {
+    this.dialogRef.close()
   }
 }

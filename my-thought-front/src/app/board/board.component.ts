@@ -44,15 +44,12 @@ export class BoardComponent implements OnInit {
   }
 
   search($event: any) {
-    console.log($event)
     if ($event !== "") {
       const searched = this.index.search($event);
       let ids: number[] = [];
       searched.forEach((res: { field: string, result: number[] }) => {
-        console.log(res.result);
         ids = ids.concat(res.result);
       })
-      console.log(ids);
       this.filteredResult = this.originalResult.filter(card => ids.includes(card.id));
 
     } else {
