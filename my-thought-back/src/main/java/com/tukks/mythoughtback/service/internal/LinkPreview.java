@@ -64,13 +64,13 @@ public class LinkPreview {
 		if (!title.equals(StringUtils.EMPTY)) {
 			return title;
 		}
-		title = document.select("h1").first().html();
-		if (!title.equals(StringUtils.EMPTY)) {
-			return title;
+		Element h1 = document.select("h1").first();
+		if (h1 != null) {
+			return h1.html();
 		}
-		title = document.select("h2").first().html();
-		if (!title.equals(StringUtils.EMPTY)) {
-			return title;
+		Element h2 = document.select("h2").first();
+		if (h2 != null) {
+			return h2.html();
 		}
 		return "";
 	}
