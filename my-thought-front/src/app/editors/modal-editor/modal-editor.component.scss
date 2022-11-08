@@ -1,4 +1,5 @@
 :host {
+  overflow: auto;
   position: relative;
   display: flex;
   height: 100%;
@@ -59,6 +60,7 @@
   .close-button {
     position: absolute;
     right: 1%;
+    z-index: 10;
   }
 }
 

@@ -17,10 +17,12 @@ export class HandleShareComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((param: any) => {
-      if (param.tex && param.text != '') {
-        this.thoughtsService.save(param.text).subscribe();
+      // On Android text is equals to the url
+      if (param.text && param.text != '') {
+        this.thoughtsService.save(param.text).subscribe(val => {
+          this.timeoutId = setTimeout(() => window.open('', '_self')!.close(), 2500);
+        });
       }
-      this.timeoutId = setTimeout(() => window.open('', '_self')!.close(), 1000);
     });
 
   }

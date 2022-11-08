@@ -3,6 +3,7 @@ package com.tukks.mythoughtback.entity;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,7 +30,7 @@ public class LinkEntity extends ThingsEntity {
 	@Column(name = "desc")
 	private String desc;
 
-	@Column(name = "image")
+	@Lob
 	private String image;
 
 	@Column(name = "imageAlt")
