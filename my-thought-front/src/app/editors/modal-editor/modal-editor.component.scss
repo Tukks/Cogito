@@ -48,12 +48,22 @@
 }
 
 @media only screen and (min-width: 992px) {
+  .modal-editor-img-preview {
+    object-fit: cover;
+  }
+  .modal-editor-left-column {
+    max-width: 80%;
+
+  }
   .close-button {
     display: none;
   }
 }
 
 @media only screen and (max-width: 991px) {
+  .modal-editor-img-preview {
+    object-fit: scale-down;
+  }
   .modal-editor {
     flex-direction: column;
   }
@@ -65,7 +75,6 @@
 }
 
 .modal-editor-img-preview {
-  object-fit: scale-down;
   height: 100%;
 }
 
