@@ -8,7 +8,7 @@
   </ng-container>
   <ng-container *ngIf="data.card.thingType === cardsType.LINK">
     <div class="modal-editor-left-column">
-      <img src="{{data.card.image}}" alt="{{data.card.imageAlt}}" class="modal-editor-img-preview"/>
+      <img src="{{data.card.image}}" alt="{{data.card.imageAlt}}" class="modal-editor-img-preview" appImgFallback/>
       <div>
         <p nz-typography>{{data.card.desc}}</p>
         <a nz-typography nzEllipsis href="{{data.card.url}}" (click)="$event.preventDefault()">{{data.card.url}}</a>
