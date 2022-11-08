@@ -250,3 +250,7 @@ Database is already closed (to disable automatic closing at VM shutdown, add ";D
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-11-08 23:11:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valeur trop longue pour la colonne "DESC CHARACTER VARYING(255)": "'One of the reasons that flexbox quickly caught the interest of web developers i... (345)"
+Value too long for column "DESC CHARACTER VARYING(255)": "'One of the reasons that flexbox quickly caught the interest of web developers i... (345)"; SQL statement:
+insert into things_entity (created, modified, comment, thing_type, title, desc, domain, image, image_alt, url, things, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'LINK', ?) [22001-214]

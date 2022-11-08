@@ -7,7 +7,7 @@ import {MarkdownCardComponent} from "../markdown-card/markdown-card.component";
 @Component({
   selector: 'app-modal-editor',
   templateUrl: './modal-editor.component.html',
-  styleUrls: ['./modal-editor.component.scss']
+  styleUrls: ['./modal-editor.component.less']
 })
 export class ModalEditorComponent implements OnInit {
   @ViewChild(MarkdownCardComponent) markdownCardComponent!: MarkdownCardComponent;

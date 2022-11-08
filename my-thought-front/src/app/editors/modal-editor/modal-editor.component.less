@@ -17,18 +17,8 @@
   padding: 10px;
 
   .modal-editor-right-column-label {
-    text-align: left;
-    padding-top: 0;
-
-    font-size: 14px;
-    line-height: 17px;
-    letter-spacing: 0.1em;
     color: #c2c2c2;
-    margin-bottom: 10px;
-    margin-top: 20px;
-    text-transform: uppercase;
-    -webkit-user-select: none;
-    user-select: none;
+
   }
 
 }
@@ -51,10 +41,12 @@
   .modal-editor-img-preview {
     object-fit: cover;
   }
+
   .modal-editor-left-column {
     max-width: 80%;
 
   }
+
   .close-button {
     display: none;
   }
@@ -64,9 +56,11 @@
   .modal-editor-img-preview {
     object-fit: scale-down;
   }
+
   .modal-editor {
     flex-direction: column;
   }
+
   .close-button {
     position: absolute;
     right: 1%;
@@ -84,4 +78,10 @@
   right: 1%;
   display: flex;
   grid-gap: 10px;
+}
+
+.modal-editor-left-column.tweet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

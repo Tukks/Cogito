@@ -3,14 +3,14 @@ import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@an
 @Component({
   selector: 'app-tags-input',
   template: `
-    <nz-tag
-      *ngFor="let tag of tags; let i = index"
-      [nzMode]="'closeable'"
-      (nzOnClose)="handleClose(tag)"
+    <nz-tag class="label"
+            *ngFor="let tag of tags; let i = index"
+            [nzMode]="'closeable'"
+            (nzOnClose)="handleClose(tag)"
     >
       {{ sliceTagName(tag) }}
     </nz-tag>
-    <nz-tag *ngIf="!inputVisible" class="editable-tag" nzNoAnimation (click)="showInput()">
+    <nz-tag *ngIf="!inputVisible" class="editable-tag" nzNoAnimation (click)="showInput()" class="label">
       <span nz-icon nzType="plus"></span>
       New Tag
     </nz-tag>

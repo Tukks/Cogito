@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import lombok.extern.jackson.Jacksonized;
 @Data
 @EqualsAndHashCode
 @Jacksonized
+@Builder
 public class Tag {
 
 	@Id
