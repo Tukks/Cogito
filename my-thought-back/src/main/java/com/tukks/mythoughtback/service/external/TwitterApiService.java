@@ -53,6 +53,7 @@ public class TwitterApiService {
         tweetFields.add("id");
         tweetFields.add("created_at");
         tweetFields.add("text");
+        tweetFields.add("attachments");
         TweetDTO tweetDTO = new TweetDTO();
         try {
             // findTweetById

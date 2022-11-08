@@ -5,8 +5,16 @@
 
   .card-image-content {
     max-height: 50%;
-    object-fit: cover;
     border-radius: 6px 6px 0px 0px;
+
+  }
+
+  .card-image-content.default-image {
+    object-fit: cover;
+  }
+
+  .card-image-content.tweet-image {
+    object-fit: contain;
   }
 
   .card-image-desc {

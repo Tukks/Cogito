@@ -39,6 +39,7 @@ public class TweetService {
                 .content(tweetDTO.getContent())
                 .hashtag(tweetDTO.getHashtag())
                 .media(tweetDTO.getMedia())
+                .html(tweetDTO.getHtml())
                 .build();
             tweetEntity.setThingType(ThingType.TWEET);
 

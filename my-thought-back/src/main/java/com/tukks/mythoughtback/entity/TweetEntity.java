@@ -32,4 +32,6 @@ public class TweetEntity extends ThingsEntity {
 
     private String hashtag;
 
+    @Lob
+    private String html;
 }

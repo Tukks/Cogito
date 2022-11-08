@@ -31,7 +31,7 @@ public class ThingsEntity extends BaseTable {
 
 	private ThingType thingType;
 
-	private String title;
+	protected String title;
 
 	private String comment;
 

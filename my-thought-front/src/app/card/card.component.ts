@@ -1,5 +1,5 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {CardsLink, CardsType} from "../../types/cards-link";
+import {CardsType, CardType} from "../../types/cards-link";
 import {Dialog} from "@angular/cdk/dialog";
 import {ModalEditorComponent} from "../editors/modal-editor/modal-editor.component";
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
@@ -11,6 +11,12 @@ import {Observable} from "rxjs";
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent implements OnInit {
+
+  public cardsType: typeof CardsType = CardsType;
+
+  @Input()
+  public card: CardType = {} as CardType;
+
   isExtraSmall: Observable<BreakpointState> = this.breakpointObserver.observe(
     Breakpoints.XSmall
   );
@@ -42,10 +48,6 @@ export class CardComponent implements OnInit {
 
   }
 
-  public cardsType: typeof CardsType = CardsType;
-
-  @Input()
-  public card: CardsLink = {} as CardsLink;
 
   constructor(public dialog: Dialog, public breakpointObserver: BreakpointObserver) {
   }

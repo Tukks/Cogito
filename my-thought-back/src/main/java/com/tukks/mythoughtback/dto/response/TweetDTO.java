@@ -13,4 +13,5 @@ public class TweetDTO {
     private String media;
     private String author;
     private String hashtag;
+    private String html;
 }

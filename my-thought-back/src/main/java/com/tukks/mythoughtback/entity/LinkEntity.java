@@ -24,10 +24,8 @@ public class LinkEntity extends ThingsEntity {
 	@Column(name = "url")
 	private String url;
 
-	@Column(name = "title")
-	private String title;
-
 	@Column(name = "desc")
+	@Lob
 	private String desc;
 
 	@Lob
@@ -37,6 +35,7 @@ public class LinkEntity extends ThingsEntity {
 	private String imageAlt;
 
 	public LinkEntity(String domain, String url, String title, String desc, String ogImage, String ogImageAlt) {
+
 		this.domain = domain;
 		this.url = url;
 		this.title = title;

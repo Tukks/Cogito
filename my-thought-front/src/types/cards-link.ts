@@ -1,5 +1,5 @@
 export enum CardsType {
-  TWEET,
+  TWEET = "TWEET",
   LINK = "LINK",
   MARKDOWN = "MARKDOWN"
 }
@@ -9,14 +9,59 @@ export interface Tag {
 }
 
 export interface CardsLink {
-  id: number,
-  url: string,
   title: string,
+  thingType: CardsType,
+  id: number,
+  comment: string,
+  tags: Tag[],
+
+}
+
+export interface NoteCard extends CardsLink {
+  markdown: string,
+
+  url: never;
+  content: never,
+  media: never,
+  author: never,
+  hashtag: never,
+  desc: never,
+  image: never,
+  imageAlt: never
+  html: never
+}
+
+export interface TweetCard extends CardsLink {
+  url: string;
+  content: string,
+  media: string,
+  author: string,
+  hashtag: string,
+  html: string,
+
+  markdown: never,
+
+  desc: never,
+  image: never,
+  imageAlt: never,
+}
+
+export interface LinkCard extends CardsLink {
+  url: string;
   desc: string,
   image: string,
-  imageAlt: string
-  thingType: CardsType,
-  markdown: string,
-  tags: Tag[],
-  comment: string,
+  imageAlt: string,
+
+  content: never,
+  media: never,
+  author: never,
+  hashtag: never,
+  markdown: never,
+  html: never
+
 }
+
+export type CardType =
+  | LinkCard
+  | TweetCard
+  | NoteCard;

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ThoughtsService} from "../../service/thoughts.service";
-import {CardsLink, CardsType} from "../../types/cards-link";
+import {CardsType, CardType} from "../../types/cards-link";
 import * as FlexSearch from "flexsearch";
 
 @Component({
@@ -9,9 +9,9 @@ import * as FlexSearch from "flexsearch";
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  public originalResult: CardsLink[] = [];
+  public originalResult: CardType[] = [];
 
-  public filteredResult: CardsLink[] = [];
+  public filteredResult: CardType[] = [];
   public cardsType: typeof CardsType = CardsType;
   public searchValue: string = "";
   public index: any;
@@ -21,7 +21,7 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     // @ts-ignore
-    this.index = new FlexSearch.Document<CardsLink>({
+    this.index = new FlexSearch.Document<CardType>({
       preset: "match",
       resolution: 1,
       tokenize: "forward",
@@ -33,7 +33,7 @@ export class BoardComponent implements OnInit {
       store: true
     });
     this.thoughtsService.getAllthougts().subscribe();
-    this.thoughtsService.subject.subscribe((val: CardsLink[]) => {
+    this.thoughtsService.subject.subscribe((val: CardType[]) => {
       val.forEach(v => {
         this.index.remove(v.id);
         this.index.add(v);

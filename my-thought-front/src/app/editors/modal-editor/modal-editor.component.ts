@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {CardsLink, CardsType, Tag} from "../../../types/cards-link";
+import {CardsType, CardType, Tag} from "../../../types/cards-link";
 import {DIALOG_DATA, DialogRef} from "@angular/cdk/dialog";
 import {ThoughtsService} from "../../../service/thoughts.service";
 import {MarkdownCardComponent} from "../markdown-card/markdown-card.component";
@@ -18,7 +18,7 @@ export class ModalEditorComponent implements OnInit {
   comment: string | undefined;
   tags: string[] = [];
 
-  constructor(@Inject(DIALOG_DATA) public data: { card: CardsLink },
+  constructor(@Inject(DIALOG_DATA) public data: { card: CardType },
               public dialogRef: DialogRef<string>, public thoughtService: ThoughtsService) {
   }
 
