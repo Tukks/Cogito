@@ -4,7 +4,7 @@
     <img src="{{card.image}}" alt="{{card.imageAlt}}" class="card-image-content" appImgFallback>
 
     <p nz-typography class="card-image-desc">{{card.desc}}</p>
-    <a nz-typography nzEllipsis href="{{card.url}}" (click)="$event.preventDefault()">{{card.url}}</a>
+    <a nz-typography nzEllipsis href="{{card.url}}" target="_blank" class="card-image-desc">{{card.url}}</a>
   </div>
 
   <!-- Fin du corp de notre carte -->

@@ -3,6 +3,7 @@ import {EditorType, StacksEditor} from "@stackoverflow/stacks-editor";
 import "@stackoverflow/stacks";
 import {ThoughtsService} from "../../../service/thoughts.service";
 
+// TODO replace with tiptap editor https://tiptap.dev
 @Component({
   selector: 'app-markdown-card',
   templateUrl: './markdown-card.component.html',
