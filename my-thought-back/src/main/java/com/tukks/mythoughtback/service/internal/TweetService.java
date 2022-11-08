@@ -1,22 +1,25 @@
-package com.tukks.mythoughtback.service;
-
-import com.tukks.mythoughtback.dto.request.TweetRequest;
-import com.tukks.mythoughtback.dto.response.TweetDTO;
-import com.tukks.mythoughtback.entity.TweetEntity;
-import com.tukks.mythoughtback.repository.TweetRepository;
-import com.tukks.mythoughtback.service.internal.TweetPreview;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+package com.tukks.mythoughtback.service.internal;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import org.modelmapper.ModelMapper;
+
+import com.tukks.mythoughtback.dto.ThingType;
+import com.tukks.mythoughtback.dto.response.TweetDTO;
+import com.tukks.mythoughtback.entity.TweetEntity;
+import com.tukks.mythoughtback.repository.TweetRepository;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Service
 @AllArgsConstructor
@@ -34,10 +37,19 @@ public class TweetService {
 
     private static final String REGEX_TWITTER = "^https?:\\/\\/twitter\\.com\\/(?:#!\\/)?(\\w+)\\/status(es)?\\/(\\d+)$";
 
-    public boolean addTweet(TweetRequest tweetRequest) {
-        if (isTweet(tweetRequest.getUrl())) {
-            TweetDTO tweetDTO = tweetPreview.extractTweetContent(tweetRequest.getUrl());
-            tweetRepository.save(modelMapper.map(tweetDTO,TweetEntity.class));
+    public boolean addTweet(String url) {
+        if (isTweet(url)) {
+            TweetDTO tweetDTO = tweetPreview.extractTweetContent(url);
+            TweetEntity tweetEntity = TweetEntity.builder()
+                .author(tweetDTO.getAuthor())
+                .url(tweetDTO.getUrl())
+                .content(tweetDTO.getContent())
+                .hashtag(tweetDTO.getHashtag())
+                .media(tweetDTO.getMedia())
+                .build();
+            tweetEntity.setThingType(ThingType.TWEET);
+
+            tweetRepository.save(tweetEntity);
             return Boolean.TRUE;
         }
         logger.debug("URL is not a valid tweet link");

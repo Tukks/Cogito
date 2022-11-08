@@ -1,5 +1,16 @@
 package com.tukks.mythoughtback.service.external;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.tukks.mythoughtback.dto.response.TweetDTO;
 import com.twitter.clientlib.ApiException;
@@ -8,18 +19,12 @@ import com.twitter.clientlib.api.TwitterApi;
 import com.twitter.clientlib.auth.TwitterOAuth20AppOnlyService;
 import com.twitter.clientlib.model.Get2TweetsIdResponse;
 import com.twitter.clientlib.model.ResourceUnauthorizedProblem;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 @Service
 @PropertySource("application-secret.properties")
 public class TwitterApiService {
 
+    Logger logger = LoggerFactory.getLogger(TwitterApiService.class);
     @Value("${api.twitter.key}")
     private String TWITTER_KEY;
     @Value("${api.twitter.key.secret}")
@@ -30,11 +35,10 @@ public class TwitterApiService {
         OAuth2AccessToken accessToken = null;
         try {
             accessToken = service.getAccessTokenClientCredentialsGrant();
-
-            System.out.println("Access token: " + accessToken.getAccessToken());
-            System.out.println("Token type: " + accessToken.getTokenType());
+            logger.debug("Access token: " + accessToken.getAccessToken());
+            logger.debug("Token type: " + accessToken.getTokenType());
         } catch (Exception e) {
-            System.err.println("Error while getting the access token:\n " + e);
+            logger.error("Error while getting the access token:\n " + e);
             e.printStackTrace();
         }
         return accessToken;
@@ -59,12 +63,13 @@ public class TwitterApiService {
                     .tweetFields(tweetFields)
                     .execute();
             if (result.getErrors() != null && result.getErrors().size() > 0) {
-                System.out.println("Error:");
 
                 result.getErrors().forEach(e -> {
-                    System.out.println(e.toString());
+                    logger.error("error : {}", e);
+
                     if (e instanceof ResourceUnauthorizedProblem) {
-                        System.out.println(e.getTitle() + " " + e.getDetail());
+
+                        logger.error(e.getTitle() + " " + e.getDetail());
                     }
                 });
             } else {
@@ -72,10 +77,10 @@ public class TwitterApiService {
                 tweetDTO.setContent(result.getData().getText());
             }
         } catch (ApiException e) {
-            System.err.println("Status code: " + e.getCode());
-            System.err.println("Reason: " + e.getResponseBody());
-            System.err.println("Response headers: " + e.getResponseHeaders());
-            e.printStackTrace();
+            logger.error("Status code: " + e.getCode());
+            logger.error("Reason: " + e.getResponseBody());
+            logger.error("Response headers: " + e.getResponseHeaders(), e);
+
         }
 
         return tweetDTO;

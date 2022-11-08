@@ -1,39 +1,35 @@
 package com.tukks.mythoughtback.entity;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
+import lombok.extern.jackson.Jacksonized;
 
 @Entity
-@Table(name = "Tweet")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TweetEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+@DiscriminatorValue("TWEET")
+@EqualsAndHashCode(callSuper = true)
+@Jacksonized
+@Builder
+public class TweetEntity extends ThingsEntity {
 
-    @Column(name = "url")
     private String url;
-    @Column(name = "content")
+
+    @Lob
     private String content;
-    @Column(name = "media")
+
     private String media;
-    @Column(name = "author")
+
     private String author;
-    @Column(name = "hashtag")
+
     private String hashtag;
 
-    public TweetEntity(String url, String content, String media, String author, String hashtag) {
-        this.url = url;
-        this.content = content;
-        this.media = media;
-        this.author = author;
-        this.hashtag = hashtag;
-    }
 }

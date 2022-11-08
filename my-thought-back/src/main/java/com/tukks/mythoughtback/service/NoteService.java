@@ -23,6 +23,7 @@ import com.tukks.mythoughtback.repository.NoteRepository;
 import com.tukks.mythoughtback.repository.TagRepository;
 import com.tukks.mythoughtback.repository.ThingsRepository;
 import com.tukks.mythoughtback.service.internal.LinkPreview;
+import com.tukks.mythoughtback.service.internal.TweetService;
 
 import lombok.AllArgsConstructor;
 
@@ -35,6 +36,7 @@ public class NoteService {
 
 	private final NoteRepository noteRepository;
 	private final ThingsRepository thingsRepository;
+	private final TweetService tweetService;
 	private final TagRepository tagRepository;
 
 	private final String REGEX_TWITTER = "^https?:\\/\\/twitter\\.com\\/(?:#!\\/)?(\\w+)\\/status(es)?\\/(\\d+)";
@@ -45,6 +47,7 @@ public class NoteService {
 		// si le texte a des quotes, on considére que c'est une citation
 		// bug avec recherche google??
 		if (isTwitterUrl(noteCleaned)) {
+			tweetService.addTweet(noteCleaned);
 			// do something
 		} else if (isValidURL(noteCleaned)) {
 			final LinkEntity linkEntity = linkPreview.extractLinkPreviewInfo(noteCleaned);
