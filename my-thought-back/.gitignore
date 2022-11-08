@@ -32,4 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-**/*.mv.db
+### database file ###
+/my-thought-back/
+/src/main/resources/db/
+
+/src/main/resources/application-secret.properties
