@@ -1,8 +1,5 @@
 package com.tukks.mythoughtback.service.internal;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,8 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import org.modelmapper.ModelMapper;
 
 import com.tukks.mythoughtback.dto.ThingType;
 import com.tukks.mythoughtback.dto.response.TweetDTO;
@@ -28,8 +23,6 @@ public class TweetService {
 
     private final Logger logger = LogManager.getLogger(getClass());
 
-    @Autowired
-    private ModelMapper modelMapper;
     private TweetRepository tweetRepository;
 
     @Autowired
@@ -56,13 +49,6 @@ public class TweetService {
         return Boolean.FALSE;
     }
 
-    public List<TweetDTO> getAll() {
-        List<TweetDTO> response = new ArrayList<>();
-        for (TweetEntity tweetEntity : tweetRepository.findAll()) {
-            response.add(modelMapper.map(tweetEntity, TweetDTO.class));
-        }
-        return response;
-    }
 
     /**
      * Check if a given link is a tweet or not
@@ -74,17 +60,5 @@ public class TweetService {
         Pattern pattern = Pattern.compile(REGEX_TWITTER);
         return pattern.matcher(url).matches();
     }
-
-    /**
-     * Take a valid tweet URL and extract some data to store
-     *
-     * @return a TweetDTO object with available data
-     */
-    private String extractDataFromTweetURL(String url) {
-        Pattern pattern = Pattern.compile(REGEX_TWITTER);
-        Matcher matcher = pattern.matcher(url);
-        return url;
-    }
-
 
 }
