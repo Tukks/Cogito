@@ -30,6 +30,8 @@ import {HandleShareComponent} from './handle-share/handle-share.component';
 import {HttpErrorInterceptor} from "./http-error.interceptor";
 import {NzMessageModule} from "ng-zorro-antd/message";
 import {ImgFallbackDirective} from './directive/img-fallback.directive';
+import {IntersectionObserverElementDirective} from './intersection-observser/intersection-observer-element.directive';
+import {IntersectionObserverGridDirective} from "./intersection-observser/intersection-observer-grid.directive";
 
 registerLocaleData(fr);
 
@@ -42,7 +44,9 @@ registerLocaleData(fr);
     ModalEditorComponent,
     CustomTagsInput,
     HandleShareComponent,
-    ImgFallbackDirective
+    ImgFallbackDirective,
+    IntersectionObserverGridDirective,
+    IntersectionObserverElementDirective
   ],
   imports: [
     BrowserModule,

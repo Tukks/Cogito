@@ -5,11 +5,16 @@
 <ng-template #suffixButton>
   <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
 </ng-template>
-<div class="container example-viewport">
+<div class="container" appIntersectionObserverGrid>
 
   <app-markdown-card [cardMode]="true" [readonly]="false"></app-markdown-card>
   <ng-container *ngFor="let card of filteredResult">
-    <app-card [card]="card"></app-card>
+    <div class="active-element" appIntersectionObserverElement
+         #intersection="intersection"
+         [ngSwitch]="intersection.isIntersecting">
+      <app-card *ngSwitchCase="intersection.IS_INTERSECTING" [card]="card"></app-card>
+    </div>
+
 
   </ng-container>
 

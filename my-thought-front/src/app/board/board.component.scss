@@ -41,3 +41,13 @@
   }
 }
 
+
+.active-element:hover {
+  border: 1px solid #B8C3D3;
+  cursor: pointer; // pour overrider stack exchange il faut le important
+}
+
+.active-element {
+  border: 1px solid transparent;
+  border-radius: 8px;
+}
