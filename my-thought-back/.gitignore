@@ -37,3 +37,5 @@ build/
 /src/main/resources/db/
 
 /src/main/resources/application-secret.properties
+
+**/static

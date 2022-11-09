@@ -28,7 +28,7 @@ export class BoardComponent implements OnInit {
       language: "fr",
       document: {
         id: "id",
-        index: ["markdown", "title", "url", "desc", "thingType", "tags[]:tag"],
+        index: ["markdown", "title", "url", "desc", "thingType", "tags[]:tag", "content"],
       },
       store: true
     });

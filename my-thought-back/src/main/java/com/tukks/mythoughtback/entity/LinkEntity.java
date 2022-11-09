@@ -29,6 +29,8 @@ public class LinkEntity extends ThingsEntity {
 	private String desc;
 
 	@Lob
+	private String content;
+	@Lob
 	private String image;
 
 	@Column(name = "imageAlt")

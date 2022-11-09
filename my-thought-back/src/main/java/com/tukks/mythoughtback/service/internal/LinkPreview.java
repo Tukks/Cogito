@@ -1,6 +1,8 @@
 package com.tukks.mythoughtback.service.internal;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -8,6 +10,12 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.html.HtmlParser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.apache.tika.sax.boilerpipe.BoilerpipeContentHandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,15 +24,20 @@ import org.springframework.web.server.ResponseStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.xml.sax.SAXException;
 
 import com.tukks.mythoughtback.entity.LinkEntity;
 import com.tukks.mythoughtback.entity.tag.Tag;
+
+import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
 /**
  * utilisé crux ?? https://github.com/chimbori/crux
  */
 @Service
 public class LinkPreview {
+
+	private record ArticleExtract(String title, String article) {}
 
 	private final Logger logger = LogManager.getLogger(getClass());
 
@@ -43,6 +56,7 @@ public class LinkPreview {
 			Document document = Jsoup.connect(url)
 				.userAgent("Mozilla")
 				.get();
+
 			String title = getTitle(document);
 			String desc = getDescription(document);
 			String ogUrl = StringUtils.defaultIfBlank(getUrl(document), url);
@@ -52,17 +66,35 @@ public class LinkPreview {
 			String domain = new URL(ogUrl).getHost();
 			LinkEntity linkEntity = new LinkEntity(domain, url, title, desc, ogImage, ogImageAlt);
 
-			if (isArticle) {
+			if (isArticle) { // est ce la bonne facon de faire?
+				ArticleExtract articleExtract = parseNews(document.html());
+				linkEntity.setContent(articleExtract.article);
+				linkEntity.setTitle(articleExtract.title);
 				Tag tag = new Tag();
 				tag.setTag("read later");
 				linkEntity.setTags(List.of(tag));
 			}
 			return linkEntity;
 
-		} catch (IOException e) {
+		} catch (IOException | TikaException | SAXException e) {
 			logger.warn("Unable to connect to extract domain name from : {}", url);
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Problem parsing the link");
 		}
+	}
+
+	public ArticleExtract parseNews(String html) throws IOException, SAXException, TikaException {
+
+		final InputStream input = new ByteArrayInputStream(html.getBytes());
+		final BodyContentHandler bodyContentHandler = new BodyContentHandler();
+		final ArticleExtractor articleExtractor = new ArticleExtractor();
+		final BoilerpipeContentHandler textHandler = new BoilerpipeContentHandler(bodyContentHandler, articleExtractor);
+		final Metadata metadata = new Metadata();
+		final HtmlParser parser = new HtmlParser();
+		final ParseContext context = new ParseContext();
+
+		parser.parse(input, textHandler, metadata, context);
+
+		return new ArticleExtract(textHandler.getTitle(), bodyContentHandler.toString());
 	}
 
 	/**
