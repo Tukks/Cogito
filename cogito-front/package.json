@@ -1,0 +1,47 @@
+{
+  "name": "cogito",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --host 192.168.1.20",
+    "startandroid": "npx cap run android",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^14.2.9",
+    "@angular/cdk": "^14.2.6",
+    "@angular/common": "^14.2.9",
+    "@angular/compiler": "^14.2.9",
+    "@angular/core": "^14.2.9",
+    "@angular/forms": "^14.2.9",
+    "@angular/platform-browser": "^14.2.9",
+    "@angular/platform-browser-dynamic": "^14.2.9",
+    "@angular/router": "^14.2.9",
+    "@angular/service-worker": "^14.2.9",
+    "@stackoverflow/stacks-editor": "^0.8.2",
+    "@tiptap/core": "^2.0.0-beta.202",
+    "@tiptap/starter-kit": "^2.0.0-beta.202",
+    "flexsearch": "^0.7.31",
+    "ng-zorro-antd": "^14.1.1",
+    "rxjs": "~7.5.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^14.2.7",
+    "@angular/cli": "~14.2.7",
+    "@angular/compiler-cli": "^14.2.9",
+    "@capacitor/cli": "^4.4.0",
+    "@types/jasmine": "~4.0.0",
+    "jasmine-core": "~4.3.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "typescript": "~4.7.2"
+  }
+}
