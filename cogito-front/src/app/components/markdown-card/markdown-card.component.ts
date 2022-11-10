@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {EditorType, StacksEditor} from "@stackoverflow/stacks-editor";
 import "@stackoverflow/stacks";
-import {ThoughtsService} from "../../../service/thoughts.service";
+import {ThoughtsService} from "../../service/thoughts.service";
 
 // TODO replace with tiptap editor https://tiptap.dev
 @Component({

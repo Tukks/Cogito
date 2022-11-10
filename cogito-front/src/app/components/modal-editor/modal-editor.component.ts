@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {CardsType, CardType, Tag} from "../../../types/cards-link";
+import {CardsType, CardType, Tag} from "../../types/cards-link";
 import {DIALOG_DATA, DialogRef} from "@angular/cdk/dialog";
-import {ThoughtsService} from "../../../service/thoughts.service";
+import {ThoughtsService} from "../../service/thoughts.service";
 import {MarkdownCardComponent} from "../markdown-card/markdown-card.component";
 
 @Component({

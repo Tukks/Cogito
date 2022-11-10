@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {BoardComponent} from "./board/board.component";
-import {HandleShareComponent} from "./handle-share/handle-share.component";
+import {BoardComponent} from "./page/board/board.component";
+import {HandleShareComponent} from "./page/handle-share/handle-share.component";
 
 const routes: Routes = [
   {

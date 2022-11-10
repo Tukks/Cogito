@@ -1,7 +1,7 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {CardsType, CardType} from "../../types/cards-link";
 import {Dialog} from "@angular/cdk/dialog";
-import {ModalEditorComponent} from "../editors/modal-editor/modal-editor.component";
+import {ModalEditorComponent} from "../modal-editor/modal-editor.component";
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {Observable} from "rxjs";
 
