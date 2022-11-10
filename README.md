@@ -2,19 +2,28 @@
 
 ## Features
 
-All your ·notes· ·bookmarks·,
-·inspiration· ·articles· and ·images· in one single, private place, enhanced with artificial intelligence.
+All you notes in one places
 
 - add Link
 - add Tweet
-- add note
-- link via tag and NLP
+- add Note
+- add Tag
+- Search in Article, Tweet and Note
+- PWA app
 
-## Launch
+## Launch dev
 
 ### Back
 
-- Launch MyThoughtBackApplication
+- add application-secret.properties with : 
+
+```
+api.twitter.key=
+api.twitter.key.secret=
+api.twitter.bearer.token=
+```
+
+- Launch CogitoBackApplication.java
 
 ### Front
 
