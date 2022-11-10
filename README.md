@@ -20,7 +20,6 @@ All you notes in one places
 ```
 api.twitter.key=
 api.twitter.key.secret=
-api.twitter.bearer.token=
 ```
 
 - Launch CogitoBackApplication.java
