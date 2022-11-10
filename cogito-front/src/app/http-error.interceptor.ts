@@ -12,6 +12,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          window.location.href = "http://localhost:9090/oauth2/authorization/google"
+        }
         let errorMsg = '';
         if (error.error instanceof ErrorEvent) {
           errorMsg = `${error.error.message}`;

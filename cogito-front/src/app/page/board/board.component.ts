@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ThoughtsService} from "../../service/thoughts.service";
 import {CardsType, CardType} from "../../types/cards-link";
 import FlexSearch from "flexsearch";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-board',
@@ -16,10 +17,11 @@ export class BoardComponent implements OnInit {
   public searchValue: string = "";
   public index: any;
 
-  constructor(private thoughtsService: ThoughtsService) {
+  constructor(private thoughtsService: ThoughtsService, public httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
+    this.httpClient.get("/api/logout");
     // @ts-ignore
     this.index = new FlexSearch.Document<CardType>({
       preset: "match",
