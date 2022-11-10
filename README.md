@@ -1,4 +1,4 @@
-# My Thought
+# Cogito
 
 ## Features
 
