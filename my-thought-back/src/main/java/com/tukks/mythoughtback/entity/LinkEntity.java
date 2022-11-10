@@ -22,6 +22,7 @@ public class LinkEntity extends ThingsEntity {
 	private String domain;
 
 	@Column(name = "url")
+	@Lob
 	private String url;
 
 	@Column(name = "desc")

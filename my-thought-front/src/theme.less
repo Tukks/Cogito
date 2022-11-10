@@ -4,9 +4,21 @@
 @import "ng-zorro-antd/style/color/colors";
 // Override less variables to here
 // View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
+// color palettes rose
+@rose-base: #bea6ac;
+@rose-1: color(~`colorPalette('@{rose-6}', 1) `);
+@rose-2: color(~`colorPalette('@{rose-6}', 2) `);
+@rose-3: color(~`colorPalette('@{rose-6}', 3) `);
+@rose-4: color(~`colorPalette('@{rose-6}', 4) `);
+@rose-5: color(~`colorPalette('@{rose-6}', 5) `);
+@rose-6: @rose-base;
+@rose-7: color(~`colorPalette('@{rose-6}', 7) `);
+@rose-8: color(~`colorPalette('@{rose-6}', 8) `);
+@rose-9: color(~`colorPalette('@{rose-6}', 9) `);
+@rose-10: color(~`colorPalette('@{rose-6}', 10) `);
 
 
-@primary-color: @gold-6;
+@primary-color: @rose-6;
 @primary-color-hover: color(~`colorPalette('@{primary-color}', 5) `);
 @primary-color-active: color(~`colorPalette('@{primary-color}', 7) `);
 @primary-color-outline: fade(@primary-color, @outline-fade);
@@ -15,9 +27,10 @@
 @btn-circle-size-lg: 64px;
 @btn-circle-size-sm: 64px;
 
-@body-background: #f5f5f5;
+@body-background: @rose-1;
 @component-background: #f5f5f5;
 @label-color: #c2c2c2;
+
 
 .ant-btn-circle {
   height: 48px;

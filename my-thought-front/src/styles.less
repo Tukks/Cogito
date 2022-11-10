@@ -2,7 +2,42 @@
 @import "@stackoverflow/stacks-editor/dist/styles.css";
 @import "@stackoverflow/stacks/dist/css/stacks.css";
 @import "~@angular/cdk/overlay-prebuilt.css";
+@import (optional, reference) "theme";
 
+// Global style
+
+body {
+  background-color: @body-background;
+}
+
+.label {
+  text-align: left;
+  padding-top: 0;
+
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  text-transform: uppercase;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.card {
+  height: 400px;
+  margin: 0px auto;
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 8px;
+}
+
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+// Markdown editor style
 
 .little {
   border-radius: 8px;
@@ -33,19 +68,7 @@
   }
 }
 
-.card {
-  height: 400px;
-  margin: 0px auto;
-  background-color: white;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  border-radius: 8px;
-}
-
-.flex-vertical {
-  display: flex;
-  flex-direction: column;
-}
-
+// CDK Style
 
 @media only screen and (max-width: 991px) {
   .cdk-overlay-pan {
@@ -56,19 +79,8 @@
   }
 
 }
-.label {
-  text-align: left;
-  padding-top: 0;
 
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.1em;
-  margin-bottom: 10px;
-  margin-top: 20px;
-  text-transform: uppercase;
-  -webkit-user-select: none;
-  user-select: none;
-}
+// Twitter Style
 .tweet {
   blockquote.twitter-tweet {
     display: inline-block;

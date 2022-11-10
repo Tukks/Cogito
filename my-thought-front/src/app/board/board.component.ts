@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ThoughtsService} from "../../service/thoughts.service";
 import {CardsType, CardType} from "../../types/cards-link";
-import * as FlexSearch from "flexsearch";
+import FlexSearch from "flexsearch";
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss']
+  styleUrls: ['./board.component.less']
 })
 export class BoardComponent implements OnInit {
   public originalResult: CardType[] = [];
