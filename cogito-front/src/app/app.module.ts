@@ -34,6 +34,7 @@ import {IntersectionObserverElementDirective} from './intersection-observser/int
 import {IntersectionObserverGridDirective} from "./intersection-observser/intersection-observer-grid.directive";
 import {LoginComponent} from "./page/login/login.component";
 import {AuthGuard} from "./guards/auth-guard.guard";
+import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 
 registerLocaleData(fr);
 
@@ -73,7 +74,8 @@ registerLocaleData(fr);
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    NzDropDownModule
   ],
   providers: [
     AuthGuard,

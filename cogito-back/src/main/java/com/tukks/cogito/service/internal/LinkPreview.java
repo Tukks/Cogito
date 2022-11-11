@@ -51,9 +51,6 @@ public class LinkPreview {
 	 */
 	public LinkEntity extractLinkPreviewInfo(String url) {
 		try {
-			if (!url.startsWith("http")) {
-				url = "http://" + url;
-			}
 			WebClient webClient = new WebClient(BrowserVersion.CHROME);
 			webClient.getOptions().setCssEnabled(false);
 			webClient.getOptions().setJavaScriptEnabled(false);

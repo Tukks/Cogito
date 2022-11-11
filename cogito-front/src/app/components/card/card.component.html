@@ -1,4 +1,4 @@
-<div class="card" *ngIf="card.thingType === cardsType.LINK">
+<div class="card" *ngIf="card.thingType === cardsType.LINK" (contextmenu)="contextMenu($event, menu)">
   <!-- Image à la une -->
   <div class="card-image flex-vertical">
     <img src="{{card.image}}" alt="{{card.imageAlt}}" class="card-image-content default-image" appImgFallback>
@@ -22,3 +22,10 @@
   </div>
 
 </div>
+
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item nzDanger (click)="deleteCard()"><span nz-icon nzType="delete" nzTheme="outline"></span> Delete Card</li>
+  </ul>
+</nz-dropdown-menu>
