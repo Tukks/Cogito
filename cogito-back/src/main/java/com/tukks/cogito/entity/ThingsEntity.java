@@ -29,6 +29,8 @@ public class ThingsEntity extends BaseTable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
+	private String oidcSub;
+
 	private ThingType thingType;
 
 	protected String title;

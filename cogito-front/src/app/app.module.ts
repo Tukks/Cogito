@@ -33,7 +33,7 @@ import {ImgFallbackDirective} from './directive/img-fallback.directive';
 import {IntersectionObserverElementDirective} from './intersection-observser/intersection-observer-element.directive';
 import {IntersectionObserverGridDirective} from "./intersection-observser/intersection-observer-grid.directive";
 import {LoginComponent} from "./page/login/login.component";
-import {RedirectOAuth2Component} from './page/redirect-oauth2/redirect-oauth2.component';
+import {AuthGuard} from "./guards/auth-guard.guard";
 
 registerLocaleData(fr);
 
@@ -50,7 +50,6 @@ registerLocaleData(fr);
     ImgFallbackDirective,
     IntersectionObserverGridDirective,
     IntersectionObserverElementDirective,
-    RedirectOAuth2Component
   ],
   imports: [
     BrowserModule,
@@ -69,7 +68,6 @@ registerLocaleData(fr);
     NzFormModule,
     NzMessageModule,
     LayoutModule,
-
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
@@ -78,6 +76,7 @@ registerLocaleData(fr);
     })
   ],
   providers: [
+    AuthGuard,
     {provide: NZ_I18N, useValue: fr_FR},
     {
       provide: HTTP_INTERCEPTORS,

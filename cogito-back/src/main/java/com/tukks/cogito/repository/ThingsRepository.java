@@ -11,9 +11,11 @@ import com.tukks.cogito.entity.ThingsEntity;
 @Service
 public interface ThingsRepository extends CrudRepository<ThingsEntity, Long> {
 
-	@Query("select p from ThingsEntity p order by p.modified desc")
-	List<Object> getAll();
+	@Query("select p from ThingsEntity p where p.oidcSub = :sub order by p.modified desc")
+	List<Object> getAll(String sub);
 
-	ThingsEntity getById(Long id);
+	ThingsEntity getByIdAndOidcSub(Long id, String sub);
+
+	ThingsEntity deleteByIdAndOidcSub(Long id, String sub);
 
 }

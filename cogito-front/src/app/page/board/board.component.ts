@@ -21,7 +21,6 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpClient.get("/api/logout");
     // @ts-ignore
     this.index = new FlexSearch.Document<CardType>({
       preset: "match",

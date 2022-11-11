@@ -8,5 +8,6 @@ import com.tukks.cogito.entity.NoteEntity;
 @Service
 public interface NoteRepository extends CrudRepository<NoteEntity, Long> {
 
-	NoteEntity getById(Long id);
+	NoteEntity getByIdAndOidcSub(Long id, String sub);
+
 }

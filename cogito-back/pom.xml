@@ -34,6 +34,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
 		<dependency>
@@ -114,31 +118,31 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.2.0</version>
-				<executions>
-					<execution>
-						<id>copy-resource-one</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/src/main/resources/static</outputDirectory>
-							<resources>
-								<resource>
-									<directory>../cogito-front/dist</directory>
-									<includes>
-										<include>*/**</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+			<!--			<plugin>-->
+			<!--				<groupId>org.apache.maven.plugins</groupId>-->
+			<!--				<artifactId>maven-resources-plugin</artifactId>-->
+			<!--				<version>3.2.0</version>-->
+			<!--				<executions>-->
+			<!--					<execution>-->
+			<!--						<id>copy-resource-one</id>-->
+			<!--						<phase>generate-sources</phase>-->
+			<!--						<goals>-->
+			<!--							<goal>copy-resources</goal>-->
+			<!--						</goals>-->
+			<!--						<configuration>-->
+			<!--							<outputDirectory>${basedir}/src/main/resources/static</outputDirectory>-->
+			<!--							<resources>-->
+			<!--								<resource>-->
+			<!--									<directory>../cogito-front/dist</directory>-->
+			<!--									<includes>-->
+			<!--										<include>*/**</include>-->
+			<!--									</includes>-->
+			<!--								</resource>-->
+			<!--							</resources>-->
+			<!--						</configuration>-->
+			<!--					</execution>-->
+			<!--				</executions>-->
+			<!--			</plugin>-->
 		</plugins>
 	</build>
 

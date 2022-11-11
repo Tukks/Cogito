@@ -16,6 +16,7 @@ import com.tukks.cogito.repository.ThingsRepository;
 import com.tukks.cogito.service.NoteService;
 
 import lombok.AllArgsConstructor;
+import static com.tukks.cogito.service.SecurityUtils.getSub;
 
 @RestController
 @RequestMapping("/api")
@@ -27,7 +28,7 @@ public class ThoughtController {
 
 	@GetMapping("/thoughts")
 	public List<Object> getAllThoughts() {
-		return thingsRepository.getAll();
+		return thingsRepository.getAll(getSub());
 	}
 
 	@PostMapping("/save")
@@ -44,4 +45,5 @@ public class ThoughtController {
 	public void delete(@PathVariable Long id) {
 		noteService.delete(id);
 	}
+
 }

@@ -17,6 +17,7 @@ import com.tukks.cogito.repository.TweetRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import static com.tukks.cogito.service.SecurityUtils.getSub;
 
 @Service
 @AllArgsConstructor
@@ -45,7 +46,7 @@ public class TweetService {
 				.build();
 			tweetEntity.setThingType(ThingType.TWEET);
 			tweetEntity.setTags(List.of(Tag.builder().tag("tweet").build()));
-
+			tweetEntity.setOidcSub(getSub());
 			tweetRepository.save(tweetEntity);
 			return Boolean.TRUE;
 		}

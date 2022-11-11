@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {BoardComponent} from "./page/board/board.component";
 import {HandleShareComponent} from "./page/handle-share/handle-share.component";
 import {LoginComponent} from "./page/login/login.component";
-import {RedirectOAuth2Component} from "./page/redirect-oauth2/redirect-oauth2.component";
+import {AuthGuard} from "./guards/auth-guard.guard";
 
 const routes: Routes = [
   {
@@ -14,16 +14,13 @@ const routes: Routes = [
   {
     path: 'board',
     component: BoardComponent,
+    canActivate: [AuthGuard]
     // loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
   },
   {
     path: 'handle-share',
     component: HandleShareComponent,
-    // loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
-  },
-  {
-    path: 'oauth2/authorization/google',
-    component: RedirectOAuth2Component,
+    canActivate: [AuthGuard]
     // loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
   },
   {
