@@ -17,6 +17,6 @@ export class AuthService {
   }
 
   public exist() {
-    return localStorage.getItem('jwt') !== undefined;
+    return localStorage.getItem('jwt') !== null;
   }
 }

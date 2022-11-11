@@ -15,7 +15,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', "Bearer " + this.authService.getCookie());
     const requestClone = request.clone({headers});
-
     return next.handle(requestClone).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMsg = '';
