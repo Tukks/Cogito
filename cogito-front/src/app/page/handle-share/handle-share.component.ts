@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ThoughtsService} from "../../service/thoughts.service";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-handle-share',
@@ -12,7 +13,7 @@ export class HandleShareComponent implements OnInit {
   tags: string[] = [];
   showTagsAdd: boolean = false;
 
-  constructor(private route: ActivatedRoute, private thoughtsService: ThoughtsService) {
+  constructor(private route: ActivatedRoute, private thoughtsService: ThoughtsService, private message: NzMessageService) {
   }
 
   ngOnInit(): void {
@@ -20,6 +21,7 @@ export class HandleShareComponent implements OnInit {
       // On Android text is equals to the url
       if (param.text && param.text != '') {
         this.thoughtsService.save(param.text).subscribe(val => {
+          this.message.success("Saved successfully")
           this.timeoutId = setTimeout(() => window.open('', '_self')!.close(), 2500);
         });
       }

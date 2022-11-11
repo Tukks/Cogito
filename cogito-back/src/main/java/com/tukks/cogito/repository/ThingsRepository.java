@@ -16,6 +16,6 @@ public interface ThingsRepository extends CrudRepository<ThingsEntity, Long> {
 
 	ThingsEntity getByIdAndOidcSub(Long id, String sub);
 
-	ThingsEntity deleteByIdAndOidcSub(Long id, String sub);
+	Integer deleteByIdAndOidcSub(Long id, String sub);
 
 }

@@ -16,6 +16,10 @@ export class AuthService {
     return localStorage.getItem('jwt');
   }
 
+  public removeCookie() {
+    localStorage.removeItem('jwt');
+  }
+
   public exist() {
     return localStorage.getItem('jwt') !== null;
   }

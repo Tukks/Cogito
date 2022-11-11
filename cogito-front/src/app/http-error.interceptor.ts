@@ -3,12 +3,13 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor,
 import {catchError, Observable, throwError} from 'rxjs';
 import {NzMessageService} from "ng-zorro-antd/message";
 import {AuthService} from "./service/auth-service.service";
+import {Router} from "@angular/router";
 
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor(private message: NzMessageService, private authService: AuthService) {
+  constructor(private message: NzMessageService, private authService: AuthService, private router: Router) {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -17,6 +18,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     const requestClone = request.clone({headers});
     return next.handle(requestClone).pipe(
       catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.authService.removeCookie()
+          this.router.navigate(['/login']);
+        }
         let errorMsg = '';
         if (error.error instanceof ErrorEvent) {
           errorMsg = `${error.error.message}`;
