@@ -1,6 +1,6 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../service/auth-service.service";
-import {Router} from "@angular/router";
+import {ActivatedRouteSnapshot, Router} from "@angular/router";
 import {environment} from "../../../environments/environment";
 
 @Component({
@@ -10,7 +10,7 @@ import {environment} from "../../../environments/environment";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router, private zone: NgZone) {
+  constructor(private authService: AuthService, private router: Router, private zone: NgZone, private route: ActivatedRouteSnapshot) {
   }
 
   @ViewChild('buttonDiv') buttonDiv!: ElementRef;
@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
     if (!this.authService.exist()) {
       (window as any).google.accounts.id.initialize({
         client_id: environment.clientId,
+        auto_select: true,
         callback: this.handleCredentialResponse.bind(this)
       });
       (window as any).google.accounts.id.renderButton(
@@ -39,7 +40,8 @@ export class LoginComponent implements OnInit {
   handleCredentialResponse(response: { credential: string; }) {
     this.zone.run(() => {
       this.authService.saveJwt(response.credential);
-      this.router.navigate(["/board"]).then();
+
+      this.router.navigate(this.route.url ? this.route.url : ["/board"]).then();
     });
 
   }

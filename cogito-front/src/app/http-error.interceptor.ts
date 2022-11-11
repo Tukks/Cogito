@@ -19,8 +19,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(requestClone).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          this.authService.removeCookie()
-          this.router.navigate(['/login']);
+          this.authService.removeCookie();
+
+          this.router.navigate([`/login?redirectTo=${this.router.url}`]).then();
         }
         let errorMsg = '';
         if (error.error instanceof ErrorEvent) {

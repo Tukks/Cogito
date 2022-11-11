@@ -17,15 +17,16 @@ import org.apache.tika.parser.html.HtmlParser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.apache.tika.sax.boilerpipe.BoilerpipeContentHandler;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.xml.sax.SAXException;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.tukks.cogito.entity.LinkEntity;
 import com.tukks.cogito.entity.tag.Tag;
 
@@ -53,9 +54,16 @@ public class LinkPreview {
 			if (!url.startsWith("http")) {
 				url = "http://" + url;
 			}
-			Document document = Jsoup.connect(url)
-				.userAgent("Mozilla")
-				.get();
+			WebClient webClient = new WebClient(BrowserVersion.CHROME);
+			webClient.getOptions().setCssEnabled(false);
+			webClient.getOptions().setJavaScriptEnabled(false);
+			HtmlPage htmlPage = webClient.getPage(url);
+			// if not working https://stackoverflow.com/questions/38417083/java-getting-a-503-error-when-trying-to-read-webpage-using-htmlunit/69760898#69760898
+			//			forceAgentHeader("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0");
+			Document document = Jsoup.parse(htmlPage.getWebResponse().getContentAsString());
+			//				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0")
+			//				.referrer("http://www.google.com")
+			//				.get();
 
 			String title = getTitle(document);
 			String desc = getDescription(document);
@@ -76,9 +84,13 @@ public class LinkPreview {
 			}
 			return linkEntity;
 
-		} catch (IOException | TikaException | SAXException e) {
+		} catch (Exception e) {
 			logger.warn("Unable to connect to extract domain name from : {}", url);
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Problem parsing the link");
+			// if something not working, with save it as markdnow note
+			LinkEntity linkEntity = new LinkEntity();
+			linkEntity.setUrl(url);
+			return linkEntity;
+
 		}
 	}
 
