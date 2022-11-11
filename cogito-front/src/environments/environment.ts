@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  server: 'http://localhost:9090'
+  clientId: '972567513023-dtp0mkqehkvra4unmb1bu4h6ab8ee07i.apps.googleusercontent.com'
 };
 
 /*

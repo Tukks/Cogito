@@ -1,6 +1,7 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../service/auth-service.service";
 import {Router} from "@angular/router";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   ngAfterViewInit(): void {
     if (!this.authService.exist()) {
       (window as any).google.accounts.id.initialize({
-        client_id: "972567513023-dtp0mkqehkvra4unmb1bu4h6ab8ee07i.apps.googleusercontent.com",
+        client_id: environment.clientId,
         callback: this.handleCredentialResponse.bind(this)
       });
       (window as any).google.accounts.id.renderButton(
