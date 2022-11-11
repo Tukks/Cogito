@@ -11,10 +11,10 @@
 </div>
 
 <ng-container *ngIf="card.thingType === cardsType.MARKDOWN">
-  <app-markdown-card [readonly]="true" [cardMode]="true" [content]="card.markdown" [id]="card.id"></app-markdown-card>
+  <app-markdown-card (contextmenu)="contextMenu($event, menu)" [readonly]="true" [cardMode]="true" [content]="card.markdown" [id]="card.id"></app-markdown-card>
 </ng-container>
 
-<div class="card tweet" *ngIf="card.thingType === cardsType.TWEET">
+<div class="card tweet" *ngIf="card.thingType === cardsType.TWEET" (contextmenu)="contextMenu($event, menu)">
   <div class="card-image flex-vertical">
     <img src="../../../assets/image/twitter_logo.png" alt="twitter logo" class="card-image-content tweet-image">
 
