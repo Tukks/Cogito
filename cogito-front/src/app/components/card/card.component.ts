@@ -86,4 +86,10 @@ export class CardComponent implements OnInit {
     }
     this.nzMessageService.success("Content copied !");
   }
+
+  openLink($event: Event) {
+    $event.stopPropagation();
+    $event.preventDefault();
+    window.open(this.card.url, "_blank");
+  }
 }

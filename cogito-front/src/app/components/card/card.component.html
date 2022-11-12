@@ -4,7 +4,9 @@
     <img src="{{card.image}}" alt="{{card.imageAlt}}" class="card-image-content default-image" appImgFallback>
 
     <p nz-typography class="card-image-desc">{{card.desc}}</p>
-    <a nz-typography nzEllipsis href="{{card.url}}" target="_blank" class="card-image-desc">{{card.url}}</a>
+    <!--    <h5 nz-typography nzEllipsis (click)="openLink($event)" class="card-image-desc">{{card.url}}</h5>-->
+    <a nz-typography nzEllipsis href="{{card.url}}" target="_blank" class="card-image-desc link" (click)="$event.stopPropagation()">{{card.url}}</a>
+
   </div>
 
   <!-- Fin du corp de notre carte -->
@@ -26,7 +28,10 @@
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
-    <li nz-menu-item nzDanger (click)="deleteCard()"><span nz-icon nzType="delete" nzTheme="outline"></span> Delete Card</li>
     <li nz-menu-item (click)="copyContent()"><span nz-icon nzType="copy" nzTheme="outline"></span> Copy Content</li>
+    <li nz-menu-item *ngIf="card.thingType !== cardsType.MARKDOWN" (click)="openLink($event)"><span nz-icon nzType="copy" nzTheme="outline"></span>Open link
+    </li>
+    <li nz-menu-item nzDanger (click)="deleteCard()"><span nz-icon nzType="delete" nzTheme="outline"></span> Delete Card</li>
+
   </ul>
 </nz-dropdown-menu>
