@@ -17,7 +17,12 @@ export class BoardComponent implements OnInit {
   public searchValue: string = "";
   public index: any;
 
+
   constructor(private thoughtsService: ThoughtsService, public httpClient: HttpClient) {
+  }
+
+  trackByFn(index: number, item: CardType) {
+    return item.id; // or item.id
   }
 
   ngOnInit(): void {

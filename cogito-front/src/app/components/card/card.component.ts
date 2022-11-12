@@ -6,6 +6,8 @@ import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/lay
 import {Observable} from "rxjs";
 import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
 import {ThoughtsService} from "../../service/thoughts.service";
+import {Clipboard} from '@angular/cdk/clipboard';
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-card',
@@ -58,7 +60,9 @@ export class CardComponent implements OnInit {
   constructor(public dialog: Dialog,
               public breakpointObserver: BreakpointObserver,
               private nzContextMenuService: NzContextMenuService,
-              private thoughtService: ThoughtsService) {
+              private thoughtService: ThoughtsService,
+              private clipboard: Clipboard,
+              private nzMessageService: NzMessageService) {
   }
 
   ngOnInit(): void {
@@ -66,5 +70,20 @@ export class CardComponent implements OnInit {
 
   deleteCard() {
     this.thoughtService.delete(this.card.id).subscribe();
+  }
+
+  copyContent() {
+    switch (this.card.thingType) {
+      case CardsType.LINK:
+        this.clipboard.copy(this.card.url);
+        break;
+      case CardsType.MARKDOWN:
+        this.clipboard.copy(this.card.markdown);
+        break;
+      case CardsType.TWEET:
+        this.clipboard.copy(this.card.url);
+        break;
+    }
+    this.nzMessageService.success("Content copied !");
   }
 }

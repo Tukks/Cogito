@@ -35,6 +35,7 @@ import {IntersectionObserverGridDirective} from "./intersection-observser/inters
 import {LoginComponent} from "./page/login/login.component";
 import {AuthGuard} from "./guards/auth-guard.guard";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 registerLocaleData(fr);
 
@@ -69,6 +70,7 @@ registerLocaleData(fr);
     NzFormModule,
     NzMessageModule,
     LayoutModule,
+    ClipboardModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
