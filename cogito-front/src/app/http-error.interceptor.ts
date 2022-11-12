@@ -3,13 +3,14 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor,
 import {catchError, Observable, throwError} from 'rxjs';
 import {NzMessageService} from "ng-zorro-antd/message";
 import {AuthService} from "./service/auth-service.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor(private message: NzMessageService, private authService: AuthService, private router: Router) {
+  constructor(private message: NzMessageService, private authService: AuthService,
+              private router: Router, private activatedRoute: ActivatedRoute) {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -21,7 +22,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           this.authService.removeCookie();
 
-          this.router.navigate([`/login?redirectTo=${this.router.url}`]).then();
+          this.router.navigateByUrl(`/login?redirectTo=${this.router.url}`).then();
         }
         let errorMsg = '';
         if (error.error instanceof ErrorEvent) {

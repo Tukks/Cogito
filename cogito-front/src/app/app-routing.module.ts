@@ -26,6 +26,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+
     // loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
   }
 ];

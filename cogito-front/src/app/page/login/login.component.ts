@@ -1,6 +1,6 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../service/auth-service.service";
-import {ActivatedRouteSnapshot, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {environment} from "../../../environments/environment";
 
 @Component({
@@ -10,7 +10,7 @@ import {environment} from "../../../environments/environment";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router, private zone: NgZone, private route: ActivatedRouteSnapshot) {
+  constructor(private authService: AuthService, private router: Router, private zone: NgZone, private activatedRoute: ActivatedRoute) {
   }
 
   @ViewChild('buttonDiv') buttonDiv!: ElementRef;
@@ -40,8 +40,10 @@ export class LoginComponent implements OnInit {
   handleCredentialResponse(response: { credential: string; }) {
     this.zone.run(() => {
       this.authService.saveJwt(response.credential);
+      const queryParamRedirect = this.activatedRoute.snapshot.queryParams['redirectTo'];
+      this.router.navigateByUrl(queryParamRedirect ?
+        queryParamRedirect : "/board");
 
-      this.router.navigate(this.route.url ? this.route.url : ["/board"]).then();
     });
 
   }
