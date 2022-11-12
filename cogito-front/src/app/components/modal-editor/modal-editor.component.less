@@ -11,7 +11,6 @@
 }
 
 .modal-editor-right-column {
-  width: 300px;
   display: flex;
   flex-direction: column;
   background-color: @body-background;
@@ -53,6 +52,11 @@
 
   }
 
+  .modal-editor-right-column {
+    width: 300px;
+
+  }
+
   .close-button {
     display: none;
   }
@@ -61,6 +65,11 @@
 @media only screen and (max-width: 991px) {
   .modal-editor-img-preview {
     object-fit: scale-down;
+  }
+
+  .modal-editor-right-column {
+    width: 300%;
+
   }
 
   .modal-editor {

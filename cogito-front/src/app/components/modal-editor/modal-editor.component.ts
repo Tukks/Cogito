@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CardsType, CardType, Tag} from "../../types/cards-link";
 import {DIALOG_DATA, DialogRef} from "@angular/cdk/dialog";
 import {ThoughtsService} from "../../service/thoughts.service";
@@ -9,7 +9,7 @@ import {MarkdownCardComponent} from "../markdown-card/markdown-card.component";
   templateUrl: './modal-editor.component.html',
   styleUrls: ['./modal-editor.component.less']
 })
-export class ModalEditorComponent implements OnInit {
+export class ModalEditorComponent implements OnInit, OnDestroy {
   @ViewChild(MarkdownCardComponent) markdownCardComponent!: MarkdownCardComponent;
 
   public cardsType: typeof CardsType = CardsType;
@@ -18,14 +18,31 @@ export class ModalEditorComponent implements OnInit {
   comment: string | undefined;
   tags: string[] = [];
 
+  @HostListener('window:popstate', ['$event'])
+  dismissModal() {
+    this.dialogRef.close();
+  }
+
   constructor(@Inject(DIALOG_DATA) public data: { card: CardType },
               public dialogRef: DialogRef<string>, public thoughtService: ThoughtsService) {
   }
+
 
   ngOnInit(): void {
     this.title = this.data.card.title;
     this.comment = this.data.card.comment;
     this.tags = this.data.card.tags.map(tag => tag.tag);
+    const modalState = {
+      modal: true,
+      desc: 'fake state for our modal'
+    };
+    history.pushState(modalState, "");
+  }
+
+  ngOnDestroy() {
+    if (window.history.state.modal) {
+      history.back();
+    }
   }
 
   update(): void {
