@@ -28,10 +28,13 @@
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
-    <li nz-menu-item (click)="copyContent()"><span nz-icon nzType="copy" nzTheme="outline"></span> Copy Content</li>
-    <li nz-menu-item *ngIf="card.thingType !== cardsType.MARKDOWN" (click)="openLink($event)"><span nz-icon nzType="copy" nzTheme="outline"></span>Open link
+    <li nz-menu-item (click)="copyContent()"><span nz-icon nzType="copy" nzTheme="outline"></span>&nbsp;Copy Content</li>
+    <li nz-menu-item *ngIf="card.thingType !== cardsType.MARKDOWN" (click)="openLink($event)"><span nz-icon nzType="link" nzTheme="outline"></span>&nbsp;Open
+      link
     </li>
-    <li nz-menu-item nzDanger (click)="deleteCard()"><span nz-icon nzType="delete" nzTheme="outline"></span> Delete Card</li>
+    <li nz-menu-item (click)="closeMenu()"><span nz-icon nzType="close" nzTheme="outline"></span>&nbsp;Close Menu
+    </li>
+    <li nz-menu-item nzDanger (click)="deleteCard()"><span nz-icon nzType="delete" nzTheme="outline"></span>&nbsp;Delete Card</li>
 
   </ul>
 </nz-dropdown-menu>

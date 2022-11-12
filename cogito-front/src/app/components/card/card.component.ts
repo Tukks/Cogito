@@ -92,4 +92,8 @@ export class CardComponent implements OnInit {
     $event.preventDefault();
     window.open(this.card.url, "_blank");
   }
+
+  closeMenu() {
+    this.nzContextMenuService.close();
+  }
 }
