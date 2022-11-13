@@ -31,7 +31,7 @@ body {
 .card {
   height: 400px;
   margin: 0px auto;
-  background-color: white;
+  background-color: @component-background;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 8px;
 }
@@ -46,6 +46,12 @@ body {
 .little {
   border-radius: 8px;
 
+  .s-textarea {
+    border-radius: 8px;
+    background-color: @component-background;
+    color: @text-color;
+  }
+
   .s-input, .s-textarea {
     max-height: 400px;
     height: 400px;
@@ -53,19 +59,25 @@ body {
 
   .s-textarea.is-readonly {
     cursor: unset;
-    background-color: white;
-    color: black;
+    background-color: @component-background;
+    color: @text-color;
   }
 
   .is-readonly {
     .ai-center {
       display: none !important;
-      background-color: white;
+      background-color: @component-background;
     }
   }
 }
 
 .big {
+  .s-textarea {
+    border-radius: 8px;
+    background-color: @component-background;
+    color: @text-color;
+  }
+
   .s-input, .s-textarea {
     max-height: 80vh;
     height: 80vh;
