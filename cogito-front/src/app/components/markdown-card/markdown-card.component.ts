@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/c
 import {EditorType, StacksEditor} from "@stackoverflow/stacks-editor";
 import "@stackoverflow/stacks";
 import {ThoughtsService} from "../../service/thoughts.service";
+import {ImagesService} from "../../service/images.service";
 
 // TODO replace with tiptap editor https://tiptap.dev
 @Component({
@@ -30,14 +31,27 @@ export class MarkdownCardComponent implements AfterViewInit {
   /**
    * TODO image uploader
    */
-  constructor(private service: ThoughtsService) {
+  constructor(private service: ThoughtsService, private imageService: ImagesService) {
   }
 
   ngAfterViewInit() {
     this.stackEditor = new StacksEditor(
       // @ts-ignore
       this.editorContainer?.nativeElement!,
-      this.content, {placeholderText: 'enter your markdown here or a link', classList: ['md-size'], defaultView: EditorType.RichText}
+      this.content, {
+        placeholderText: 'enter your markdown here or a link',
+        classList: ['md-size'],
+        defaultView: EditorType.RichText,
+        // imageUpload: {
+        //   handler: (file) => {
+        //     const image$ = this.imageService.saveImage(file as File)
+        //       .pipe(map(val => this.imageService.buildImageUrl(val.id)));
+        //     return firstValueFrom(image$);
+        //   },
+        //   embedImagesAsLinks: false,
+        //   allowExternalUrls: true
+        // }
+      }
     );
     if (this.readonly) {
       this.stackEditor.disable();

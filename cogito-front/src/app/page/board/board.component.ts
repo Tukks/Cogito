@@ -22,7 +22,7 @@ export class BoardComponent implements OnInit {
   }
 
   trackByFn(index: number, item: CardType) {
-    return item.id; // or item.id
+    return item.id;
   }
 
   ngOnInit(): void {
