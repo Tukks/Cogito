@@ -5,7 +5,7 @@ import {ModalEditorComponent} from "../modal-editor/modal-editor.component";
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {Observable} from "rxjs";
 import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
-import {ThoughtsService} from "../../service/thoughts.service";
+import {ThoughtsService} from "../../http-service/thoughts.service";
 import {Clipboard} from '@angular/cdk/clipboard';
 import {NzMessageService} from "ng-zorro-antd/message";
 

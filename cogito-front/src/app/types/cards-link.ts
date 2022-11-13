@@ -28,7 +28,8 @@ export interface NoteCard extends CardsLink {
   desc: never,
   image: never,
   imageAlt: never
-  html: never
+  html: never,
+  domain: never,
 }
 
 export interface TweetCard extends CardsLink {
@@ -44,6 +45,8 @@ export interface TweetCard extends CardsLink {
   desc: never,
   image: never,
   imageAlt: never,
+  domain: never,
+
 }
 
 export interface LinkCard extends CardsLink {
@@ -51,6 +54,7 @@ export interface LinkCard extends CardsLink {
   desc: string,
   image: string,
   imageAlt: string,
+  domain: string,
 
   content: never,
   media: never,

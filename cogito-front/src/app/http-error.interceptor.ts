@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
 import {NzMessageService} from "ng-zorro-antd/message";
-import {AuthService} from "./service/auth-service.service";
+import {AuthService} from "./http-service/auth-service.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 

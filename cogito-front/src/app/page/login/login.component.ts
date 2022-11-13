@@ -1,5 +1,5 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from "../../service/auth-service.service";
+import {AuthService} from "../../http-service/auth-service.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {environment} from "../../../environments/environment";
 

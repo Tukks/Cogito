@@ -4,8 +4,7 @@
     <img src="{{card.image}}" alt="{{card.imageAlt}}" class="card-image-content default-image" appImgFallback>
 
     <p nz-typography class="card-image-desc">{{card.desc}}</p>
-    <!--    <h5 nz-typography nzEllipsis (click)="openLink($event)" class="card-image-desc">{{card.url}}</h5>-->
-    <a nz-typography nzEllipsis href="{{card.url}}" target="_blank" class="card-image-desc link" (click)="$event.stopPropagation()">{{card.url}}</a>
+    <a nz-typography nzEllipsis href="{{card.url}}" target="_blank" class="card-image-desc link" (click)="$event.stopPropagation()">{{card.domain}}</a>
 
   </div>
 
