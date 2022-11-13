@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {ThoughtsService} from "../../service/thoughts.service";
+import {ThoughtsService} from "../../http-service/thoughts.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({

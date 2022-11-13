@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ThoughtsService} from "../../service/thoughts.service";
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ThoughtsService} from "../../http-service/thoughts.service";
 import {CardsType, CardType} from "../../types/cards-link";
 import FlexSearch from "flexsearch";
 import {HttpClient} from "@angular/common/http";
+import {HotkeysService} from "../../internal-service/hotkeys/hotkeys.service";
 
 @Component({
   selector: 'app-board',
@@ -16,9 +17,10 @@ export class BoardComponent implements OnInit {
   public cardsType: typeof CardsType = CardsType;
   public searchValue: string = "";
   public index: any;
+  @ViewChild('searchInput') searchInput!: ElementRef;
 
 
-  constructor(private thoughtsService: ThoughtsService, public httpClient: HttpClient) {
+  constructor(private thoughtsService: ThoughtsService, public httpClient: HttpClient, private hotkeys: HotkeysService) {
   }
 
   trackByFn(index: number, item: CardType) {
@@ -26,6 +28,9 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.hotkeys.addShortcut({keys: 'shift.s'}).subscribe(() => {
+      this.searchInput.nativeElement.focus();
+    });
     // @ts-ignore
     this.index = new FlexSearch.Document<CardType>({
       preset: "match",

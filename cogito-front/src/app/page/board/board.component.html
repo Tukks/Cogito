@@ -1,5 +1,5 @@
 <nz-input-group nzSearch nzSize="large" class="search">
-  <input type="text" nz-input placeholder="Search cogito" [ngModel]="searchValue" (ngModelChange)="search($event)" class="input"/>
+  <input type="text" nz-input placeholder="Search cogito" [ngModel]="searchValue" (ngModelChange)="search($event)" class="input" #searchInput/>
 </nz-input-group>
 
 <div class="container" appIntersectionObserverGrid>

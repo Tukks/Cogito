@@ -1,7 +1,8 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {EditorType, StacksEditor} from "@stackoverflow/stacks-editor";
 import "@stackoverflow/stacks";
-import {ThoughtsService} from "../../service/thoughts.service";
+import {ThoughtsService} from "../../http-service/thoughts.service";
+import {HotkeysService} from "../../internal-service/hotkeys/hotkeys.service";
 
 // TODO replace with tiptap editor https://tiptap.dev
 @Component({
@@ -30,8 +31,9 @@ export class MarkdownCardComponent implements AfterViewInit {
   /**
    * TODO image uploader
    */
-  constructor(private service: ThoughtsService) {
+  constructor(private service: ThoughtsService, private hotkeys: HotkeysService) {
   }
+
 
   ngAfterViewInit() {
     this.stackEditor = new StacksEditor(
@@ -42,6 +44,9 @@ export class MarkdownCardComponent implements AfterViewInit {
     if (this.readonly) {
       this.stackEditor.disable();
     }
+    this.hotkeys.addShortcut({keys: 'shift.n'}).subscribe(() => {
+      this.stackEditor?.focus();
+    });
   }
 
   create() {
