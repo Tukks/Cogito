@@ -32,7 +32,8 @@ export class IntersectionObserverGridDirective {
         // This classifies the "intersection" as being a bit outside the
         // viewport. The intent here is give the elements a little time to react
         // to the change before the element is actually visible to the user.
-        rootMargin: "400px 0px 400px 0px"
+        rootMargin: "800px 0px 800px 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1],
       }
     );
 

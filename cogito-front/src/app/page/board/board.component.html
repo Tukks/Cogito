@@ -1,10 +1,7 @@
-<nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton" class="search">
-  <input type="text" nz-input placeholder="input search text" [ngModel]="searchValue" (ngModelChange)="search($event)" class="input"/>
+<nz-input-group nzSearch nzSize="large" class="search">
+  <input type="text" nz-input placeholder="Search cogito" [ngModel]="searchValue" (ngModelChange)="search($event)" class="input"/>
 </nz-input-group>
 
-<ng-template #suffixButton>
-  <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
-</ng-template>
 <div class="container" appIntersectionObserverGrid>
 
   <app-markdown-card [cardMode]="true" [readonly]="false" class="first-child-container"></app-markdown-card>
