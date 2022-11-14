@@ -45,6 +45,8 @@ export class MarkdownCardComponent implements AfterViewInit {
       this.stackEditor.disable();
     }
     this.hotkeys.addShortcut({keys: 'shift.n'}).subscribe(() => {
+      this.stackEditor?.dom.scroll();
+
       this.stackEditor?.focus();
     });
   }

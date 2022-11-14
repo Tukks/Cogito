@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {BoardComponent} from "./page/board/board.component";
 import {HandleShareComponent} from "./page/handle-share/handle-share.component";
 import {LoginComponent} from "./page/login/login.component";
-import {AuthGuard} from "./guards/auth-guard.guard";
+import {RegisterComponent} from "./page/register/register.component";
 
 const routes: Routes = [
   {
@@ -14,13 +14,11 @@ const routes: Routes = [
   {
     path: 'board',
     component: BoardComponent,
-    canActivate: [AuthGuard]
     // loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
   },
   {
     path: 'handle-share',
     component: HandleShareComponent,
-    canActivate: [AuthGuard]
     // loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
   },
   {
@@ -28,6 +26,11 @@ const routes: Routes = [
     component: LoginComponent,
 
     // loadChildren: () => import('./folder/folder.module').then(m => m.FolderPageModule)
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+
   }
 ];
 

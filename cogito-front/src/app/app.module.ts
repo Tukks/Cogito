@@ -8,7 +8,7 @@ import {CardComponent} from './components/card/card.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MarkdownCardComponent} from "./components/markdown-card/markdown-card.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ModalEditorComponent} from './components/modal-editor/modal-editor.component';
 import {DialogModule} from "@angular/cdk/dialog";
 import {fr_FR, NZ_I18N} from 'ng-zorro-antd/i18n';
@@ -33,9 +33,9 @@ import {ImgFallbackDirective} from './directive/img-fallback.directive';
 import {IntersectionObserverElementDirective} from './internal-service/intersection-observser/intersection-observer-element.directive';
 import {IntersectionObserverGridDirective} from "./internal-service/intersection-observser/intersection-observer-grid.directive";
 import {LoginComponent} from "./page/login/login.component";
-import {AuthGuard} from "./guards/auth-guard.guard";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import {ClipboardModule} from "@angular/cdk/clipboard";
+import {RegisterComponent} from './page/register/register.component';
 
 registerLocaleData(fr);
 
@@ -52,6 +52,7 @@ registerLocaleData(fr);
     ImgFallbackDirective,
     IntersectionObserverGridDirective,
     IntersectionObserverElementDirective,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +72,7 @@ registerLocaleData(fr);
     NzMessageModule,
     LayoutModule,
     ClipboardModule,
+    ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
@@ -80,7 +82,6 @@ registerLocaleData(fr);
     NzDropDownModule
   ],
   providers: [
-    AuthGuard,
     {provide: NZ_I18N, useValue: fr_FR},
     {
       provide: HTTP_INTERCEPTORS,

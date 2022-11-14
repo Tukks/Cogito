@@ -14,7 +14,7 @@ export class ThoughtsService {
   }
 
   public getAllthougts(): Observable<CardType[]> {
-    return this.httpClient.get<CardType[]>("/api/thoughts").pipe(map(values => {
+    return this.httpClient.get<CardType[]>("/api/thoughts", {withCredentials: true}).pipe(map(values => {
       this.subject.next(values);
       return values;
     }));

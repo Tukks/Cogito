@@ -1,7 +1,8 @@
-import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../http-service/auth-service.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {environment} from "../../../environments/environment";
+import {Router} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {LoginService} from "../../http-service/login.service";
 
 @Component({
   selector: 'app-login',
@@ -9,42 +10,27 @@ import {environment} from "../../../environments/environment";
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
+  register = new FormGroup({
+    email: new FormControl('', [Validators.email]),
+    password: new FormControl('', [Validators.min(12)]),
+  });
 
-  constructor(private authService: AuthService, private router: Router, private zone: NgZone, private activatedRoute: ActivatedRoute) {
+  constructor(private loginService: LoginService,
+              private authService: AuthService, private router: Router) {
   }
 
-  @ViewChild('buttonDiv') buttonDiv!: ElementRef;
-
-
-  ngAfterViewInit(): void {
-    if (!this.authService.exist()) {
-      (window as any).google.accounts.id.initialize({
-        client_id: environment.clientId,
-        auto_select: true,
-        callback: this.handleCredentialResponse.bind(this)
-      });
-      (window as any).google.accounts.id.renderButton(
-        this.buttonDiv.nativeElement,
-        {theme: "outline", size: "large"}  // customization attributes
-      );
-      (window as any).google.accounts.id.prompt();
-    }
-  }
 
   ngOnInit(): void {
-    if (this.authService.exist()) {
-      this.router.navigate(['/board']);
-    }
+
   }
 
-  handleCredentialResponse(response: { credential: string; }) {
-    this.zone.run(() => {
-      this.authService.saveJwt(response.credential);
-      const queryParamRedirect = this.activatedRoute.snapshot.queryParams['redirectTo'];
-      this.router.navigateByUrl(queryParamRedirect ?
-        queryParamRedirect : "/board");
-
+  save() {
+    this.loginService.login(this.register.getRawValue()).subscribe(() => {
+      this.router.navigateByUrl("/board");
     });
+  }
 
+  goToNewAccount() {
+    this.router.navigateByUrl("/register");
   }
 }

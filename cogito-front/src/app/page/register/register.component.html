@@ -1,11 +1,12 @@
-<div class="login">
+<div class="register">
   <img src="assets/icons/icon-96x96.png" alt="logo" height="96" width="96" style="align-self: center;"/>
   <h1 nz-typography>Cogito</h1>
   <form [formGroup]="register" class="form-login">
     <input type="text" nz-input placeholder="Email" formControlName="email" autocomplete="email"/>
-    <input type="password" nz-input placeholder="Password" formControlName="password" autocomplete="current-password"/>
-    <button nz-button (click)="save()" nzType="primary">Login</button>
-    <button nz-button (click)="goToNewAccount()">New Account</button>
+    <input type="password" nz-input placeholder="Password" formControlName="password" autocomplete="new-password"/>
+    <button nz-button (click)="save()" nzType="primary">Create Account</button>
 
   </form>
 </div>
+
+
