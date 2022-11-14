@@ -1,11 +1,12 @@
 package com.tukks.cogito.service;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
+
+import com.tukks.cogito.entity.UserEntity;
 
 public class SecurityUtils {
 
 	public static String getSub() {
-		return (String)((Jwt)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getClaims().get("sub");
+		return ((UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId().toString();
 	}
 }

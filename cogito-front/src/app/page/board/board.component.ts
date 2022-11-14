@@ -28,7 +28,8 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.hotkeys.addShortcut({keys: 'shift.s'}).subscribe(() => {
+    this.hotkeys.addShortcut({keys: 'shift.f'}).subscribe(() => {
+      this.searchInput.nativeElement.blur();
       this.searchInput.nativeElement.focus();
     });
     // @ts-ignore
