@@ -24,7 +24,7 @@ export class BoardComponent implements OnInit {
   }
 
   trackByFn(index: number, item: CardType) {
-    return item.id; // or item.id
+    return item.id && item.modified; // or item.id
   }
 
   ngOnInit(): void {
@@ -58,8 +58,8 @@ export class BoardComponent implements OnInit {
   search($event: any) {
     if ($event !== "") {
       const searched = this.index.search($event);
-      let ids: number[] = [];
-      searched.forEach((res: { field: string, result: number[] }) => {
+      let ids: string[] = [];
+      searched.forEach((res: { field: string, result: string[] }) => {
         ids = ids.concat(res.result);
       })
       this.filteredResult = this.originalResult.filter(card => ids.includes(card.id));

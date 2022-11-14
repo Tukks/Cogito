@@ -13,7 +13,7 @@ import {HotkeysService} from "../../internal-service/hotkeys/hotkeys.service";
 export class MarkdownCardComponent implements AfterViewInit {
 
   @Input()
-  id: number | undefined;
+  id: string | undefined;
 
   @Input()
   readonly: boolean = true;

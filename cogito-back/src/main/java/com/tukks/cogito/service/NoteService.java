@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -60,12 +61,12 @@ public class NoteService {
 	}
 
 	@Transactional
-	public void delete(final Long id) {
+	public void delete(final UUID id) {
 		thingsRepository.deleteByIdAndOidcSub(id, getSub());
 	}
 
 	@Transactional
-	public void editThings(final Long id, final ThingsEditRequest thingsEditRequest) {
+	public void editThings(final UUID id, final ThingsEditRequest thingsEditRequest) {
 		final String sub = getSub();
 		ThingsEntity thingsEntity = thingsRepository.getByIdAndOidcSub(id, sub);
 		if (thingsEntity == null) {

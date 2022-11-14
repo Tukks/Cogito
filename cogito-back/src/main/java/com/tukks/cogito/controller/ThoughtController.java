@@ -1,6 +1,7 @@
 package com.tukks.cogito.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,12 +38,12 @@ public class ThoughtController {
 	}
 
 	@PatchMapping("/{id}")
-	public void editThings(@PathVariable Long id, @RequestBody ThingsEditRequest thingsEditRequest) {
+	public void editThings(@PathVariable UUID id, @RequestBody ThingsEditRequest thingsEditRequest) {
 		noteService.editThings(id, thingsEditRequest);
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id) {
+	public void delete(@PathVariable UUID id) {
 		noteService.delete(id);
 	}
 

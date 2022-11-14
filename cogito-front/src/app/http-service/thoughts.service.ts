@@ -26,13 +26,13 @@ export class ThoughtsService {
     }))
   }
 
-  public delete(id: number): Observable<any> {
+  public delete(id: string): Observable<any> {
     return this.httpClient.delete(`/api/${id}`).pipe(tap(() => {
       this.getAllthougts().subscribe(value => this.subject.next(value));
     }))
   }
 
-  public editThing(id: number, thingRequest: { title?: string, note?: string, tags?: Tag[], comment?: string }): Observable<any> {
+  public editThing(id: string, thingRequest: { title?: string, note?: string, tags?: Tag[], comment?: string }): Observable<any> {
     return this.httpClient.patch(`/api/${id}`, thingRequest).pipe(tap(() => {
       this.getAllthougts().subscribe(value => this.subject.next(value));
     }))

@@ -1,8 +1,11 @@
 package com.tukks.cogito.entity;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Type;
 
 import com.tukks.cogito.dto.ThingType;
 import com.tukks.cogito.entity.superclass.BaseTable;
@@ -26,8 +29,10 @@ import lombok.extern.jackson.Jacksonized;
 public class ThingsEntity extends BaseTable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	@GeneratedValue
+	@Column(columnDefinition = "uuid")
+	@Type(type = "org.hibernate.type.UUIDCharType")
+	private UUID id;
 
 	private String oidcSub;
 

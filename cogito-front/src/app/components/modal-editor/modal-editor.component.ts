@@ -69,7 +69,7 @@ export class ModalEditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  delete(id: number): void {
+  delete(id: string): void {
     this.thoughtService.delete(id).subscribe();
     this.dialogRef.close();
   }
