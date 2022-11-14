@@ -8,19 +8,8 @@ export class AuthService {
   constructor() {
   }
 
-  public saveJwt(jwt: string) {
-    localStorage.setItem('jwt', jwt);
-  }
-
-  public getCookie() {
-    return localStorage.getItem('jwt');
-  }
-
   public removeCookie() {
-    localStorage.removeItem('jwt');
+    document.cookie = "accessToken= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
   }
 
-  public exist() {
-    return localStorage.getItem('jwt') !== null;
-  }
 }

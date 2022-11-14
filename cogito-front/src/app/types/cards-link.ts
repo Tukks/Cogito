@@ -11,10 +11,11 @@ export interface Tag {
 export interface CardsLink {
   title: string,
   thingType: CardsType,
-  id: number,
+  id: string, // this is an uuid
   comment: string,
   tags: Tag[],
-
+  created: Date;
+  modified: Date;
 }
 
 export interface NoteCard extends CardsLink {

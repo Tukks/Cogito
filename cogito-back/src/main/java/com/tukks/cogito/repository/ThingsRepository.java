@@ -1,6 +1,7 @@
 package com.tukks.cogito.repository;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -14,8 +15,8 @@ public interface ThingsRepository extends CrudRepository<ThingsEntity, Long> {
 	@Query("select p from ThingsEntity p where p.oidcSub = :sub order by p.modified desc")
 	List<Object> getAll(String sub);
 
-	ThingsEntity getByIdAndOidcSub(Long id, String sub);
+	ThingsEntity getByIdAndOidcSub(UUID uuid, String sub);
 
-	Integer deleteByIdAndOidcSub(Long id, String sub);
+	Integer deleteByIdAndOidcSub(UUID uuid, String sub);
 
 }
