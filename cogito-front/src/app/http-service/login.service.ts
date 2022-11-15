@@ -18,4 +18,8 @@ export class LoginService {
   public login(user: { email: string | null, password: string | null }): Observable<any> {
     return this.httpClient.post("/api/login", user);
   }
+
+  public checkConnected(): Observable<any> {
+    return this.httpClient.get("/api/check");
+  }
 }

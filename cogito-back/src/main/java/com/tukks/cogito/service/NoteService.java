@@ -9,6 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,11 +32,13 @@ import com.tukks.cogito.service.internal.TweetService;
 
 import lombok.AllArgsConstructor;
 import static com.tukks.cogito.service.SecurityUtils.getSub;
+import static com.tukks.cogito.utils.Constants.REGEX_TWITTER;
 
 @Service
 @AllArgsConstructor
 public class NoteService {
 
+	private final Logger logger = LogManager.getLogger(getClass());
 	private final LinkPreview linkPreview;
 	private final LinkRepository linkRepository;
 
@@ -41,18 +46,22 @@ public class NoteService {
 	private final ThingsRepository thingsRepository;
 	private final TweetService tweetService;
 
-	private static final String REGEX_TWITTER = "^https?:\\/\\/twitter\\.com\\/(?:#!\\/)?(\\w+)\\/status(es)?\\/(\\d+)";
 
 	public void save(final String note) {
 		final String noteCleaned = note.trim();
 		if (isTwitterUrl(noteCleaned)) {
+			logger.info("Added Tweet note");
 			tweetService.addTweet(noteCleaned);
 		} else if (isValidURL(noteCleaned)) {
+			logger.info("Added Link note");
+
 			final LinkEntity linkEntity = linkPreview.extractLinkPreviewInfo(noteCleaned);
 			linkEntity.setThingType(ThingType.LINK);
 			linkEntity.setOidcSub(getSub());
 			linkRepository.save(linkEntity);
 		} else {
+			logger.info("Added note");
+
 			final NoteEntity noteEntity = new NoteEntity(note);
 			noteEntity.setThingType(ThingType.MARKDOWN);
 			noteEntity.setOidcSub(getSub());
