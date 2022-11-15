@@ -5,7 +5,7 @@
   "background_color": "black",
   "display": "standalone",
   "share_target": {
-    "action": "/handle-share/",
+    "action": "/#/handle-share/",
     "method": "GET",
     "params": {
       "title": "title",
