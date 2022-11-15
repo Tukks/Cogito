@@ -4,7 +4,6 @@
 @media only screen and (max-width: 768px) {
   .container {
     grid-template-columns: repeat(auto-fit, 48%);
-    padding-left: 10px;
 
   }
 
@@ -17,14 +16,12 @@
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .container {
     grid-template-columns: repeat(auto-fit, 32%);
-    padding-left: 10px;
   }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
   .container {
-    padding-left: 10px;
     grid-template-columns: repeat(auto-fit, 19%);
 
   }
@@ -45,12 +42,11 @@
   padding-right: 10px;
   padding-top: 20px;
   background-color: @body-background;
-
   .input {
+    border-radius: 8px;
     height: 40px;
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
+    border: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   }
 }
 

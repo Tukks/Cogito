@@ -21,6 +21,7 @@ export class ThoughtsService {
   }
 
   public save(note: string): Observable<any> {
+    console.log(note);
     return this.httpClient.post("/api/save", note).pipe(tap(() => {
       this.getAllthougts().subscribe(value => this.subject.next(value));
     }))

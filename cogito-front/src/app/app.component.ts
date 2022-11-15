@@ -1,17 +1,18 @@
-import {Component} from '@angular/core';
-import {NzConfigService} from "ng-zorro-antd/core/config";
+import {Component, OnInit} from '@angular/core';
+import {LoginService} from "./http-service/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor(private nzConfigService: NzConfigService) {
+  constructor(private loginService: LoginService, private router: Router) {
   }
 
-  onChangeConfig() {
-    this.nzConfigService.set('theme', {bodyBackground: '#1890ff'})
+  ngOnInit(): void {
   }
+
 }

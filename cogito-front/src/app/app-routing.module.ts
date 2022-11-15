@@ -8,7 +8,7 @@ import {RegisterComponent} from "./page/register/register.component";
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'board',
     pathMatch: 'full'
   },
   {
