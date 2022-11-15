@@ -21,10 +21,6 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.loginService.checkConnected().subscribe({
-      next: value => this.router.navigateByUrl("/board"),
-      error: err => this.router.navigateByUrl("/login")
-    })
   }
 
   save() {
