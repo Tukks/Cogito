@@ -18,6 +18,7 @@ export class HandleShareComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((param: any) => {
+      console.log(param);
       // On Android text is equals to the url
       if (param.text && param.text != '') {
         this.thoughtsService.save(param.text).subscribe(val => {
