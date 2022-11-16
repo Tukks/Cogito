@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "./http-service/login.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -9,11 +7,21 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private loginService: LoginService, private router: Router) {
+  darkModeMenu: string = 'Dark theme';
+
+  constructor() {
   }
 
   ngOnInit(): void {
-    document.body.classList.toggle("dark-mode");
   }
 
+  changeTheme(): void {
+    document.body.classList.toggle("dark-mode");
+    if (document.body.classList.contains("dark-mode")) {
+      this.darkModeMenu = 'White Theme';
+    } else {
+      this.darkModeMenu = 'Dark theme';
+
+    }
+  }
 }

@@ -36,6 +36,7 @@ import {LoginComponent} from "./page/login/login.component";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {RegisterComponent} from './page/register/register.component';
+import {NzAffixModule} from "ng-zorro-antd/affix";
 
 registerLocaleData(fr);
 
@@ -79,7 +80,8 @@ registerLocaleData(fr);
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    NzDropDownModule
+    NzDropDownModule,
+    NzAffixModule
   ],
   providers: [
     {provide: NZ_I18N, useValue: fr_FR},

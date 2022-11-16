@@ -1,2 +1,12 @@
 <router-outlet></router-outlet>
+<nz-affix [nzOffsetBottom]="0" class="menu">
+  <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="menu"><span nz-icon nzType="menu" nzTheme="outline"></span></button>
+</nz-affix>
 
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="changeTheme()">
+      <a>{{darkModeMenu}}</a>
+    </li>
+  </ul>
+</nz-dropdown-menu>
