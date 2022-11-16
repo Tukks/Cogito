@@ -12,6 +12,7 @@ body {
 
 .link {
   font-size: 24px;
+  color: @text-color;
 }
 
 .label {
@@ -46,10 +47,15 @@ body {
 .little {
   border-radius: 8px;
 
+  .s-btn:not(:hover) {
+    color: @text-color !important;
+
+  }
+
   .s-textarea {
     border-radius: 8px;
     background-color: @component-background;
-    color: @text-color;
+    color: @text-color !important;
   }
 
   .s-input, .s-textarea {
@@ -61,6 +67,7 @@ body {
     cursor: unset;
     background-color: @component-background;
     color: @text-color;
+    border-color: @component-background;
   }
 
   .is-readonly {
@@ -106,6 +113,7 @@ body {
     line-height: 16px;
     border-color: #eee #ddd #bbb;
     border-radius: 5px;
+    color: @text-color;
     //border-style: solid;
     //border-width: 1px;
     //box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
