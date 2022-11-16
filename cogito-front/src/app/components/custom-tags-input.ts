@@ -21,19 +21,12 @@ import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@an
       *ngIf="inputVisible"
       type="text"
       [(ngModel)]="inputValue"
-      style="width: 78px;"
+      class="tags-input"
       (blur)="handleInputConfirm()"
       (keydown.enter)="handleInputConfirm()"
     />
   `,
-  styles: [
-    `
-      .editable-tag {
-        background: rgb(255, 255, 255);
-        border-style: dashed;
-      }
-    `
-  ]
+  styleUrls: ['./custom-tags-input.less']
 })
 export class CustomTagsInput {
   @Input()

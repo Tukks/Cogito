@@ -2,6 +2,19 @@
 // For more information: https://ng.ant.design/docs/customize-theme/en
 @import "ng-zorro-antd/style/color/colorPalette.less";
 @import "ng-zorro-antd/ng-zorro-antd.less";
+:root {
+  --background-color: @rose-6;
+  --component-background: #FFF;
+  --text-color: @rose-9;
+}
+
+:root {
+  .dark-mode {
+    --background-color: #121212;
+    --component-background: #282A3A;
+    --text-color: white;
+  }
+}
 
 // Override less variables to here
 // View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
@@ -29,11 +42,12 @@
 @btn-circle-size-lg: 64px;
 @btn-circle-size-sm: 64px;
 
-@body-background: @rose-4;
-@component-background: #FFF;
-@label-color: @rose-9;
-@text-color: @rose-9;
+@body-background: var(--background-color);
+@component-background: var(--component-background);
+@label-color: var(--text-color);
+@text-color: var(--text-color);
 @text-color-secondary: @rose-9;
+;
 
 .ant-btn-circle {
   height: 48px;
