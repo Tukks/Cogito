@@ -33,4 +33,6 @@ public class Tag {
 
 	private String tag;
 
+	private boolean hidden = false;
+
 }

@@ -39,23 +39,23 @@ public class ThoughtController {
 	}
 
 	@PostMapping("/save")
-	public void save(@RequestBody String note) {
+	public Object save(@RequestBody String note) {
 		logger.info("Saving new note");
 
-		noteService.save(note);
+		return noteService.save(note);
 	}
 
 	@PatchMapping("/{id}")
-	public void editThings(@PathVariable UUID id, @RequestBody ThingsEditRequest thingsEditRequest) {
+	public Object editThings(@PathVariable UUID id, @RequestBody ThingsEditRequest thingsEditRequest) {
 		logger.info("Edit note, id : {}", id);
-		noteService.editThings(id, thingsEditRequest);
+		return noteService.editThings(id, thingsEditRequest);
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable UUID id) {
+	public Integer delete(@PathVariable UUID id) {
 		logger.info("Delete note, id : {}", id);
 
-		noteService.delete(id);
+		return noteService.delete(id);
 	}
 
 }
