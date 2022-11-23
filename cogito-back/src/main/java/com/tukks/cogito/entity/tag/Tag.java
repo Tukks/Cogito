@@ -33,6 +33,7 @@ public class Tag {
 
 	private String tag;
 
+	@Column(name = "hidden", columnDefinition = "bool default false")
 	private boolean hidden = false;
 
 }
