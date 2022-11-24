@@ -11,4 +11,6 @@ public class TagEditRequest {
 
 	private String tag;
 
+	private boolean hidden;
+
 }

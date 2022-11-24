@@ -1,5 +1,5 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {CardsType, CardType} from "../../types/cards-link";
+import {CardsType, CardType, LinkCard, NoteCard, TweetCard} from "../../types/cards-link";
 import {Dialog} from "@angular/cdk/dialog";
 import {ModalEditorComponent} from "../modal-editor/modal-editor.component";
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
@@ -75,13 +75,13 @@ export class CardComponent implements OnInit {
   copyContent() {
     switch (this.card.thingType) {
       case CardsType.LINK:
-        this.clipboard.copy(this.card.url);
+        this.clipboard.copy((this.card as LinkCard).url);
         break;
       case CardsType.MARKDOWN:
-        this.clipboard.copy(this.card.markdown);
+        this.clipboard.copy((this.card as NoteCard).markdown);
         break;
       case CardsType.TWEET:
-        this.clipboard.copy(this.card.url);
+        this.clipboard.copy((this.card as TweetCard).url);
         break;
     }
     this.nzMessageService.success("Content copied !");
@@ -90,7 +90,7 @@ export class CardComponent implements OnInit {
   openLink($event: Event) {
     $event.stopPropagation();
     $event.preventDefault();
-    window.open(this.card.url, "_blank");
+    window.open((this.card as LinkCard).url, "_blank");
   }
 
   closeMenu() {

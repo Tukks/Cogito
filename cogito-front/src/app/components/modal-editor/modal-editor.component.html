@@ -1,24 +1,25 @@
 <div class="modal-editor">
   <button nz-button (click)="close()" nzType="primary" class="close-button" nzShape="circle"><span nz-icon nzType="close" nzTheme="outline"></span></button>
 
-  <ng-container *ngIf="data.card.thingType === cardsType.MARKDOWN">
-    <app-markdown-card class="modal-editor-left-column markdown" [content]="data.card.markdown" [cardMode]="false" [id]="data.card.id" [readonly]="false">
+  <ng-container *ngIf="$any(data.card).thingType === cardsType.MARKDOWN">
+    <app-markdown-card class="modal-editor-left-column markdown" [content]="$any(data.card).markdown" [cardMode]="false" [id]="$any(data.card).id"
+                       [readonly]="false">
 
     </app-markdown-card>
   </ng-container>
-  <ng-container *ngIf="data.card.thingType === cardsType.LINK">
+  <ng-container *ngIf="$any(data.card).thingType === cardsType.LINK">
     <div class="modal-editor-left-column">
-      <img src="{{data.card.image}}" alt="{{data.card.imageAlt}}" class="modal-editor-img-preview" appImgFallback/>
+      <img src="{{$any($any(data.card)).image}}" alt="{{$any(data.card).imageAlt}}" class="modal-editor-img-preview" appImgFallback/>
       <div>
-        <p nz-typography>{{data.card.desc}}</p>
-        <a nz-typography nzEllipsis href="{{data.card.url}}" target="_blank" (click)="$event.stopPropagation()" class="link">{{data.card.url}}</a>
+        <p nz-typography>{{$any(data.card).desc}}</p>
+        <a nz-typography nzEllipsis href="{{$any(data.card).url}}" target="_blank" (click)="$event.stopPropagation()" class="link">{{$any(data.card).url}}</a>
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="data.card.thingType === cardsType.TWEET">
+  <ng-container *ngIf="$any(data.card).thingType === cardsType.TWEET">
     <div class="modal-editor-left-column tweet">
 
-      <div [innerHTML]="data.card.html"></div>
+      <div [innerHTML]="$any(data.card).html"></div>
     </div>
   </ng-container>
   <div class="modal-editor-right-column">
@@ -38,5 +39,6 @@
 </div>
 <div class="modal-editor-actions">
   <button nz-button (click)="update()" nzType="primary" nzShape="circle"><span nz-icon nzType="save" nzTheme="outline"></span></button>
-  <button nz-button (click)="delete(data.card.id)" nzType="primary" nzDanger nzShape="circle"><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+  <button nz-button (click)="delete($any(data.card).id)" nzType="primary" nzDanger nzShape="circle"><span nz-icon nzType="delete" nzTheme="outline"></span>
+  </button>
 </div>
