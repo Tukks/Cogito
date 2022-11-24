@@ -23,6 +23,7 @@
     "@stackoverflow/stacks-editor": "^0.8.2",
     "@tiptap/core": "^2.0.0-beta.202",
     "@tiptap/starter-kit": "^2.0.0-beta.202",
+    "dexie": "^3.2.2",
     "flexsearch": "^0.7.31",
     "ng-zorro-antd": "^14.1.1",
     "rxjs": "~7.5.0",

@@ -1,25 +1,27 @@
-<div class="card" *ngIf="card.thingType === cardsType.LINK" (contextmenu)="contextMenu($event, menu)">
+<div class="card" *ngIf="$any(card).thingType === cardsType.LINK" (contextmenu)="contextMenu($event, menu)">
   <!-- Image à la une -->
   <div class="card-image flex-vertical">
-    <img src="{{card.image}}" alt="{{card.imageAlt}}" class="card-image-content default-image" appImgFallback>
+    <img src="{{$any(card).image}}" alt="{{$any(card).imageAlt}}" class="card-image-content default-image" appImgFallback>
 
-    <p nz-typography class="card-image-desc">{{card.desc}}</p>
-    <a nz-typography nzEllipsis href="{{card.url}}" target="_blank" class="card-image-desc link" (click)="$event.stopPropagation()">{{card.domain}}</a>
+    <p nz-typography class="card-image-desc">{{$any(card).desc}}</p>
+    <a nz-typography nzEllipsis href="{{$any(card).url}}" target="_blank" class="card-image-desc link"
+       (click)="$event.stopPropagation()">{{$any(card).domain}}</a>
 
   </div>
 
   <!-- Fin du corp de notre carte -->
 </div>
 
-<ng-container *ngIf="card.thingType === cardsType.MARKDOWN">
-  <app-markdown-card (contextmenu)="contextMenu($event, menu)" [readonly]="true" [cardMode]="true" [content]="card.markdown" [id]="card.id"></app-markdown-card>
+<ng-container *ngIf="$any(card).thingType === cardsType.MARKDOWN">
+  <app-markdown-card (contextmenu)="contextMenu($event, menu)" [readonly]="true" [cardMode]="true" [content]="$any(card).markdown"
+                     [id]="$any(card).id"></app-markdown-card>
 </ng-container>
 
-<div class="card tweet" *ngIf="card.thingType === cardsType.TWEET" (contextmenu)="contextMenu($event, menu)">
+<div class="card tweet" *ngIf="$any(card).thingType === cardsType.TWEET" (contextmenu)="contextMenu($event, menu)">
   <div class="card-image flex-vertical">
     <img src="../../../assets/image/twitter_logo.png" alt="twitter logo" class="card-image-content tweet-image">
 
-    <div [innerHTML]="card.html"></div>
+    <div [innerHTML]="$any(card).html"></div>
   </div>
 
 </div>
@@ -28,7 +30,7 @@
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
     <li nz-menu-item (click)="copyContent()"><span nz-icon nzType="copy" nzTheme="outline"></span>&nbsp;Copy Content</li>
-    <li nz-menu-item *ngIf="card.thingType !== cardsType.MARKDOWN" (click)="openLink($event)"><span nz-icon nzType="link" nzTheme="outline"></span>&nbsp;Open
+    <li nz-menu-item *ngIf="$any(card).thingType !== cardsType.MARKDOWN" (click)="openLink($event)"><span nz-icon nzType="link" nzTheme="outline"></span>&nbsp;Open
       link
     </li>
     <li nz-menu-item (click)="closeMenu()"><span nz-icon nzType="close" nzTheme="outline"></span>&nbsp;Close Menu

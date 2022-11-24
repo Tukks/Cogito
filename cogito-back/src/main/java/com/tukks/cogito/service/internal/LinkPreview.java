@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +21,7 @@ import org.apache.tika.sax.boilerpipe.BoilerpipeContentHandler;
 
 import org.springframework.stereotype.Service;
 
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -29,17 +32,23 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.tukks.cogito.entity.LinkEntity;
 import com.tukks.cogito.entity.tag.Tag;
+import com.tukks.cogito.service.internal.NLP.TaggerNLP;
+import com.tukks.cogito.service.internal.NLP.pojo.TermDocument;
 
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
+import lombok.AllArgsConstructor;
 
 /**
  * utilisé crux ?? https://github.com/chimbori/crux
+ * todo make async
  */
 @Service
+@AllArgsConstructor
 public class LinkPreview {
 
 	private record ArticleExtract(String title, String article) {}
 
+	private TaggerNLP taggerNLP;
 	private final Logger logger = LogManager.getLogger(getClass());
 
 	/**
@@ -55,33 +64,16 @@ public class LinkPreview {
 			webClient.getOptions().setCssEnabled(false);
 			webClient.getOptions().setJavaScriptEnabled(false);
 			HtmlPage htmlPage = webClient.getPage(url);
-			// if not working https://stackoverflow.com/questions/38417083/java-getting-a-503-error-when-trying-to-read-webpage-using-htmlunit/69760898#69760898
-			//			forceAgentHeader("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0");
 			Document document = Jsoup.parse(htmlPage.getWebResponse().getContentAsString());
-			//				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0")
-			//				.referrer("http://www.google.com")
-			//				.get();
 
-			String title = getTitle(document);
-			String desc = getDescription(document);
-			String ogUrl = StringUtils.defaultIfBlank(getUrl(document), url);
-			String ogImage = getImg(document, url);
-			String ogImageAlt = getMetaTagContent(document, "meta[property=og:image:alt]");
-			Boolean isArticle = isArticle(document);
-			String domain = new URL(ogUrl).getHost();
-			LinkEntity linkEntity = new LinkEntity(domain, url, title, desc, ogImage, ogImageAlt);
+			LinkEntity linkEntity = extractInformationFromWebPage(url, document);
+			ArticleExtract articleExtract = getArticleFromHtml(document, linkEntity);
 
-			if (isArticle) { // est ce la bonne facon de faire?
-				ArticleExtract articleExtract = parseNews(document.html());
-				linkEntity.setContent(articleExtract.article);
-				linkEntity.setTitle(articleExtract.title);
-				Tag tag = new Tag();
-				tag.setTag("read later");
-				linkEntity.setTags(List.of(tag));
-			}
+			createTagFromNLPAnalyse(linkEntity, articleExtract);
+
 			return linkEntity;
 
-		} catch (Exception e) {
+		} catch (IOException | SAXException | TikaException e) {
 			logger.warn("Unable to connect to extract domain name from : {}", url);
 			// if something not working, with save it as markdnow note
 			LinkEntity linkEntity = new LinkEntity();
@@ -89,6 +81,40 @@ public class LinkPreview {
 			return linkEntity;
 
 		}
+	}
+
+	private void createTagFromNLPAnalyse(LinkEntity linkEntity, ArticleExtract articleExtract) {
+		TermDocument termDocument = taggerNLP.getTagFromNlp(articleExtract.article);
+
+		linkEntity.setTags(getNLPTag(termDocument));
+	}
+
+	@NotNull
+	private List<Tag> getNLPTag(TermDocument termDocument) {
+		List<Tag> tags = new ArrayList<>();
+		termDocument.finalFilteredTerms.forEach((s, integers) -> tags.add(Tag.builder().tag(s).hidden(true).build()));
+		return tags;
+	}
+
+	@NotNull
+	private ArticleExtract getArticleFromHtml(Document document, LinkEntity linkEntity) throws IOException, SAXException, TikaException {
+		Boolean isArticle = isArticle(document);
+
+		ArticleExtract articleExtract = parseNews(document.html());
+		linkEntity.setContent(articleExtract.article);
+		linkEntity.setTitle(articleExtract.title);
+		return articleExtract;
+	}
+
+	@NotNull
+	private LinkEntity extractInformationFromWebPage(String url, Document document) throws MalformedURLException {
+		String title = getTitle(document);
+		String desc = getDescription(url, document);
+		String ogUrl = StringUtils.defaultIfBlank(getUrl(document), url);
+		String ogImage = getImg(document, url);
+		String ogImageAlt = getMetaTagContent(document, "meta[property=og:image:alt]");
+		String domain = new URL(ogUrl).getHost();
+		return new LinkEntity(domain, url, title, desc, ogImage, ogImageAlt);
 	}
 
 	public ArticleExtract parseNews(String html) throws IOException, SAXException, TikaException {
@@ -103,6 +129,11 @@ public class LinkPreview {
 
 		parser.parse(input, textHandler, metadata, context);
 
+		String contentEncoding = metadata.get(Metadata.CONTENT_ENCODING);
+		if (contentEncoding != null && !contentEncoding.equals(StandardCharsets.UTF_8.name())) {
+			return new ArticleExtract(new String(textHandler.getTitle().getBytes(contentEncoding), StandardCharsets.UTF_8),
+				new String(bodyContentHandler.toString().getBytes(contentEncoding), StandardCharsets.UTF_8));
+		}
 		return new ArticleExtract(textHandler.getTitle(), bodyContentHandler.toString());
 	}
 
@@ -115,10 +146,7 @@ public class LinkPreview {
 	 */
 	private Boolean isArticle(Document document) {
 		Element article = document.select("article").first();
-		if (article != null) {
-			return true;
-		}
-		return false;
+		return article != null;
 	}
 
 	private String getTitle(Document document) {
@@ -145,7 +173,14 @@ public class LinkPreview {
 		return "";
 	}
 
-	private String getDescription(Document document) {
+	private String getDescription(String url, Document document) {
+		if (url.contains("wikipedia")) {
+			for (Element element : document.select(".mw-content-ltr p")) {
+				if (!element.text().equals(StringUtils.EMPTY)) {
+					return element.text();
+				}
+			}
+		}
 		var description = getMetaTagContent(document, "meta[property=\"og:description\"]");
 		if (!description.equals(StringUtils.EMPTY)) {
 			return description;

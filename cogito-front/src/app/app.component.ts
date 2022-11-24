@@ -13,13 +13,17 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    document.body.classList.add(localStorage.getItem('theme')!);
+
   }
 
   changeTheme(): void {
     document.body.classList.toggle("dark-mode");
     if (document.body.classList.contains("dark-mode")) {
+      localStorage.setItem('theme', "dark-mode");
       this.darkModeMenu = 'White Theme';
     } else {
+      localStorage.setItem('theme', "");
       this.darkModeMenu = 'Dark theme';
 
     }

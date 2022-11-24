@@ -47,35 +47,35 @@ public class NoteService {
 	private final TweetService tweetService;
 
 
-	public void save(final String note) {
+	public Object save(final String note) {
 		final String noteCleaned = note.trim();
 		if (isTwitterUrl(noteCleaned)) {
 			logger.info("Added Tweet note");
-			tweetService.addTweet(noteCleaned);
+			return tweetService.addTweet(noteCleaned);
 		} else if (isValidURL(noteCleaned)) {
 			logger.info("Added Link note");
 
 			final LinkEntity linkEntity = linkPreview.extractLinkPreviewInfo(noteCleaned);
 			linkEntity.setThingType(ThingType.LINK);
 			linkEntity.setOidcSub(getSub());
-			linkRepository.save(linkEntity);
+			return linkRepository.save(linkEntity);
 		} else {
 			logger.info("Added note");
 
 			final NoteEntity noteEntity = new NoteEntity(note);
 			noteEntity.setThingType(ThingType.MARKDOWN);
 			noteEntity.setOidcSub(getSub());
-			noteRepository.save(noteEntity);
+			return noteRepository.save(noteEntity);
 		}
 	}
 
 	@Transactional
-	public void delete(final UUID id) {
-		thingsRepository.deleteByIdAndOidcSub(id, getSub());
+	public Integer delete(final UUID id) {
+		return thingsRepository.deleteByIdAndOidcSub(id, getSub());
 	}
 
 	@Transactional
-	public void editThings(final UUID id, final ThingsEditRequest thingsEditRequest) {
+	public Object editThings(final UUID id, final ThingsEditRequest thingsEditRequest) {
 		final String sub = getSub();
 		ThingsEntity thingsEntity = thingsRepository.getByIdAndOidcSub(id, sub);
 		if (thingsEntity == null) {
@@ -93,7 +93,7 @@ public class NoteService {
 			if (thingsEditRequest.getTitle() != null) {
 				noteEntity.setTitle(thingsEditRequest.getTitle());
 			}
-			noteRepository.save(noteEntity);
+			return noteRepository.save(noteEntity);
 		} else {
 			if (thingsEditRequest.getTitle() != null) {
 				thingsEntity.setTitle(thingsEditRequest.getTitle());
@@ -104,7 +104,7 @@ public class NoteService {
 			if (thingsEditRequest.getComment() != null) {
 				thingsEntity.setComment(thingsEditRequest.getComment());
 			}
-			thingsRepository.save(thingsEntity);
+			return thingsRepository.save(thingsEntity);
 		}
 
 	}
@@ -113,6 +113,7 @@ public class NoteService {
 		return tags.stream().map(s -> {
 			Tag newTag = new Tag();
 			newTag.setTag(s.getTag());
+			newTag.setHidden(s.isHidden());
 			return newTag;
 		}).collect(Collectors.toList());
 	}

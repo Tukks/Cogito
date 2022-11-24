@@ -4,6 +4,7 @@ import {CardsType, CardType} from "../../types/cards-link";
 import FlexSearch from "flexsearch";
 import {HttpClient} from "@angular/common/http";
 import {HotkeysService} from "../../internal-service/hotkeys/hotkeys.service";
+import {CogitoStoreService} from "../../internal-service/store/cogito-store.service";
 
 @Component({
   selector: 'app-board',
@@ -20,7 +21,9 @@ export class BoardComponent implements OnInit {
   @ViewChild('searchInput') searchInput!: ElementRef;
 
 
-  constructor(private thoughtsService: ThoughtsService, public httpClient: HttpClient, private hotkeys: HotkeysService) {
+  constructor(private thoughtsService: ThoughtsService,
+              public httpClient: HttpClient,
+              private hotkeys: HotkeysService, private cogitoStoreService: CogitoStoreService) {
   }
 
   trackByFn(index: number, item: CardType) {
@@ -40,12 +43,12 @@ export class BoardComponent implements OnInit {
       language: "fr",
       document: {
         id: "id",
-        index: ["markdown", "title", "url", "desc", "thingType", "tags[]:tag", "content"],
+        index: ["markdown", "title", "url", "desc", "thingType", "tags[]:tag"],
       },
       store: true
     });
     this.thoughtsService.getAllthougts().subscribe();
-    this.thoughtsService.subject.subscribe((val: CardType[]) => {
+    this.cogitoStoreService.cards$.subscribe((val) => {
       val.forEach(v => {
         this.index.remove(v.id);
         this.index.add(v);

@@ -1,41 +1,38 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, Subject, tap} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {CardType, Tag} from "../types/cards-link";
-import {map} from "rxjs/operators";
+import {CogitoStoreService} from "../internal-service/store/cogito-store.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThoughtsService {
-  public subject = new Subject<CardType[]>();
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private cogitoStoreService: CogitoStoreService) {
   }
 
   public getAllthougts(): Observable<CardType[]> {
-    return this.httpClient.get<CardType[]>("/api/thoughts", {withCredentials: true}).pipe(map(values => {
-      this.subject.next(values);
-      return values;
+    return this.httpClient.get<CardType[]>("/api/thoughts").pipe(tap((values) => {
+      this.cogitoStoreService.addCards(values);
     }));
   }
 
-  public save(note: string): Observable<any> {
-    console.log(note);
-    return this.httpClient.post("/api/save", note).pipe(tap(() => {
-      this.getAllthougts().subscribe(value => this.subject.next(value));
+  public save(note: string): Observable<CardType> {
+    return this.httpClient.post<CardType>("/api/save", note).pipe(tap((card) => {
+      this.cogitoStoreService.addCard(card);
     }))
   }
 
-  public delete(id: string): Observable<any> {
-    return this.httpClient.delete(`/api/${id}`).pipe(tap(() => {
-      this.getAllthougts().subscribe(value => this.subject.next(value));
+  public delete(id: string): Observable<number> {
+    return this.httpClient.delete<number>(`/api/${id}`).pipe(tap(() => {
+      this.cogitoStoreService.removeCard(id);
     }))
   }
 
-  public editThing(id: string, thingRequest: { title?: string, note?: string, tags?: Tag[], comment?: string }): Observable<any> {
-    return this.httpClient.patch(`/api/${id}`, thingRequest).pipe(tap(() => {
-      this.getAllthougts().subscribe(value => this.subject.next(value));
+  public editThing(id: string, thingRequest: { title?: string, note?: string, tags?: Tag[], comment?: string }): Observable<CardType> {
+    return this.httpClient.patch<CardType>(`/api/${id}`, thingRequest).pipe(tap((cardModified) => {
+      this.cogitoStoreService.editCard(cardModified);
     }))
   }
 

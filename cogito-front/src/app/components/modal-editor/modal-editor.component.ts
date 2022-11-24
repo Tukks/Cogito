@@ -31,7 +31,7 @@ export class ModalEditorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.title = this.data.card.title;
     this.comment = this.data.card.comment;
-    this.tags = this.data.card.tags.map(tag => tag.tag);
+    this.tags = this.data.card.tags.filter(tag => !tag.hidden).map(tag => tag.tag);
     const modalState = {
       modal: true,
       desc: 'fake state for our modal'
@@ -47,9 +47,9 @@ export class ModalEditorComponent implements OnInit, OnDestroy {
 
   update(): void {
     let customTag: Tag[] = this.tags.map(tag => {
-      return {tag}
+      return {tag, hidden: false}
     });
-
+    customTag.push(...this.data.card.tags.filter(tag => tag.hidden));
     if (this.data.card.thingType === this.cardsType.MARKDOWN) {
       this.thoughtService.editThing(this.data.card.id, {
         note: this.markdownCardComponent.stackEditor?.content!,
