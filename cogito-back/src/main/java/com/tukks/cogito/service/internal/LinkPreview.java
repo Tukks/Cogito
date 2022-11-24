@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,6 +129,11 @@ public class LinkPreview {
 
 		parser.parse(input, textHandler, metadata, context);
 
+		String contentEncoding = metadata.get(Metadata.CONTENT_ENCODING);
+		if (contentEncoding != null && !contentEncoding.equals(StandardCharsets.UTF_8.name())) {
+			return new ArticleExtract(new String(textHandler.getTitle().getBytes(contentEncoding), StandardCharsets.UTF_8),
+				new String(bodyContentHandler.toString().getBytes(contentEncoding), StandardCharsets.UTF_8));
+		}
 		return new ArticleExtract(textHandler.getTitle(), bodyContentHandler.toString());
 	}
 
