@@ -28,8 +28,8 @@ import org.jsoup.nodes.Element;
 import org.xml.sax.SAXException;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.tukks.cogito.entity.LinkEntity;
 import com.tukks.cogito.entity.tag.Tag;
 import com.tukks.cogito.service.internal.NLP.TaggerNLP;
@@ -59,11 +59,11 @@ public class LinkPreview {
 	 * @throws IOException
 	 */
 	public LinkEntity extractLinkPreviewInfo(String url) {
-		try {
-			WebClient webClient = new WebClient(BrowserVersion.CHROME);
+		try (WebClient webClient = new WebClient(BrowserVersion.CHROME)) {
+
 			webClient.getOptions().setCssEnabled(false);
 			webClient.getOptions().setJavaScriptEnabled(false);
-			HtmlPage htmlPage = webClient.getPage(url);
+			Page htmlPage = webClient.getPage(url);
 			Document document = Jsoup.parse(htmlPage.getWebResponse().getContentAsString());
 
 			LinkEntity linkEntity = extractInformationFromWebPage(url, document);
