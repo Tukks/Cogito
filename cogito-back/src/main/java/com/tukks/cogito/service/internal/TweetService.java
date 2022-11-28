@@ -30,7 +30,7 @@ public class TweetService {
 
 	private TweetPreview tweetPreview;
 
-	public TweetEntity addTweet(String url) {
+	public TweetEntity addTweet(String url, List<Tag> tags) {
 		Pattern pattern = Pattern.compile(REGEX_TWITTER);
 		String cleanedUrl = pattern.matcher(url)
 			.results()                       // Stream<MatchResult>

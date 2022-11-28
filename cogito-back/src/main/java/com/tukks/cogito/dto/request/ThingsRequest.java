@@ -9,7 +9,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @Builder
 @Jacksonized
-public class ThingsEditRequest {
+public class ThingsRequest {
 
 	private String title;
 

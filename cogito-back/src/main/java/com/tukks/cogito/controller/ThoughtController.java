@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tukks.cogito.dto.request.ThingsEditRequest;
+import com.tukks.cogito.dto.request.ThingsRequest;
 import com.tukks.cogito.repository.ThingsRepository;
 import com.tukks.cogito.service.NoteService;
 
@@ -39,16 +39,16 @@ public class ThoughtController {
 	}
 
 	@PostMapping("/save")
-	public Object save(@RequestBody String note) {
+	public Object save(@RequestBody ThingsRequest thingsRequest) {
 		logger.info("Saving new note");
 
-		return noteService.save(note);
+		return noteService.save(thingsRequest);
 	}
 
 	@PatchMapping("/{id}")
-	public Object editThings(@PathVariable UUID id, @RequestBody ThingsEditRequest thingsEditRequest) {
+	public Object editThings(@PathVariable UUID id, @RequestBody ThingsRequest thingsRequest) {
 		logger.info("Edit note, id : {}", id);
-		return noteService.editThings(id, thingsEditRequest);
+		return noteService.editThings(id, thingsRequest);
 	}
 
 	@DeleteMapping("/{id}")

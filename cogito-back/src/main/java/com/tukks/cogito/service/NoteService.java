@@ -3,6 +3,7 @@ package com.tukks.cogito.service;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -19,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.tukks.cogito.dto.ThingType;
 import com.tukks.cogito.dto.request.TagEditRequest;
-import com.tukks.cogito.dto.request.ThingsEditRequest;
+import com.tukks.cogito.dto.request.ThingsRequest;
 import com.tukks.cogito.entity.LinkEntity;
 import com.tukks.cogito.entity.NoteEntity;
 import com.tukks.cogito.entity.ThingsEntity;
@@ -46,25 +47,27 @@ public class NoteService {
 	private final ThingsRepository thingsRepository;
 	private final TweetService tweetService;
 
-
-	public Object save(final String note) {
-		final String noteCleaned = note.trim();
+	public Object save(final ThingsRequest thingsRequest) {
+		final String noteCleaned = thingsRequest.getNote().trim();
 		if (isTwitterUrl(noteCleaned)) {
 			logger.info("Added Tweet note");
-			return tweetService.addTweet(noteCleaned);
+			return tweetService.addTweet(noteCleaned, createTagsEntityFromString(thingsRequest.getTags()));
 		} else if (isValidURL(noteCleaned)) {
 			logger.info("Added Link note");
 
 			final LinkEntity linkEntity = linkPreview.extractLinkPreviewInfo(noteCleaned);
 			linkEntity.setThingType(ThingType.LINK);
 			linkEntity.setOidcSub(getSub());
+			linkEntity.setTags(createTagsEntityFromString(thingsRequest.getTags()));
+
 			return linkRepository.save(linkEntity);
 		} else {
 			logger.info("Added note");
 
-			final NoteEntity noteEntity = new NoteEntity(note);
+			final NoteEntity noteEntity = new NoteEntity(thingsRequest.getNote());
 			noteEntity.setThingType(ThingType.MARKDOWN);
 			noteEntity.setOidcSub(getSub());
+			noteEntity.setTags(createTagsEntityFromString(thingsRequest.getTags()));
 			return noteRepository.save(noteEntity);
 		}
 	}
@@ -75,7 +78,7 @@ public class NoteService {
 	}
 
 	@Transactional
-	public Object editThings(final UUID id, final ThingsEditRequest thingsEditRequest) {
+	public Object editThings(final UUID id, final ThingsRequest thingsRequest) {
 		final String sub = getSub();
 		ThingsEntity thingsEntity = thingsRepository.getByIdAndOidcSub(id, sub);
 		if (thingsEntity == null) {
@@ -83,26 +86,26 @@ public class NoteService {
 		}
 		if (thingsEntity.getThingType() == ThingType.MARKDOWN) {
 			NoteEntity noteEntity = noteRepository.getByIdAndOidcSub(id, sub);
-			noteEntity.setMarkdown(thingsEditRequest.getNote());
-			if (thingsEditRequest.getTags() != null) {
-				noteEntity.setTags(createTagsEntityFromString(thingsEditRequest.getTags()));
+			noteEntity.setMarkdown(thingsRequest.getNote());
+			if (thingsRequest.getTags() != null) {
+				noteEntity.setTags(createTagsEntityFromString(thingsRequest.getTags()));
 			}
-			if (thingsEditRequest.getComment() != null) {
-				noteEntity.setComment(thingsEditRequest.getComment());
+			if (thingsRequest.getComment() != null) {
+				noteEntity.setComment(thingsRequest.getComment());
 			}
-			if (thingsEditRequest.getTitle() != null) {
-				noteEntity.setTitle(thingsEditRequest.getTitle());
+			if (thingsRequest.getTitle() != null) {
+				noteEntity.setTitle(thingsRequest.getTitle());
 			}
 			return noteRepository.save(noteEntity);
 		} else {
-			if (thingsEditRequest.getTitle() != null) {
-				thingsEntity.setTitle(thingsEditRequest.getTitle());
+			if (thingsRequest.getTitle() != null) {
+				thingsEntity.setTitle(thingsRequest.getTitle());
 			}
-			if (thingsEditRequest.getTags() != null) {
-				thingsEntity.setTags(createTagsEntityFromString(thingsEditRequest.getTags()));
+			if (thingsRequest.getTags() != null) {
+				thingsEntity.setTags(createTagsEntityFromString(thingsRequest.getTags()));
 			}
-			if (thingsEditRequest.getComment() != null) {
-				thingsEntity.setComment(thingsEditRequest.getComment());
+			if (thingsRequest.getComment() != null) {
+				thingsEntity.setComment(thingsRequest.getComment());
 			}
 			return thingsRepository.save(thingsEntity);
 		}
@@ -110,12 +113,15 @@ public class NoteService {
 	}
 
 	private List<Tag> createTagsEntityFromString(List<TagEditRequest> tags) {
-		return tags.stream().map(s -> {
-			Tag newTag = new Tag();
-			newTag.setTag(s.getTag());
-			newTag.setHidden(s.isHidden());
-			return newTag;
-		}).collect(Collectors.toList());
+		if (tags != null) {
+			return tags.stream().map(s -> {
+				Tag newTag = new Tag();
+				newTag.setTag(s.getTag());
+				newTag.setHidden(s.isHidden());
+				return newTag;
+			}).collect(Collectors.toList());
+		}
+		return new ArrayList<>();
 	}
 
 	public boolean isTwitterUrl(String url) {

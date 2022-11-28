@@ -1,8 +1,14 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {EditorType, StacksEditor} from "@stackoverflow/stacks-editor";
-import "@stackoverflow/stacks";
-import {ThoughtsService} from "../../http-service/thoughts.service";
-import {HotkeysService} from "../../internal-service/hotkeys/hotkeys.service";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+} from '@angular/core';
+import { EditorType, StacksEditor } from '@stackoverflow/stacks-editor';
+import '@stackoverflow/stacks';
+import { ThoughtsService } from '../../http-service/thoughts.service';
+import { HotkeysService } from '../../internal-service/hotkeys/hotkeys.service';
 
 // TODO replace with tiptap editor https://tiptap.dev
 @Component({
@@ -11,7 +17,6 @@ import {HotkeysService} from "../../internal-service/hotkeys/hotkeys.service";
   styleUrls: ['./markdown-card.component.scss'],
 })
 export class MarkdownCardComponent implements AfterViewInit {
-
   @Input()
   id: string | undefined;
 
@@ -19,7 +24,7 @@ export class MarkdownCardComponent implements AfterViewInit {
   readonly: boolean = true;
 
   @Input()
-  content: string = "";
+  content: string ""'';
 
   @Input()
   cardMode: boolean = true;
@@ -31,20 +36,26 @@ export class MarkdownCardComponent implements AfterViewInit {
   /**
    * TODO image uploader
    */
-  constructor(private service: ThoughtsService, private hotkeys: HotkeysService) {
-  }
-
+  constructor(
+    private service: ThoughtsService,
+    private hotkeys: HotkeysService
+  ) {}
 
   ngAfterViewInit() {
     this.stackEditor = new StacksEditor(
       // @ts-ignore
       this.editorContainer?.nativeElement!,
-      this.content, {placeholderText: 'enter your markdown here or a link', classList: ['md-size'], defaultView: EditorType.RichText}
+      this.content,
+      {
+        placeholderText: "enter your markdown here or a link",
+        classList: ["md-size"],
+        defaultView: EditorType.RichText
+      }
     );
     if (this.readonly) {
       this.stackEditor.disable();
     }
-    this.hotkeys.addShortcut({keys: 'shift.n'}).subscribe(() => {
+    this.hotkeys.addShortcut({ keys: "shift.n" }).subscribe(() => {
       this.stackEditor?.dom.scroll();
 
       this.stackEditor?.focus();
@@ -52,7 +63,7 @@ export class MarkdownCardComponent implements AfterViewInit {
   }
 
   create() {
-    this.service.save(this.stackEditor?.content!).subscribe();
+    this.service.save({ note: this.stackEditor?.content! }).subscribe();
     this.stackEditor!.content = "";
   }
 }
