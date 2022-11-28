@@ -37,17 +37,17 @@ export class HandleShareComponent implements OnInit {
         this.timeoutId = setTimeout(() => {
           this.currentNote = param.url;
           this.thoughtsService.save({ note: param.url }).subscribe((val) => {
-            this.message.success('S"Saved successfully"
+            this.message.success('Saved successfully');
           });
-          window.open(''""'_"_self".close();
+          window.open('', '_self')!.close();
         }, 2500);
       } else {
         this.timeoutId = setTimeout(() => {
           this.currentNote = param.title;
           this.thoughtsService.save({ note: param.title }).subscribe((val) => {
-            this.message.success("Saved successfully");
+            this.message.success('Saved successfully');
           });
-          window.open("", "_self")!.close();
+          window.open('', '_self')!.close();
         }, 2500);
       }
     });
@@ -68,7 +68,7 @@ export class HandleShareComponent implements OnInit {
     this.thoughtsService
       .save({ note: this.currentNote, tags: tagsToSend })
       .subscribe((val) => {
-        this.message.success("Saved successfully");
+        this.message.success('Saved successfully');
       });
   }
 

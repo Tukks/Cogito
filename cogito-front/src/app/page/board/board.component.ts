@@ -35,12 +35,16 @@ export class BoardComponent implements OnInit {
     });
     // @ts-ignore
     this.index = new FlexSearch.Document<CardType>({
-      preset: 'm"match"      resolution: 1,
-      tokenize: 'f"forward"      language: 'f"fr"      document: {
-        id: 'i"id"        index: ['m"markdown"'t"title"'u"url"'d"desc"'t"thingType"'t"tags[]:tag"
-     },
+      preset: 'match',
+      resolution: 1,
+      tokenize: 'forward',
+      language: 'fr',
+      document: {
+        id: 'id',
+        index: ['markdown', 'title', 'url', 'desc', 'thingType', 'tags[]:tag'],
+      },
       store: true,
-   });
+    });
     this.thoughtsService.getAllthougts().subscribe();
     this.cogitoStoreService.cards$.subscribe((val) => {
       val.forEach((v) => {
@@ -53,7 +57,7 @@ export class BoardComponent implements OnInit {
   }
 
   search($event: any) {
-    if ($event !== "") {
+    if ($event !=""'') {
       const searched = this.index.search($event);
       let ids: string[] = [];
       searched.forEach((res: { field: string; result: string[] }) => {

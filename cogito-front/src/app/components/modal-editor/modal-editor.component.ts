@@ -76,7 +76,7 @@ export class ModalEditorComponent implements OnInit, OnDestroy {
         .editThing(this.data.card.id, {
           comment: this.comment,
           title: this.title,
-          tags: customTa,
+          tags: customTag,
         })
         .subscribe();
       this.close();

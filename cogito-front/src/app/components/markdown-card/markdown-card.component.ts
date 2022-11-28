@@ -24,7 +24,7 @@ export class MarkdownCardComponent implements AfterViewInit {
   readonly: boolean = true;
 
   @Input()
-  content: string ""'';
+  content: string = '';
 
   @Input()
   cardMode: boolean = true;
@@ -47,15 +47,15 @@ export class MarkdownCardComponent implements AfterViewInit {
       this.editorContainer?.nativeElement!,
       this.content,
       {
-        placeholderText: "enter your markdown here or a link",
-        classList: ["md-size"],
-        defaultView: EditorType.RichText
+        placeholderText: 'enter your markdown here or a link',
+        classList: ['md-size'],
+        defaultView: EditorType.RichText,
       }
     );
     if (this.readonly) {
       this.stackEditor.disable();
     }
-    this.hotkeys.addShortcut({ keys: "shift.n" }).subscribe(() => {
+    this.hotkeys.addShortcut({ keys:"shift.n"' }).subscribe(() => {
       this.stackEditor?.dom.scroll();
 
       this.stackEditor?.focus();
