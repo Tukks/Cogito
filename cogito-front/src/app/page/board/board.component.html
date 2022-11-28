@@ -1,22 +1,22 @@
 <!--<app-vertical-menu></app-vertical-menu>-->
 
-<nz-input-group nzSearch nzSize="large" class="search">
-  <input type="text" nz-input placeholder="Search cogito, shortcut : shift + f" [ngModel]="searchValue" (ngModelChange)="search($event)" class="input"
-         #searchInput />
-</nz-input-group>
+  <nz-input-group nzSearch nzSize="large" class="search">
+    <input type="text" nz-input placeholder="Search cogito, shortcut : shift + f" [ngModel]="searchValue" (ngModelChange)="search($event)" class="input"
+           #searchInput />
+  </nz-input-group>
 
-<div class="container" appIntersectionObserverGrid>
+  <div class="container" appIntersectionObserverGrid>
 
-  <app-markdown-card [cardMode]="true" [readonly]="false" class="first-child-container"></app-markdown-card>
-  <ng-container *ngFor="let card of filteredResult; trackBy: trackByFn">
-    <div class="active-element" appIntersectionObserverElement
-         #intersection="intersection"
-         [ngSwitch]="intersection.isIntersecting">
-      <app-card *ngSwitchCase="intersection.IS_INTERSECTING" [card]="card"></app-card>
-    </div>
+    <app-markdown-card [cardMode]="true" [readonly]="false" class="first-child-container"></app-markdown-card>
+    <ng-container *ngFor="let card of filteredResult; trackBy: trackByFn">
+      <div class="active-element" appIntersectionObserverElement
+           #intersection="intersection"
+           [ngSwitch]="intersection.isIntersecting">
+        <app-card *ngSwitchCase="intersection.IS_INTERSECTING" [card]="card"></app-card>
+      </div>
 
 
-  </ng-container>
+    </ng-container>
 
-</div>
+  </div>
 

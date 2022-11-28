@@ -57,7 +57,7 @@ export class BoardComponent implements OnInit {
   }
 
   search($event: any) {
-    if ($event !=""'') {
+    if ($event !== '') {
       const searched = this.index.search($event);
       let ids: string[] = [];
       searched.forEach((res: { field: string; result: string[] }) => {

@@ -38,6 +38,7 @@ public class ThoughtController {
 		return thingsRepository.getAll(getSub());
 	}
 
+
 	@PostMapping("/save")
 	public Object save(@RequestBody ThingsRequest thingsRequest) {
 		logger.info("Saving new note");

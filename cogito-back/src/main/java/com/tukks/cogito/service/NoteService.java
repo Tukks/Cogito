@@ -47,6 +47,7 @@ public class NoteService {
 	private final ThingsRepository thingsRepository;
 	private final TweetService tweetService;
 
+
 	public Object save(final ThingsRequest thingsRequest) {
 		final String noteCleaned = thingsRequest.getNote().trim();
 		if (isTwitterUrl(noteCleaned)) {
