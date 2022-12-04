@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ThoughtsService } from '../../http-service/thoughts.service';
 import { CardType } from '../../types/cards-link';
-import FlexSearch from 'flexsearch';
 import { HotkeysService } from '../../internal-service/hotkeys/hotkeys.service';
 import { CogitoStoreService } from '../../internal-service/store/cogito-store.service';
+import Document from 'flexsearch/dist/module/document';
 
 @Component({
   selector: 'app-board',
@@ -33,8 +33,8 @@ export class BoardComponent implements OnInit {
       this.searchInput.nativeElement.blur();
       this.searchInput.nativeElement.focus();
     });
-    // @ts-ignore
-    this.index = new FlexSearch.Document<CardType>({
+
+    this.index = new Document({
       preset: 'match',
       resolution: 1,
       tokenize: 'forward',
@@ -46,6 +46,10 @@ export class BoardComponent implements OnInit {
       store: true,
     });
     this.thoughtsService.getAllthougts().subscribe();
+    this.cogitoStoreService.filters$.subscribe((val) => {
+      this.searchValue = val;
+      this.search(val);
+    });
     this.cogitoStoreService.cards$.subscribe((val) => {
       val.forEach((v) => {
         this.index.remove(v.id);

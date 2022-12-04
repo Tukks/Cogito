@@ -26,24 +26,27 @@ export class HandleShareComponent implements OnInit {
     this.route.queryParams.subscribe((param: any) => {
       // On Android text is equals to the url
       if (param.text && param.text != '') {
+        this.currentNote = param.text;
+
         this.timeoutId = setTimeout(() => {
-          this.currentNote = param.text;
           this.thoughtsService.save({ note: param.text }).subscribe((val) => {
             this.message.success('Saved successfully');
           });
           window.open('', '_self')!.close();
         }, 2000);
       } else if (param.url && param.url != '') {
+        this.currentNote = param.url;
+
         this.timeoutId = setTimeout(() => {
-          this.currentNote = param.url;
           this.thoughtsService.save({ note: param.url }).subscribe((val) => {
             this.message.success('Saved successfully');
           });
           window.open('', '_self')!.close();
         }, 2500);
       } else {
+        this.currentNote = param.title;
+
         this.timeoutId = setTimeout(() => {
-          this.currentNote = param.title;
           this.thoughtsService.save({ note: param.title }).subscribe((val) => {
             this.message.success('Saved successfully');
           });
@@ -54,8 +57,8 @@ export class HandleShareComponent implements OnInit {
   }
 
   removeTimeout() {
-    this.showTagsAdd = true;
     clearTimeout(this.timeoutId);
+    this.showTagsAdd = true;
   }
 
   update(): void {
