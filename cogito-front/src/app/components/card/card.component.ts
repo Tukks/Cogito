@@ -1,21 +1,33 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {CardsType, CardType, LinkCard, NoteCard, TweetCard} from "../../types/cards-link";
-import {Dialog} from "@angular/cdk/dialog";
-import {ModalEditorComponent} from "../modal-editor/modal-editor.component";
-import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
-import {Observable} from "rxjs";
-import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
-import {ThoughtsService} from "../../http-service/thoughts.service";
-import {Clipboard} from '@angular/cdk/clipboard';
-import {NzMessageService} from "ng-zorro-antd/message";
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import {
+  CardsType,
+  CardType,
+  LinkCard,
+  NoteCard,
+  TweetCard,
+} from '../../types/cards-link';
+import { Dialog } from '@angular/cdk/dialog';
+import { ModalEditorComponent } from '../modal-editor/modal-editor.component';
+import {
+  BreakpointObserver,
+  Breakpoints,
+  BreakpointState,
+} from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import {
+  NzContextMenuService,
+  NzDropdownMenuComponent,
+} from 'ng-zorro-antd/dropdown';
+import { ThoughtsService } from '../../http-service/thoughts.service';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  styleUrls: ['./card.component.less'],
 })
 export class CardComponent implements OnInit {
-
   public cardsType: typeof CardsType = CardsType;
 
   @Input()
@@ -31,42 +43,37 @@ export class CardComponent implements OnInit {
 
   @HostListener('click', ['$event.target'])
   onClick() {
-    this.isExtraSmall.subscribe(value => {
+    this.isExtraSmall.subscribe((value) => {
       if (value.matches) {
-        this.dialog.open(
-          ModalEditorComponent, {
-            height: '100vh',
-            width: '100vw',
-            data: {
-              card: this.card,
-            },
-          });
+        this.dialog.open(ModalEditorComponent, {
+          height: '100vh',
+          width: '100vw',
+          data: {
+            card: this.card,
+          },
+        });
       } else {
-        this.dialog.open(
-          ModalEditorComponent, {
-            height: '80%',
-            width: '80%',
-            data: {
-              card: this.card,
-            },
-          });
+        this.dialog.open(ModalEditorComponent, {
+          height: '80%',
+          width: '80%',
+          data: {
+            card: this.card,
+          },
+        });
       }
     });
-
-
   }
 
+  constructor(
+    public dialog: Dialog,
+    public breakpointObserver: BreakpointObserver,
+    private nzContextMenuService: NzContextMenuService,
+    private thoughtService: ThoughtsService,
+    private clipboard: Clipboard,
+    private nzMessageService: NzMessageService
+  ) {}
 
-  constructor(public dialog: Dialog,
-              public breakpointObserver: BreakpointObserver,
-              private nzContextMenuService: NzContextMenuService,
-              private thoughtService: ThoughtsService,
-              private clipboard: Clipboard,
-              private nzMessageService: NzMessageService) {
-  }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   deleteCard() {
     this.thoughtService.delete(this.card.id).subscribe();
@@ -84,13 +91,13 @@ export class CardComponent implements OnInit {
         this.clipboard.copy((this.card as TweetCard).url);
         break;
     }
-    this.nzMessageService.success("Content copied !");
+    this.nzMessageService.success('Content copied !');
   }
 
   openLink($event: Event) {
     $event.stopPropagation();
     $event.preventDefault();
-    window.open((this.card as LinkCard).url, "_blank");
+    window.open((this.card as LinkCard).url, '_blank');
   }
 
   closeMenu() {

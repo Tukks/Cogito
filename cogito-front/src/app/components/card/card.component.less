@@ -1,8 +1,11 @@
+@import (optional, reference) "../../../theme";
+
 .card-image {
   width: 100%;
   height: 100%;
   justify-content: space-between;
-
+  background-color: @news-color;
+  border-radius: 8px;
   .card-image-content {
     max-height: 50%;
     border-radius: 6px 6px 0px 0px;
@@ -23,14 +26,15 @@
   }
 }
 .card-tweet {
+  background-color: @tweet-color;
+.tweet-content {
   justify-content: center;
   width: 100%;
   height: 100%;
 }
-.card-excerpt {
-  width: 100%;
-  height: 100%;
+
 }
+
 
 
 

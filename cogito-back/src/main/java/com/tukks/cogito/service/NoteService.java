@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,9 +60,10 @@ public class NoteService {
 			final LinkEntity linkEntity = linkPreview.extractLinkPreviewInfo(noteCleaned);
 			linkEntity.setThingType(ThingType.LINK);
 			linkEntity.setOidcSub(getSub());
+
 			var tags = createTagsEntityFromString(thingsRequest.getTags());
-			tags.addAll(linkEntity.getTags());
-			linkEntity.setTags(tags);
+
+			linkEntity.setTags(Stream.concat(tags.stream(), linkEntity.getTags().stream()).toList());
 
 			return linkRepository.save(linkEntity);
 		} else {

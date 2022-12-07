@@ -1,7 +1,7 @@
-<div class="card" *ngIf="$any(card).thingType === cardsType.LINK" (contextmenu)="contextMenu($event, menu)">
+<div class="card card-link" *ngIf="$any(card).thingType === cardsType.LINK" (contextmenu)="contextMenu($event, menu)">
   <!-- Image à la une -->
   <div class="card-image flex-vertical">
-    <img src="{{$any(card).image}}" alt="{{$any(card).imageAlt}}" class="card-image-content default-image" appImgFallback>
+    <img src="{{$any(card).image}}" alt="{{$any(card).imageAlt}}" class="card-image-content default-image">
 
     <p nz-typography class="card-image-desc">{{$any(card).desc}}</p>
     <a nz-typography nzEllipsis href="{{$any(card).url}}" target="_blank" class="card-image-desc link"
@@ -17,8 +17,8 @@
                      [id]="$any(card).id"></app-markdown-card>
 </ng-container>
 
-<div class="card tweet" *ngIf="$any(card).thingType === cardsType.TWEET" (contextmenu)="contextMenu($event, menu)">
-  <div class="card-tweet flex-vertical">
+<div class="card card-tweet" *ngIf="$any(card).thingType === cardsType.TWEET" (contextmenu)="contextMenu($event, menu)">
+  <div class="tweet-content flex-vertical">
     <div [innerHTML]="$any(card).html"></div>
   </div>
 

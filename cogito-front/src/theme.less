@@ -4,8 +4,10 @@
 @import "ng-zorro-antd/ng-zorro-antd.less";
 :root {
   --background-color: @rose-6;
-  --component-background: #FFF;
+  --component-background: #eef0f4;
   --text-color: @rose-9;
+  --tweet-background: #eef0f4;
+  --news-background: #eef0f4;
 }
 
 :root {
@@ -13,8 +15,14 @@
     --background-color: #121212;
     --component-background: #282A3A;
     --text-color: white;
+    --tweet-background: #282A3A;
+    --news-background: #282A3A;
+
   }
 }
+
+@tweet-color: var(--tweet-background);
+@news-color: var(--news-background);
 
 // Override less variables to here
 // View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
@@ -48,6 +56,7 @@
 @text-color: var(--text-color);
 @text-color-secondary: @rose-9;
 
+//@note-color: #BCE29E;
 
 .ant-btn-circle {
   height: 48px;
