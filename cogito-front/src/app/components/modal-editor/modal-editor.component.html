@@ -8,10 +8,10 @@
     </app-markdown-card>
   </ng-container>
   <ng-container *ngIf="$any(data.card).thingType === cardsType.LINK">
-    <div class="modal-editor-left-column">
-      <img src="{{$any($any(data.card)).image}}" alt="{{$any(data.card).imageAlt}}" class="modal-editor-img-preview" appImgFallback/>
-      <div>
-        <p nz-typography>{{$any(data.card).desc}}</p>
+    <div class="modal-editor-left-column" [ngStyle]="{'background': 'url('+ $any(data.card).image + ') no-repeat center center, linear-gradient(#00467f, #a5cc82) fixed',
+       'background-size': 'cover'}">
+      <div class="description">
+        <p nz-typography style="width: 50%;">{{$any(data.card).desc}}</p>
         <a nz-typography nzEllipsis href="{{$any(data.card).url}}" target="_blank" (click)="$event.stopPropagation()" class="link">{{$any(data.card).url}}</a>
       </div>
     </div>

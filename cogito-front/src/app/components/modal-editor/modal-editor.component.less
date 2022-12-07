@@ -30,6 +30,21 @@
   height: 100%;
   flex-direction: column;
   text-align: center;
+  position: relative;
+  .description {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.52), #000000b3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    .link {
+      color: white;
+    }
+  }
 }
 
 .modal-editor-left-column.markdown {
