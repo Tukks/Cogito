@@ -3,7 +3,7 @@ package com.tukks.cogito.service;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -59,7 +59,9 @@ public class NoteService {
 			final LinkEntity linkEntity = linkPreview.extractLinkPreviewInfo(noteCleaned);
 			linkEntity.setThingType(ThingType.LINK);
 			linkEntity.setOidcSub(getSub());
-			linkEntity.setTags(createTagsEntityFromString(thingsRequest.getTags()));
+			var tags = createTagsEntityFromString(thingsRequest.getTags());
+			tags.addAll(linkEntity.getTags());
+			linkEntity.setTags(tags);
 
 			return linkRepository.save(linkEntity);
 		} else {
@@ -122,7 +124,7 @@ public class NoteService {
 				return newTag;
 			}).collect(Collectors.toList());
 		}
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	public boolean isTwitterUrl(String url) {
