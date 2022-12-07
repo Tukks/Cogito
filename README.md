@@ -2,6 +2,11 @@
 
 WIP, do not use for important stuff
 
+## TODO :
+Replace H2 database
+Add type (movies, recipe, read it later)
+kanban board? 
+
 ## Screenshot 
 ![image](https://user-images.githubusercontent.com/5930169/206248167-ff68d6e7-197a-4785-afa8-4b9b8c534f84.png)
 ![image](https://user-images.githubusercontent.com/5930169/206248222-8d5b7353-bfa5-4e3e-a386-a5bbccd232da.png)
