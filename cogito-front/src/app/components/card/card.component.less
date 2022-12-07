@@ -1,15 +1,28 @@
 @import (optional, reference) "../../../theme";
 
+
 .card-image {
   width: 100%;
   height: 100%;
   justify-content: space-between;
-  background-color: @news-color;
+  background-size: cover;
   border-radius: 8px;
-  .card-image-content {
-    max-height: 50%;
-    border-radius: 6px 6px 0px 0px;
 
+  .card-image-content {
+    max-height: 100%;
+    border-radius: 8px;
+
+  }
+
+  .description {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.52), #000000b3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 8px;
   }
 
   .card-image-content.default-image {
@@ -23,15 +36,18 @@
 
   .card-image-desc {
     text-align: center;
+    color: white;
   }
 }
+
 .card-tweet {
   background-color: @tweet-color;
-.tweet-content {
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
+
+  .tweet-content {
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
 
 }
 
