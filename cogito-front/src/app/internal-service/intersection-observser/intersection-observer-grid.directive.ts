@@ -1,4 +1,4 @@
-import {Directive} from "@angular/core";
+import { Directive } from "@angular/core";
 
 @Directive({
   selector: "[appIntersectionObserverGrid]"
@@ -33,7 +33,7 @@ export class IntersectionObserverGridDirective {
         // viewport. The intent here is give the elements a little time to react
         // to the change before the element is actually visible to the user.
         rootMargin: "800px 0px 800px 0px",
-        threshold: [0, 0.25, 0.5, 0.75, 1],
+        threshold: [0, 0.10, 0.20, 0.30, 0.40,0.50, 0.6, 0.7, 0.8, 0.9, 1],
       }
     );
 
