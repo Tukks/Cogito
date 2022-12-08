@@ -1,13 +1,23 @@
 @import (optional, reference) "../../../theme";
 
-
+:host {
+  border-radius: 8px;
+}
 .card-image {
   width: 100%;
   height: 100%;
   justify-content: space-between;
   background-size: cover;
   border-radius: 8px;
+  background: linear-gradient(#00467f, #a5cc82) fixed;
 
+  .card-image-element {
+    border-radius: 8px;
+    position: absolute;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
   .card-image-content {
     max-height: 100%;
     border-radius: 8px;

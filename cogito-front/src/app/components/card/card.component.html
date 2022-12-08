@@ -1,8 +1,7 @@
 <div class="card card-link" style="position: relative" *ngIf="$any(card).thingType === cardsType.LINK" (contextmenu)="contextMenu($event, menu)">
   <!-- Image à la une -->
-  <div class="card-image flex-vertical"
-       [ngStyle]="{'background': 'url('+ $any(card).image+ ') no-repeat center center, linear-gradient(#00467f, #a5cc82) fixed',
-       'background-size': 'cover'}">
+  <div class="card-image flex-vertical">
+    <img *ngIf="!!$any(card).image" class="card-image-element" src="{{$any(card).image}}" loading="lazy"  alt="{{$any(card).imageAlt}}"/>
     <div class="description">
       <p nz-typography class="card-image-desc">{{$any(card).desc}}</p>
       <a nz-typography nzEllipsis href="{{$any(card).url}}" target="_blank" class="card-image-desc link"

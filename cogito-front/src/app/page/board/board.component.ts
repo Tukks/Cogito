@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ThoughtsService } from '../../http-service/thoughts.service';
-import { CardType } from '../../types/cards-link';
-import { HotkeysService } from '../../internal-service/hotkeys/hotkeys.service';
-import { CogitoStoreService } from '../../internal-service/store/cogito-store.service';
-import Document from 'flexsearch/dist/module/document';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ThoughtsService } from "../../http-service/thoughts.service";
+import { CardType } from "../../types/cards-link";
+import { HotkeysService } from "../../internal-service/hotkeys/hotkeys.service";
+import { CogitoStoreService } from "../../internal-service/store/cogito-store.service";
+import Document from "flexsearch/dist/module/document";
 
 @Component({
   selector: 'app-board',
@@ -25,7 +25,7 @@ export class BoardComponent implements OnInit {
   ) {}
 
   trackByFn(index: number, item: CardType) {
-    return item.id && item.modified; // or item.id
+    return item.id && item.modified;
   }
 
   ngOnInit(): void {
