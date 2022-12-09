@@ -46,11 +46,8 @@ public class TweetPreview {
 			uri = new URI(baseUrl);
 
 			ResponseEntity<TweetOEmbed> result = restTemplate.getForEntity(uri, TweetOEmbed.class);
-			if (result != null) {
-				return Optional.of(result.getBody());
-			}
+			return Optional.ofNullable(result.getBody());
 
-			return Optional.empty();
 		} catch (URISyntaxException e) {
 			throw new RuntimeException(e);
 		}

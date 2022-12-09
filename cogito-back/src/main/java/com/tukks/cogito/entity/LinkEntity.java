@@ -1,5 +1,7 @@
 package com.tukks.cogito.entity;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -36,6 +38,8 @@ public class LinkEntity extends ThingsEntity {
 
 	@Column(name = "imageAlt")
 	private String imageAlt;
+
+	private UUID imageId;
 
 	public LinkEntity(String domain, String url, String title, String desc, String ogImage, String ogImageAlt) {
 

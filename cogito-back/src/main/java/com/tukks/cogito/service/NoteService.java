@@ -43,11 +43,10 @@ public class NoteService {
 	private final Logger logger = LogManager.getLogger(getClass());
 	private final LinkPreview linkPreview;
 	private final LinkRepository linkRepository;
-
+	private final ImageService imageService;
 	private final NoteRepository noteRepository;
 	private final ThingsRepository thingsRepository;
 	private final TweetService tweetService;
-
 
 	public Object save(final ThingsRequest thingsRequest) {
 		final String noteCleaned = thingsRequest.getNote().trim();
@@ -64,6 +63,9 @@ public class NoteService {
 			var tags = createTagsEntityFromString(thingsRequest.getTags());
 
 			linkEntity.setTags(Stream.concat(tags.stream(), linkEntity.getTags().stream()).toList());
+
+
+			linkEntity.setImageId(imageService.uploadImageFromUrl(linkEntity.getImage()));
 
 			return linkRepository.save(linkEntity);
 		} else {
