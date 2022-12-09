@@ -18,7 +18,7 @@
 
 <div class="card card-tweet" *ngIf="$any(card).thingType === cardsType.TWEET" (contextmenu)="contextMenu($event, menu)">
   <div class="tweet-content flex-vertical">
-    <img src="../../../assets/image/twitter_logo.png" alt="twitter logo" class="card-image-content tweet-image">
+    <img src="../../../assets/image/twitter_logo.png" alt="twitter logo" class="card-image-content tweet-image" height="30">
     <div [innerHTML]="$any(card).html"></div>
   </div>
 
