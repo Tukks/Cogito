@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
@@ -13,6 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -58,7 +60,7 @@ public class ImageService {
 
 	}
 
-	public UUID uploadImageFromUrl(final String imageUrl) {
+	public Optional<UUID> uploadImageFromUrl(final String imageUrl) {
 		final String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmssSSS-"));
 		final String folderPath = imageUploadFolder;
 
@@ -67,10 +69,24 @@ public class ImageService {
 		try {
 			// Open a connection to the URL
 			URL url = new URL(imageUrl);
-			URLConnection connection = url.openConnection();
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			int status = connection.getResponseCode();
 
+			// Follow redirect response if needed
+			if (status != HttpURLConnection.HTTP_OK) {
+				if (status == HttpURLConnection.HTTP_MOVED_TEMP
+					|| status == HttpURLConnection.HTTP_MOVED_PERM
+					|| status == HttpURLConnection.HTTP_SEE_OTHER) {
+
+					String newUrl = connection.getHeaderField("Location");
+					connection = (HttpURLConnection) new URL(newUrl).openConnection();
+				}
+			}
 			// Determine the image format based on the URL
 			String contentType = connection.getHeaderField("Content-Type");
+			if (!contentType.startsWith("image/")) {
+				return Optional.empty();
+			}
 			String[] parts = contentType.split("/");
 			String imageFormat = parts[parts.length - 1];
 
@@ -99,7 +115,7 @@ public class ImageService {
 		}
 		ImageEntity imageEntity = ImageEntity.builder().oidcSub(getSub()).imagePath(filePath).build();
 		var imageEntitySaved = imageRepository.save(imageEntity);
-		return imageEntitySaved.getId();
+		return Optional.of(imageEntitySaved.getId());
 	}
 
 	public FileImage getImage(String id) {

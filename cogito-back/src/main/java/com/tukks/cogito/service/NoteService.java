@@ -65,7 +65,7 @@ public class NoteService {
 			linkEntity.setTags(Stream.concat(tags.stream(), linkEntity.getTags().stream()).toList());
 
 
-			linkEntity.setImageId(imageService.uploadImageFromUrl(linkEntity.getImage()));
+			linkEntity.setImageId(imageService.uploadImageFromUrl(linkEntity.getImage()).orElse(null));
 
 			return linkRepository.save(linkEntity);
 		} else {
