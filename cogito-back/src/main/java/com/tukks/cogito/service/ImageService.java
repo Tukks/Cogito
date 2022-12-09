@@ -17,6 +17,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
@@ -31,6 +34,9 @@ import static com.tukks.cogito.service.SecurityUtils.getSub;
 
 @Service
 public class ImageService {
+	private final Logger logger = LogManager.getLogger(getClass());
+
+	public static final String INVALID_FILENAME_CHAR_REGEX = "[\\\\/:*?\"<>|.&]";
 
 	public record FileImage(InputStreamResource resource, String mimeType) {}
 
@@ -102,7 +108,7 @@ public class ImageService {
 
 			// Set up streams
 			InputStream is = connection.getInputStream();
-			filePath = filePath + fileName + "." + imageFormat;
+			filePath = filePath + fileName.replaceAll(INVALID_FILENAME_CHAR_REGEX, "") + "." + imageFormat;
 			OutputStream os = new FileOutputStream(filePath);
 
 			// Read from is and write to os
@@ -116,6 +122,7 @@ public class ImageService {
 			os.close();
 			is.close();
 		} catch (IOException e) {
+			logger.error("unsupported file", e);
 			// the image is unreachable or other problem, do something
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "problem with file");
 		}
