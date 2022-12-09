@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.UnsupportedCharsetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -17,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.http.entity.ContentType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,6 +36,7 @@ import static com.tukks.cogito.service.SecurityUtils.getSub;
 
 @Service
 public class ImageService {
+
 	private final Logger logger = LogManager.getLogger(getClass());
 
 	public static final String INVALID_FILENAME_CHAR_REGEX = "[\\\\/:*?\"<>|.&]";
@@ -80,22 +83,11 @@ public class ImageService {
 
 		try {
 			// Open a connection to the URL
-			URL url = new URL(imageUrl);
-			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-			int status = connection.getResponseCode();
+			HttpURLConnection connection = createConnection(imageUrl);
 
-			// Follow redirect response if needed
-			if (status != HttpURLConnection.HTTP_OK) {
-				if (status == HttpURLConnection.HTTP_MOVED_TEMP
-					|| status == HttpURLConnection.HTTP_MOVED_PERM
-					|| status == HttpURLConnection.HTTP_SEE_OTHER) {
+			// Determine the image format based content type
+			String contentType = getContentTypeWithoutCharset(connection.getHeaderField("Content-Type"));
 
-					String newUrl = connection.getHeaderField("Location");
-					connection = (HttpURLConnection) new URL(newUrl).openConnection();
-				}
-			}
-			// Determine the image format based on the URL
-			String contentType = connection.getHeaderField("Content-Type");
 			if (!contentType.startsWith("image/")) {
 				return Optional.empty();
 			}
@@ -107,20 +99,10 @@ public class ImageService {
 			String fileName = urlParts[urlParts.length - 1];
 
 			// Set up streams
-			InputStream is = connection.getInputStream();
 			filePath = filePath + fileName.replaceAll(INVALID_FILENAME_CHAR_REGEX, "") + "." + imageFormat;
-			OutputStream os = new FileOutputStream(filePath);
 
-			// Read from is and write to os
-			byte[] buffer = new byte[4096];
-			int len;
-			while ((len = is.read(buffer)) > 0) {
-				os.write(buffer, 0, len);
-			}
+			writeImageToFile(filePath, connection.getInputStream());
 
-			// Clean up
-			os.close();
-			is.close();
 		} catch (IOException e) {
 			logger.error("unsupported file", e);
 			// the image is unreachable or other problem, do something
@@ -129,6 +111,56 @@ public class ImageService {
 		ImageEntity imageEntity = ImageEntity.builder().oidcSub(getSub()).imagePath(filePath).build();
 		var imageEntitySaved = imageRepository.save(imageEntity);
 		return Optional.of(imageEntitySaved.getId());
+	}
+
+	private HttpURLConnection createConnection(final String imageUrl) throws IOException {
+		final URL url = new URL(imageUrl);
+		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+		int status = connection.getResponseCode();
+
+		connection = followRedirectionIfNeeded(connection, status);
+		return connection;
+	}
+
+	private static HttpURLConnection followRedirectionIfNeeded(HttpURLConnection connection, int status) throws IOException {
+		// Follow redirect response if needed
+		if (status != HttpURLConnection.HTTP_OK) {
+			if (status == HttpURLConnection.HTTP_MOVED_TEMP
+				|| status == HttpURLConnection.HTTP_MOVED_PERM
+				|| status == HttpURLConnection.HTTP_SEE_OTHER) {
+
+				String newUrl = connection.getHeaderField("Location");
+				connection = (HttpURLConnection)new URL(newUrl).openConnection();
+			}
+		}
+		return connection;
+	}
+	private void writeImageToFile(String filePath, InputStream inputStream) throws IOException {
+		OutputStream os = new FileOutputStream(filePath);
+		// Read from inputStream and write to os
+		byte[] buffer = new byte[4096];
+		int len;
+		while ((len = inputStream.read(buffer)) > 0) {
+			os.write(buffer, 0, len);
+		}
+
+		// Clean up
+		os.close();
+		inputStream.close();
+	}
+
+
+
+	private String getContentTypeWithoutCharset(String s) {
+		String mimeType;
+
+		try {
+			ContentType contentType = ContentType.parse(s); // here exception may be thrown
+			mimeType = contentType.getMimeType();
+		} catch (UnsupportedCharsetException e) {
+			mimeType = s.substring(0, s.indexOf(';')); // in case of exception, mimeType needs to be parsed separately
+		}
+		return mimeType;
 	}
 
 	public FileImage getImage(String id) {

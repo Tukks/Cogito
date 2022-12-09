@@ -81,6 +81,7 @@ public class NoteService {
 
 	@Transactional
 	public Integer delete(final UUID id) {
+		// TODO delete associated image
 		return thingsRepository.deleteByIdAndOidcSub(id, getSub());
 	}
 
