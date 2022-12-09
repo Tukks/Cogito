@@ -3,6 +3,7 @@
   <div class="card-image flex-vertical">
     <img *ngIf="!!$any(card).image" class="card-image-element" src="{{$any(card).imageId ? '/api/image/'+$any(card).imageId : $any(card).image}}" loading="lazy"  alt="{{$any(card).imageAlt}}"/>
     <div class="description">
+      <p nz-typography class="card-image-desc link">{{$any(card).title}}</p>
       <p nz-typography class="card-image-desc">{{$any(card).desc}}</p>
       <a nz-typography nzEllipsis href="{{$any(card).url}}" target="_blank" class="card-image-desc link"
          (click)="$event.stopPropagation()">{{$any(card).domain}}</a>
