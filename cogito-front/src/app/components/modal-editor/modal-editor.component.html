@@ -3,7 +3,7 @@
 
   <ng-container *ngIf="$any(data.card).thingType === cardsType.MARKDOWN">
     <app-markdown-card class="modal-editor-left-column markdown" [content]="$any(data.card).markdown" [cardMode]="false" [id]="$any(data.card).id"
-                       [readonly]="false">
+                       [readonly]="false" (needSave)="saveAuto($event)">
 
     </app-markdown-card>
   </ng-container>
@@ -25,21 +25,21 @@
   </ng-container>
   <div class="modal-editor-right-column">
     <nz-form-label class="modal-editor-right-column-label label">title</nz-form-label>
-    <input nz-input placeholder="title" [(ngModel)]="title"/>
+    <input nz-input placeholder="title" [(ngModel)]="title" (ngModelChange)="saveAuto(true)" [ngModelOptions]="{ updateOn: 'blur' }"/>
     <nz-form-label class="modal-editor-right-column-label label">Tags</nz-form-label>
-    <app-tags-input [(tags)]="tags"></app-tags-input>
+    <app-tags-input [(tags)]="tags" (tagsChange)="saveAuto(true)"></app-tags-input>
     <nz-form-label class="modal-editor-right-column-label label">Comment</nz-form-label>
     <nz-form-item>
       <nz-form-control>
         <nz-textarea-count [nzMaxCharacterCount]="100">
-          <textarea rows="4" [(ngModel)]="comment" placeholder="comment" nz-input></textarea>
+          <textarea rows="4" [(ngModel)]="comment" (ngModelChange)="saveAuto(true)"  [ngModelOptions]="{ updateOn: 'blur' }" placeholder="comment" nz-input></textarea>
         </nz-textarea-count>
       </nz-form-control>
     </nz-form-item>
   </div>
 </div>
 <div class="modal-editor-actions">
-  <button nz-button (click)="update()" nzType="primary" nzShape="circle"><span nz-icon nzType="save" nzTheme="outline"></span></button>
+  <button nz-button (click)="updateAndClose()" [nzLoading]="isSaving" nzType="primary" nzShape="circle"><span nz-icon nzType="save" nzTheme="outline"></span></button>
   <button nz-button (click)="delete($any(data.card).id)" nzType="primary" nzDanger nzShape="circle"><span nz-icon nzType="delete" nzTheme="outline"></span>
   </button>
 </div>

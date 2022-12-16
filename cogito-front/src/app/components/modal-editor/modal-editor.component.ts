@@ -1,15 +1,8 @@
-import {
-  Component,
-  HostListener,
-  Inject,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { CardsType, CardType, Tag } from '../../types/cards-link';
-import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { ThoughtsService } from '../../http-service/thoughts.service';
-import { MarkdownCardComponent } from '../markdown-card/markdown-card.component';
+import { Component, HostListener, Inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { CardsType, CardType, Tag } from "../../types/cards-link";
+import { DIALOG_DATA, DialogRef } from "@angular/cdk/dialog";
+import { ThoughtsService } from "../../http-service/thoughts.service";
+import { MarkdownCardComponent } from "../markdown-card/markdown-card.component";
 
 @Component({
   selector: 'app-modal-editor',
@@ -25,6 +18,8 @@ export class ModalEditorComponent implements OnInit, OnDestroy {
   title: string | undefined;
   comment: string | undefined;
   tags: string[] = [];
+
+  isSaving: boolean = false;
 
   @HostListener('window:popstate', ['$event'])
   dismissModal() {
@@ -56,7 +51,13 @@ export class ModalEditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  update(): void {
+  updateAndClose(): void {
+    this.update();
+    this.close();
+  }
+
+  private update() {
+    this.isSaving = true;
     let customTag: Tag[] = this.tags.map((tag) => {
       return { tag, hidden: false };
     });
@@ -67,19 +68,17 @@ export class ModalEditorComponent implements OnInit, OnDestroy {
           note: this.markdownCardComponent.stackEditor?.content!,
           comment: this.comment,
           title: this.title,
-          tags: customTag,
+          tags: customTag
         })
-        .subscribe();
-      this.close();
+        .subscribe(() => this.isSaving = false);
     } else {
       this.thoughtService
         .editThing(this.data.card.id, {
           comment: this.comment,
           title: this.title,
-          tags: customTag,
+          tags: customTag
         })
-        .subscribe();
-      this.close();
+        .subscribe(() => this.isSaving = false);
     }
   }
 
@@ -90,5 +89,11 @@ export class ModalEditorComponent implements OnInit, OnDestroy {
 
   close(): void {
     this.dialogRef.close();
+  }
+
+  saveAuto($event: boolean) {
+    if ($event) {
+      this.update();
+    }
   }
 }

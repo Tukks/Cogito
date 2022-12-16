@@ -1,14 +1,8 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-} from '@angular/core';
-import { EditorType, StacksEditor } from '@stackoverflow/stacks-editor';
-import '@stackoverflow/stacks';
-import { ThoughtsService } from '../../http-service/thoughts.service';
-import { HotkeysService } from '../../internal-service/hotkeys/hotkeys.service';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { EditorType, StacksEditor } from "@stackoverflow/stacks-editor";
+import "@stackoverflow/stacks";
+import { ThoughtsService } from "../../http-service/thoughts.service";
+import { HotkeysService } from "../../internal-service/hotkeys/hotkeys.service";
 
 // TODO replace with tiptap editor https://tiptap.dev
 @Component({
@@ -29,6 +23,9 @@ export class MarkdownCardComponent implements AfterViewInit {
   @Input()
   cardMode: boolean = true;
 
+  @Output()
+  needSave: EventEmitter<boolean> = new EventEmitter<boolean>();
+  private timeout?: number;
   public stackEditor: StacksEditor | undefined;
 
   @ViewChild('editorContainer') editorContainer!: ElementRef;
@@ -65,5 +62,11 @@ export class MarkdownCardComponent implements AfterViewInit {
   create() {
     this.service.save({ note: this.stackEditor?.content! }).subscribe();
     this.stackEditor!.content = '';
+  }
+
+  saveOnType() {
+    this.needSave.emit(false);
+    window.clearTimeout(this.timeout);
+    this.timeout = window.setTimeout(() => this.needSave.emit(true), 300);
   }
 }

@@ -1,4 +1,5 @@
-<div #editorContainer class="js-tables-enabled" [ngClass]="cardMode ? 'little card' : 'big'" style=" border-radius: 8px;">
+<div #editorContainer class="js-tables-enabled" [ngClass]="cardMode ? 'little card' : 'big'" style=" border-radius: 8px;"
+(keyup)="saveOnType()" >
 
 </div>
 <button [disabled]="stackEditor?.content === ''" nz-button nzType="primary" nzShape="circle" (click)="create()" *ngIf="!readonly && cardMode" class="add-items">
