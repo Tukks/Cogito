@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ThoughtsService } from '../../http-service/thoughts.service';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { Tag } from '../../types/cards-link';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { ThoughtsService } from "../../http-service/thoughts.service";
+import { NzMessageService } from "ng-zorro-antd/message";
+import { Tag } from "../../types/cards-link";
 
 @Component({
   selector: 'app-handle-share',
@@ -31,8 +31,9 @@ export class HandleShareComponent implements OnInit {
         this.timeoutId = setTimeout(() => {
           this.thoughtsService.save({ note: param.text }).subscribe((val) => {
             this.message.success('Saved successfully');
+            window.open('', '_self')!.close();
+
           });
-          window.open('', '_self')!.close();
         }, 2000);
       } else if (param.url && param.url != '') {
         this.currentNote = param.url;
@@ -40,8 +41,9 @@ export class HandleShareComponent implements OnInit {
         this.timeoutId = setTimeout(() => {
           this.thoughtsService.save({ note: param.url }).subscribe((val) => {
             this.message.success('Saved successfully');
+            window.open('', '_self')!.close();
+
           });
-          window.open('', '_self')!.close();
         }, 2500);
       } else {
         this.currentNote = param.title;
@@ -49,8 +51,9 @@ export class HandleShareComponent implements OnInit {
         this.timeoutId = setTimeout(() => {
           this.thoughtsService.save({ note: param.title }).subscribe((val) => {
             this.message.success('Saved successfully');
+            window.open('', '_self')!.close();
+
           });
-          window.open('', '_self')!.close();
         }, 2500);
       }
     });
@@ -72,6 +75,8 @@ export class HandleShareComponent implements OnInit {
       .save({ note: this.currentNote, tags: tagsToSend })
       .subscribe((val) => {
         this.message.success('Saved successfully');
+        window.open('', '_self')!.close();
+
       });
   }
 

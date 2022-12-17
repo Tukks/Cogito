@@ -9,7 +9,7 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { MarkdownCardComponent } from "./components/markdown-card/markdown-card.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ModalEditorComponent } from "./components/modal-editor/modal-editor.component";
+import { EditorComponent } from "./components/modal-editor/editor.component";
 import { DialogModule } from "@angular/cdk/dialog";
 import { fr_FR, NZ_I18N } from "ng-zorro-antd/i18n";
 import { registerLocaleData } from "@angular/common";
@@ -37,6 +37,8 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
 import { RegisterComponent } from "./page/register/register.component";
 import { NzAffixModule } from "ng-zorro-antd/affix";
 import { NzRadioModule } from "ng-zorro-antd/radio";
+import { RoutableEditorComponent } from "./components/routable-editor/routable-editor.component";
+import { ModalEntryComponent } from "./components/modal-entry/modal-entry.component";
 
 registerLocaleData(fr);
 
@@ -46,13 +48,15 @@ registerLocaleData(fr);
     BoardComponent,
     CardComponent,
     MarkdownCardComponent,
-    ModalEditorComponent,
+    EditorComponent,
     CustomTagsInput,
     HandleShareComponent,
     LoginComponent,
     IntersectionObserverGridDirective,
     IntersectionObserverElementDirective,
     RegisterComponent,
+    RoutableEditorComponent,
+    ModalEntryComponent,
   ],
   imports: [
     BrowserModule,

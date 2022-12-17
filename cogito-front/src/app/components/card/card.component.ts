@@ -1,26 +1,14 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
-import {
-  CardsType,
-  CardType,
-  LinkCard,
-  NoteCard,
-  TweetCard,
-} from '../../types/cards-link';
-import { Dialog } from '@angular/cdk/dialog';
-import { ModalEditorComponent } from '../modal-editor/modal-editor.component';
-import {
-  BreakpointObserver,
-  Breakpoints,
-  BreakpointState,
-} from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import {
-  NzContextMenuService,
-  NzDropdownMenuComponent,
-} from 'ng-zorro-antd/dropdown';
-import { ThoughtsService } from '../../http-service/thoughts.service';
-import { Clipboard } from '@angular/cdk/clipboard';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { Component, HostListener, Input, OnInit } from "@angular/core";
+import { CardsType, CardType, LinkCard, NoteCard, TweetCard } from "../../types/cards-link";
+import { Dialog } from "@angular/cdk/dialog";
+import { BreakpointObserver, Breakpoints, BreakpointState } from "@angular/cdk/layout";
+import { Observable } from "rxjs";
+import { NzContextMenuService, NzDropdownMenuComponent } from "ng-zorro-antd/dropdown";
+import { ThoughtsService } from "../../http-service/thoughts.service";
+import { Clipboard } from "@angular/cdk/clipboard";
+import { NzMessageService } from "ng-zorro-antd/message";
+import { ModalEntryComponent } from "../modal-entry/modal-entry.component";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-card',
@@ -45,7 +33,7 @@ export class CardComponent implements OnInit {
   onClick() {
     this.isExtraSmall.subscribe((value) => {
       if (value.matches) {
-        this.dialog.open(ModalEditorComponent, {
+        this.dialog.open(ModalEntryComponent, {
           height: '100vh',
           width: '100vw',
           data: {
@@ -53,7 +41,7 @@ export class CardComponent implements OnInit {
           },
         });
       } else {
-        this.dialog.open(ModalEditorComponent, {
+        this.dialog.open(ModalEntryComponent, {
           height: '80%',
           width: '80%',
           data: {
@@ -70,7 +58,8 @@ export class CardComponent implements OnInit {
     private nzContextMenuService: NzContextMenuService,
     private thoughtService: ThoughtsService,
     private clipboard: Clipboard,
-    private nzMessageService: NzMessageService
+    private nzMessageService: NzMessageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -102,5 +91,12 @@ export class CardComponent implements OnInit {
 
   closeMenu() {
     this.nzContextMenuService.close();
+  }
+
+  openNewTab() {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['/board/' + this.card.id])
+    );
+    window.open(url, '_blank');
   }
 }

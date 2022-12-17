@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
-import { CardType, Tag } from '../types/cards-link';
-import { CogitoStoreService } from '../internal-service/store/cogito-store.service';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable, tap } from "rxjs";
+import { CardType, Tag } from "../types/cards-link";
+import { CogitoStoreService } from "../internal-service/store/cogito-store.service";
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +19,10 @@ export class ThoughtsService {
         this.cogitoStoreService.addCards(values);
       })
     );
+  }
+
+  public getThought(id: string): Observable<CardType> {
+    return this.httpClient.get<CardType>('/api/thoughts/' + id );
   }
 
   public save(thingRequest: {

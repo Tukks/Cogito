@@ -38,6 +38,11 @@ public class ThoughtController {
 		return thingsRepository.getAll(getSub());
 	}
 
+	@GetMapping("/thoughts/{id}")
+	public Object getThought(@PathVariable UUID id) {
+		logger.info("Get all elements");
+		return thingsRepository.getByIdAndOidcSub(id, getSub());
+	}
 
 	@PostMapping("/save")
 	public Object save(@RequestBody ThingsRequest thingsRequest) {

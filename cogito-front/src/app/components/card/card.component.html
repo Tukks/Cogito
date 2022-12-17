@@ -27,6 +27,8 @@
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
+    <li nz-menu-item (click)="openNewTab()"><span nz-icon nzType="plus-square" nzTheme="outline"></span>&nbsp;Open new tab</li>
+
     <li nz-menu-item (click)="copyContent()"><span nz-icon nzType="copy" nzTheme="outline"></span>&nbsp;Copy Content</li>
     <li nz-menu-item *ngIf="$any(card).thingType !== cardsType.MARKDOWN" (click)="openLink($event)"><span nz-icon nzType="link" nzTheme="outline"></span>&nbsp;Open
       link
