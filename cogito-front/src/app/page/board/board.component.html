@@ -1,7 +1,7 @@
 <!--<app-vertical-menu></app-vertical-menu>-->
 
 <nz-input-group nzSearch nzSize="large" class="search">
-  <input type="text" nz-input placeholder="Search cogito, shortcut : shift + f" [ngModel]="searchValue" (ngModelChange)="search($event)" class="input"
+  <input type="text" nz-input placeholder="Search cogito, shortcut : shift + f" [ngModel]="searchValue" (ngModelChange)="setSearchToStore($event)" class="input"
          #searchInput />
 </nz-input-group>
 

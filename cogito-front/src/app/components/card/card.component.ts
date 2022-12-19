@@ -29,8 +29,8 @@ export class CardComponent implements OnInit {
     this.nzContextMenuService.create($event, menu);
   }
 
-  @HostListener('click', ['$event.target'])
-  onClick() {
+  @HostListener('click', ['$event'])
+  onClick($event: any) {
     this.isExtraSmall.subscribe((value) => {
       if (value.matches) {
         this.dialog.open(ModalEntryComponent, {

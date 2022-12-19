@@ -56,7 +56,7 @@ export class BoardComponent implements OnInit {
         this.index.add(v);
       });
       this.originalResult = val;
-      this.filteredResult = val;
+      this.search(this.searchValue);
     });
   }
 
@@ -73,5 +73,9 @@ export class BoardComponent implements OnInit {
     } else {
       this.filteredResult = this.originalResult;
     }
+  }
+
+  setSearchToStore($event: any) {
+    this.cogitoStoreService.setFilter($event);
   }
 }
