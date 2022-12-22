@@ -39,6 +39,8 @@ import { NzAffixModule } from "ng-zorro-antd/affix";
 import { NzRadioModule } from "ng-zorro-antd/radio";
 import { RoutableEditorComponent } from "./components/routable-editor/routable-editor.component";
 import { ModalEntryComponent } from "./components/modal-entry/modal-entry.component";
+import { NzToolTipModule } from "ng-zorro-antd/tooltip";
+import { NzModalModule } from "ng-zorro-antd/modal";
 
 registerLocaleData(fr);
 
@@ -77,15 +79,17 @@ registerLocaleData(fr);
     LayoutModule,
     ClipboardModule,
     ReactiveFormsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
+    ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000',
+      registrationStrategy: "registerWhenStable:30000"
     }),
     NzDropDownModule,
     NzAffixModule,
     NzRadioModule,
+    NzToolTipModule,
+    NzModalModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: fr_FR },

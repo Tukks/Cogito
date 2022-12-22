@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { CardType } from '../../types/cards-link';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { CardType } from "../../types/cards-link";
+import { map } from "rxjs/operators";
 
 // TODO add offline support
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root"
 })
 export class CogitoStoreService {
   private readonly _cards = new BehaviorSubject<CardType[]>([]);
-  private readonly filters = new BehaviorSubject<string>('');
+  private readonly filters = new BehaviorSubject<string>("");
 
   readonly filters$ = this.filters.asObservable();
   readonly cards$ = this._cards.asObservable().pipe(
     map((data) =>
       data.sort((a, b) => {
-        if (a.modified < b.modified) {
+        if (a.created < b.created) {
           return 1;
         }
-        if (a.modified > b.modified) {
+        if (a.created > b.created) {
           return -1;
         }
         return 0;
@@ -26,7 +26,10 @@ export class CogitoStoreService {
     )
   );
 
-  constructor() {}
+  constructor() {
+  }
+
+
 
   get cards(): CardType[] {
     return this._cards.getValue();
@@ -62,4 +65,5 @@ export class CogitoStoreService {
   removeCard(id: string) {
     this.cards = this.cards.filter((card) => card.id !== id);
   }
+
 }

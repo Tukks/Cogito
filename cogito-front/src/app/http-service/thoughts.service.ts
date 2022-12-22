@@ -5,16 +5,18 @@ import { CardType, Tag } from "../types/cards-link";
 import { CogitoStoreService } from "../internal-service/store/cogito-store.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root"
 })
 export class ThoughtsService {
   constructor(
     private httpClient: HttpClient,
-    private cogitoStoreService: CogitoStoreService
-  ) {}
+    private cogitoStoreService: CogitoStoreService) {
+
+  }
+
 
   public getAllthougts(): Observable<CardType[]> {
-    return this.httpClient.get<CardType[]>('/api/thoughts').pipe(
+    return this.httpClient.get<CardType[]>("/api/thoughts").pipe(
       tap((values) => {
         this.cogitoStoreService.addCards(values);
       })
@@ -22,14 +24,14 @@ export class ThoughtsService {
   }
 
   public getThought(id: string): Observable<CardType> {
-    return this.httpClient.get<CardType>('/api/thoughts/' + id );
+    return this.httpClient.get<CardType>("/api/thoughts/" + id);
   }
 
   public save(thingRequest: {
     note?: string;
     tags?: Tag[];
   }): Observable<CardType> {
-    return this.httpClient.post<CardType>('/api/save', thingRequest).pipe(
+    return this.httpClient.post<CardType>("/api/save", thingRequest).pipe(
       tap((card) => {
         this.cogitoStoreService.addCard(card);
       })

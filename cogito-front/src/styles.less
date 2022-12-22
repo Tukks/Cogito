@@ -7,12 +7,12 @@
 // Global style
 
 body {
-  background-color: @body-background;
+  background-color: var(--background-color);
 }
 
 .link {
   font-size: 24px;
-  color: @text-color;
+  color: var(--text-color);
 }
 
 .label {
@@ -30,9 +30,9 @@ body {
 }
 
 .card {
-  height: @card-size;
+  height: var(--card-size);
   margin: 0px auto;
-  background-color: @component-background;
+  background-color: var(--component-background);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   border-radius: 8px;
 }
@@ -41,43 +41,47 @@ body {
   display: flex;
   flex-direction: column;
 }
+.flex-horizontal {
+  display: flex;
+  flex-direction: row;
+}
 
 // Markdown editor style
 
 .little {
   h1 h2 h3 h4 h5 {
-    color: @text-color !important;
+    color: var(--text-color) !important;
   }
 
   border-radius: 8px;
 
   .s-btn:not(:hover) {
-    color: @text-color !important;
+    color: var(--text-color) !important;
 
   }
 
   .s-textarea {
     border-radius: 8px;
-    background-color: @component-background;
-    color: @text-color !important;
+    background-color: var(--component-background);
+    color: var(--text-color) !important;
   }
 
   .s-input, .s-textarea {
-    max-height: @card-size;
-    height: @card-size;
+    max-height: var(--card-size);
+    height: var(--card-size);
   }
 
   .s-textarea.is-readonly {
     cursor: unset;
-    background-color: @component-background;
-    color: @text-color;
-    border-color: @component-background;
+    background-color: var(--component-background);
+    color: var(--text-color);
+    border-color: var(--component-background);
   }
 
   .is-readonly {
     .ai-center {
       display: none !important;
-      background-color: @component-background;
+      background-color: var(--component-background);
     }
   }
 }
@@ -87,8 +91,8 @@ body {
 
   .s-textarea {
     border-radius: 8px;
-    background-color: @component-background;
-    color: @text-color;
+    background-color: var(--component-background);
+    color: var(--text-color);
   }
 
   .s-input, .s-textarea {
@@ -112,9 +116,9 @@ body {
 // Twitter Style
 .tweet-content {
   //background: radial-gradient(circle, #fdfbfb   0%, #ebedee 100%);
-  background-image: linear-gradient(180deg, @tweet-color 0%, @component-background 100%);
+  background-image: linear-gradient(180deg, var(--tweet-background) 0%, var(--component-background) 100%);
   background-size: 100% 100px;
-  background-color: @component-background;
+  background-color: var(--component-background);
   background-repeat: no-repeat;
   border-radius: 8px;
   position: relative;
@@ -130,7 +134,7 @@ body {
     font-size: 1.5rem;
     line-height: 1.3em;
     margin: 10px;
-    color: @text-color;
+    color: var(--text-color);
   }
   blockquote:after {
     content: open-quote;

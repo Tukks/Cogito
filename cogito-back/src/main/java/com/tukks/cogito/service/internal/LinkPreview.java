@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +29,7 @@ import org.jsoup.nodes.Element;
 import org.xml.sax.SAXException;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.tukks.cogito.entity.LinkEntity;
@@ -73,11 +75,12 @@ public class LinkPreview {
 
 			return linkEntity;
 
-		} catch (IOException | SAXException | TikaException e) {
+		} catch (IOException | SAXException | TikaException | FailingHttpStatusCodeException e) {
 			logger.warn("Unable to connect to extract domain name from : {}", url);
 			// if something not working, with save it as markdnow note
 			LinkEntity linkEntity = new LinkEntity();
 			linkEntity.setUrl(url);
+			linkEntity.setTags(Collections.emptyList());
 			return linkEntity;
 
 		}

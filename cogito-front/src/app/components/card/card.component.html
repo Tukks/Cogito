@@ -6,7 +6,7 @@
       <p nz-typography class="card-image-desc link">{{$any(card).title}}</p>
       <p nz-typography class="card-image-desc">{{$any(card).desc}}</p>
       <a nz-typography nzEllipsis href="{{$any(card).url}}" target="_blank" class="card-image-desc link"
-         (click)="$event.stopPropagation()">{{$any(card).domain}}</a>
+         (click)="$event.stopPropagation()">{{$any(card).domain ? $any(card).domain : $any(card).url}}</a>
     </div>
   </div>
 </div>

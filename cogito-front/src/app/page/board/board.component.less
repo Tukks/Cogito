@@ -1,4 +1,3 @@
-@import (optional, reference) "../../../theme";
 
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -26,7 +25,9 @@
     grid-template-columns: repeat(auto-fit, 19%);
     display: grid;
   }
-
+  :host {
+    flex: 1;
+  }
 
 }
 
@@ -35,7 +36,7 @@
   padding-top: 10px;
   grid-gap: 10px;
   display: grid;
-  background-color: @body-background;
+  background-color: var(--background-color);
   scroll-behavior: smooth;
 }
 
@@ -43,7 +44,7 @@
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 20px;
-  background-color: @body-background;
+  background-color: var(--background-color);
   .input {
     border-radius: 8px;
     height: 40px;
@@ -60,7 +61,7 @@
 }
 
 .active-element {
-  height: @card-size;
+  height: var(--card-size);
   border: 1px solid transparent;
   border-radius: 8px;
 }
