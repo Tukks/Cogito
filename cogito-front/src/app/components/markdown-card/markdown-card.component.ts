@@ -15,6 +15,9 @@ export class MarkdownCardComponent implements AfterViewInit {
   id: string | undefined;
 
   @Input()
+  isTodo: boolean = false;
+
+  @Input()
   readonly: boolean = true;
 
   @Input()
@@ -25,6 +28,9 @@ export class MarkdownCardComponent implements AfterViewInit {
 
   @Output()
   needSave: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Output()
+  markAsDone: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
   private timeout?: number;
   public stackEditor: StacksEditor | undefined;
 

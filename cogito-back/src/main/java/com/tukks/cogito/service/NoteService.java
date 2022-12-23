@@ -94,7 +94,9 @@ public class NoteService {
 		}
 		if (thingsEntity.getThingType() == ThingType.MARKDOWN) {
 			NoteEntity noteEntity = noteRepository.getByIdAndOidcSub(id, sub);
-			noteEntity.setMarkdown(thingsRequest.getNote());
+			if (thingsRequest.getNote() != null) {
+				noteEntity.setMarkdown(thingsRequest.getNote());
+			}
 			if (thingsRequest.getTags() != null) {
 				noteEntity.setTags(createTagsEntityFromString(thingsRequest.getTags()));
 			}

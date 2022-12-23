@@ -21,6 +21,7 @@ export class CardComponent implements OnInit {
   @Input()
   public card: CardType = {} as CardType;
 
+  public isTodo: boolean = false;
   isExtraSmall: Observable<BreakpointState> = this.breakpointObserver.observe(
     Breakpoints.XSmall
   );
@@ -62,7 +63,9 @@ export class CardComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isTodo = !!this.card.tags.find(value => value.tag.toLowerCase() === 'todo');
+  }
 
   deleteCard() {
     this.thoughtService.delete(this.card.id).subscribe();
@@ -98,5 +101,18 @@ export class CardComponent implements OnInit {
       this.router.createUrlTree(['/board/' + this.card.id])
     );
     window.open(url, '_blank');
+  }
+
+  markAsDone($event: MouseEvent) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    console.log(this.card);
+    this.thoughtService
+      .editThing(this.card.id, {
+        ...this.card,
+
+        tags: this.card.tags.filter(value => value.tag.toLowerCase() != 'todo'),
+      })
+      .subscribe();
   }
 }

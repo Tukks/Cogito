@@ -34,8 +34,8 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.isExtraSmall.subscribe(value => this.showMenu = !value.matches);
-
-    timer(0, 3000).pipe(
+    // TODO websocket
+    timer(0, 10000).pipe(
       switchMap(() => this.thoughtService.getAllthougts()),
       retry(),
       share()

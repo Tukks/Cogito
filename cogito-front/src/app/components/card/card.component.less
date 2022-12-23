@@ -1,7 +1,9 @@
 
 :host {
   border-radius: 8px;
+  position: relative;
 }
+
 .card-image {
   width: 100%;
   height: 100%;
@@ -17,6 +19,7 @@
     height: 100%;
     width: 100%;
   }
+
   .card-image-content {
     max-height: 100%;
     border-radius: 8px;
@@ -51,11 +54,20 @@
 
 .card-tweet {
   background-color: var(--tweet-background);
+
   .tweet-content {
     justify-content: space-between;
     width: 100%;
     height: 100%;
   }
+
+}
+
+.todo-button {
+  z-index: 10;
+  position: absolute;
+  top: 86%;
+  right: 2%;
 
 }
 

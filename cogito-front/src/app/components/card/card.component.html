@@ -1,4 +1,5 @@
-<div class="card card-link" style="position: relative" *ngIf="$any(card).thingType === cardsType.LINK" (contextmenu)="contextMenu($event, menu)">
+
+<div class="card card-link"  *ngIf="$any(card).thingType === cardsType.LINK" (contextmenu)="contextMenu($event, menu)">
   <!-- Image à la une -->
   <div class="card-image flex-vertical">
     <img *ngIf="!!($any(card).imageId || $any(card).image)" class="card-image-element" src="{{$any(card).imageId ? '/api/image/'+$any(card).imageId : $any(card).image}}" loading="lazy"  alt="{{$any(card).imageAlt}}"/>
@@ -9,11 +10,16 @@
          (click)="$event.stopPropagation()">{{$any(card).domain ? $any(card).domain : $any(card).url}}</a>
     </div>
   </div>
+  <button nz-button nzType="primary" nzShape="circle" class="todo-button" *ngIf="isTodo" nz-tooltip="" nzTooltipTitle="Mark as done" (click)="markAsDone($event)">
+    <span nz-icon nzType="check-circle" nzTheme="outline"></span>
+  </button>
 </div>
 
 <ng-container *ngIf="$any(card).thingType === cardsType.MARKDOWN">
-  <app-markdown-card (contextmenu)="contextMenu($event, menu)" [readonly]="true" [cardMode]="true" [content]="$any(card).markdown"
+  <app-markdown-card (contextmenu)="contextMenu($event, menu)" [readonly]="true" [cardMode]="true"
+                     [isTodo]="isTodo" [content]="$any(card).markdown" (markAsDone)="markAsDone($event)"
                      [id]="$any(card).id"></app-markdown-card>
+
 </ng-container>
 
 <div class="card card-tweet" *ngIf="$any(card).thingType === cardsType.TWEET" (contextmenu)="contextMenu($event, menu)">
@@ -21,8 +27,12 @@
     <img src="../../../assets/image/twitter_logo.png" alt="twitter logo" class="card-image-content tweet-image" height="30">
     <div [innerHTML]="$any(card).html"></div>
   </div>
-
+  <button nz-button nzType="primary" nzShape="circle" class="todo-button" *ngIf="isTodo">
+    <span nz-icon nzType="check-circle" nzTheme="outline" nz-tooltip="" nzTooltipTitle="Mark as done" (click)="markAsDone($event)"></span>
+  </button>
 </div>
+
+
 
 
 <nz-dropdown-menu #menu="nzDropdownMenu">

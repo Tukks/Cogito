@@ -6,9 +6,7 @@
 <app-tags-input *ngIf="showTagsAdd" [(tags)]="tags"></app-tags-input>
 
 <div class="group-button">
-  <button (click)="addQuickTag('read later')" *ngIf="showTagsAdd" nz-button nzType="primary">Read it later</button>
-  <button (click)="addQuickTag('Good to know')" *ngIf="showTagsAdd" nz-button nzType="primary">Good to know</button>
-  <button (click)="addQuickTag('serpendity')" *ngIf="showTagsAdd" nz-button nzType="primary">Serpendity</button>
+  <button (click)="addQuickTag('TODO')" *ngIf="showTagsAdd" nz-button nzType="primary">todo</button>
 </div>
 
 <button (click)="update()" *ngIf="showTagsAdd" nz-button nzType="primary" class="button-add-tag">Save</button>
