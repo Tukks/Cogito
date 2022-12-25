@@ -20,6 +20,7 @@
                      [isTodo]="isTodo" [content]="$any(card).markdown" (markAsDone)="markAsDone($event)"
                      [id]="$any(card).id"></app-markdown-card>
 
+
 </ng-container>
 
 <div class="card card-tweet" *ngIf="$any(card).thingType === cardsType.TWEET" (contextmenu)="contextMenu($event, menu)">

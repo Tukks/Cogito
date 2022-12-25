@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable, tap } from "rxjs";
+import { lastValueFrom, Observable, tap } from "rxjs";
 import { CardType, Tag } from "../types/cards-link";
 import { CogitoStoreService } from "../internal-service/store/cogito-store.service";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -60,5 +61,11 @@ export class ThoughtsService {
         this.cogitoStoreService.editCard(cardModified);
       })
     );
+  }
+
+  public uploadImage(data: FormData): Promise<any> {
+    return lastValueFrom(
+      this.httpClient.post('/api/image', data)
+      .pipe(map(value => `/api/image/${value}`)));
   }
 }

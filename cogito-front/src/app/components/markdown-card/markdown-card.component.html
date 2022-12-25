@@ -1,10 +1,10 @@
 <div #editorContainer class="js-tables-enabled" [ngClass]="cardMode ? 'little card' : 'big'" style=" border-radius: 8px;"
 (keyup)="saveOnType()" >
-
+  <button nz-button nzType="primary" nzShape="circle" (click)="markAsDone.emit($event)" *ngIf="isTodo" class="add-items">
+    <span nz-icon nzType="check-circle" nzTheme="outline"></span>
+  </button>
 </div>
-<!--<button nz-button nzType="primary" nzShape="circle" (click)="markAsDone.emit($event)" *ngIf="isTodo" class="add-items">-->
-<!--  <span nz-icon nzType="check-circle" nzTheme="outline"></span>-->
-<!--</button>-->
+
 <button [disabled]="stackEditor?.content === ''" nz-button nzType="primary" nzShape="circle" (click)="create()" *ngIf="!readonly && cardMode" class="add-items">
   <span nz-icon nzType="file-add" nzTheme="outline"></span>
 </button>

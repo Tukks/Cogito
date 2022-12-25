@@ -52,17 +52,15 @@ public class ImageService {
 		this.imageRepository = imageRepository;
 	}
 
-	public void uploadImage(MultipartFile file) {
-		String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss-"));
-		String fileName = date + file.getOriginalFilename();
+	public UUID uploadImage(MultipartFile file) {
+		String fileName = UUID.randomUUID() + file.getOriginalFilename();
+		String filePath = imageUploadFolder + File.separator + fileName;
 
-		String folderPath = imageUploadFolder;
-		String filePath = folderPath + File.separator + fileName;
 		try {
 			Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
 			ImageEntity imageEntity = ImageEntity.builder().oidcSub(getSub()).imagePath(filePath).build();
-			imageRepository.save(imageEntity);
-
+			var imageEntitySaved = imageRepository.save(imageEntity);
+			return imageEntitySaved.getId();
 		} catch (IOException e) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "problem with file");
 		}

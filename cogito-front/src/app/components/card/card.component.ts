@@ -43,8 +43,8 @@ export class CardComponent implements OnInit {
         });
       } else {
         this.dialog.open(ModalEntryComponent, {
-          height: '80%',
-          width: '80%',
+          height: '95%',
+          width: '95%',
           data: {
             card: this.card,
           },
@@ -106,11 +106,9 @@ export class CardComponent implements OnInit {
   markAsDone($event: MouseEvent) {
     $event.preventDefault();
     $event.stopPropagation();
-    console.log(this.card);
     this.thoughtService
       .editThing(this.card.id, {
         ...this.card,
-
         tags: this.card.tags.filter(value => value.tag.toLowerCase() != 'todo'),
       })
       .subscribe();

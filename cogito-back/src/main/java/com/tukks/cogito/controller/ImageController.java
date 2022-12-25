@@ -1,5 +1,6 @@
 package com.tukks.cogito.controller;
 
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.core.io.InputStreamResource;
@@ -27,8 +28,8 @@ public class ImageController {
 	private final ImageService imageService;
 
 	@PostMapping("/image")
-	public void uploadImage(@RequestParam("image") MultipartFile file) {
-		imageService.uploadImage(file);
+	public UUID uploadImage(@RequestParam("image") MultipartFile file) {
+		return imageService.uploadImage(file);
 	}
 
 	@GetMapping(value = "/image/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
@@ -36,7 +37,9 @@ public class ImageController {
 		var image = imageService.getImage(id);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.parseMediaType(image.mimeType()));
+		if (image.mimeType() != null) {
+			headers.setContentType(MediaType.parseMediaType(image.mimeType()));
+		}
 
 		CacheControl cacheControl = CacheControl.maxAge(60, TimeUnit.DAYS)
 			.noTransform()
