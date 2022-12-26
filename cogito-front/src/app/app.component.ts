@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   filterToAdd: any = '';
 
   removeMode: boolean = false;
+  isMobile: boolean = false;
   constructor(private cogitoStoreService: CogitoStoreService,
               private thoughtService: ThoughtsService,
               private breakpointObserver: BreakpointObserver) {
@@ -34,6 +35,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.isExtraSmall.subscribe(value => this.showMenu = !value.matches);
+    this.isExtraSmall.subscribe(value => this.isMobile = value.matches);
     // TODO websocket
     timer(0, 10000).pipe(
       switchMap(() => this.thoughtService.getAllthougts()),
@@ -83,5 +85,9 @@ export class AppComponent implements OnInit {
 
   activateRemoveMode() {
     this.removeMode = !this.removeMode;
+  }
+
+  showMenuMobile() {
+    this.showMenu = !this.showMenu;
   }
 }
