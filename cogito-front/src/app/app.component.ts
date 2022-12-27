@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { CogitoStoreService } from "./internal-service/store/cogito-store.service";
 import { ThoughtsService } from "./http-service/thoughts.service";
-import { Observable, retry, share, switchMap, timer } from "rxjs";
+import { filter, Observable, retry, share, switchMap, timer } from "rxjs";
 import { BreakpointObserver, Breakpoints, BreakpointState } from "@angular/cdk/layout";
 
 @Component({
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   // When user close tab
   isVisible: boolean = false;
   filterToAdd: any = '';
-
+  isLoggedIn: boolean = false;
   removeMode: boolean = false;
   isMobile: boolean = false;
   constructor(private cogitoStoreService: CogitoStoreService,
@@ -34,10 +34,12 @@ export class AppComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.cogitoStoreService.isLoggedIn$.subscribe(val => this.isLoggedIn = val);
     this.isExtraSmall.subscribe(value => this.showMenu = !value.matches);
     this.isExtraSmall.subscribe(value => this.isMobile = value.matches);
     // TODO websocket
     timer(0, 10000).pipe(
+      filter(() => this.isLoggedIn),
       switchMap(() => this.thoughtService.getAllthougts()),
       retry(),
       share()
@@ -59,7 +61,6 @@ export class AppComponent implements OnInit {
   }
 
   setSearch(val: string) {
-    console.log(this.removeMode)
     if (!this.removeMode) {
       this.cogitoStoreService.setFilter(val);
     } else {

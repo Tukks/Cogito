@@ -1,4 +1,8 @@
-<div [ngClass]="showMenu ? 'flex-horizontal' : ''">
+<ng-container *ngIf="!isLoggedIn">
+  <router-outlet></router-outlet>
+
+</ng-container>
+<div [ngClass]="showMenu ? 'flex-horizontal' : ''" *ngIf="isLoggedIn">
   <div class="sidebar-menu" *ngIf="showMenu">
     <ul>
       <li *ngFor="let val of filtersMenu" (click)="setSearch(val.value)" nz-tooltip="" nzTooltipTitle="{{val.value}}">

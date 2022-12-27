@@ -1,16 +1,17 @@
-import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
-import {NzMessageService} from "ng-zorro-antd/message";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService} from "./internal-service/auth/auth.service";
+import { Injectable } from "@angular/core";
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { catchError, Observable, throwError } from "rxjs";
+import { NzMessageService } from "ng-zorro-antd/message";
+import { Router } from "@angular/router";
+import { AuthService } from "./internal-service/auth/auth.service";
+import { CogitoStoreService } from "./internal-service/store/cogito-store.service";
 
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(private message: NzMessageService, private authService: AuthService,
-              private router: Router, private activatedRoute: ActivatedRoute) {
+              private router: Router, private cogitoStoreService: CogitoStoreService) {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -18,6 +19,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 403) {
           this.authService.removeCookie();
+          this.cogitoStoreService.setLoggedIn(false);
           this.router.navigateByUrl(`/login`).then();
         }
         let errorMsg = '';

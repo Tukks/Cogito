@@ -10,7 +10,9 @@ import { map } from "rxjs/operators";
 export class CogitoStoreService {
   private readonly _cards = new BehaviorSubject<CardType[]>([]);
   private readonly filters = new BehaviorSubject<string>("");
+  private readonly isLoggedIn = new BehaviorSubject<boolean>(true);
 
+  readonly isLoggedIn$ = this.isLoggedIn.asObservable();
   readonly filters$ = this.filters.asObservable();
   readonly cards$ = this._cards.asObservable().pipe(
     map((data) =>
@@ -39,6 +41,9 @@ export class CogitoStoreService {
     this._cards.next(val);
   }
 
+  setLoggedIn(isLoggedInd: boolean) {
+    this.isLoggedIn.next(isLoggedInd);
+  }
   setFilter(val: string) {
     this.filters.next(val);
   }
