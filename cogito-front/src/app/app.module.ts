@@ -41,6 +41,7 @@ import { RoutableEditorComponent } from "./components/routable-editor/routable-e
 import { ModalEntryComponent } from "./components/modal-entry/modal-entry.component";
 import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 import { NzModalModule } from "ng-zorro-antd/modal";
+import { NzAutocompleteModule } from "ng-zorro-antd/auto-complete";
 
 registerLocaleData(fr);
 
@@ -89,7 +90,8 @@ registerLocaleData(fr);
     NzAffixModule,
     NzRadioModule,
     NzToolTipModule,
-    NzModalModule
+    NzModalModule,
+    NzAutocompleteModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: fr_FR },

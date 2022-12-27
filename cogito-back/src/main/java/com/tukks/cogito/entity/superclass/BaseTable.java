@@ -2,14 +2,13 @@ package com.tukks.cogito.entity.superclass;
 
 import java.time.Instant;
 
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
-
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

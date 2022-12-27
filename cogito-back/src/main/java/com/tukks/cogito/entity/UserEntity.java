@@ -3,16 +3,13 @@ package com.tukks.cogito.entity;
 import java.util.Collection;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import org.hibernate.annotations.Type;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 @Entity
@@ -20,9 +17,7 @@ import lombok.Data;
 public class UserEntity implements UserDetails {
 
 	@Id
-	@GeneratedValue
-	@Column(columnDefinition = "uuid")
-	@Type(type = "org.hibernate.type.UUIDCharType")
+	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String username;
 

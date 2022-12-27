@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 
 @Component({
   selector: 'app-tags-input',
@@ -10,7 +10,7 @@ import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@an
     >
       {{ sliceTagName(tag) }}
     </nz-tag>
-    <nz-tag *ngIf="!inputVisible" class="editable-tag" nzNoAnimation (click)="showInput()" class="label">
+    <nz-tag *ngIf="!inputVisible" nzNoAnimation (click)="showInput()" class="label">
       <span nz-icon nzType="plus"></span>
       New Tag
     </nz-tag>
@@ -22,9 +22,12 @@ import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@an
       type="text"
       [(ngModel)]="inputValue"
       class="tags-input"
+      (input)="onInput($event)"
       (blur)="handleInputConfirm()"
       (keydown.enter)="handleInputConfirm()"
+      [nzAutocomplete]="auto"
     />
+    <nz-autocomplete [nzDataSource]="options" nzBackfill #auto></nz-autocomplete>
   `,
   styleUrls: ['./custom-tags-input.less']
 })
@@ -35,10 +38,15 @@ export class CustomTagsInput {
   @Output()
   public tagsChange = new EventEmitter<string[]>();
 
+  options: string[] = [];
   inputVisible = false;
   inputValue = '';
   @ViewChild('inputElement', {static: false}) inputElement?: ElementRef;
 
+  onInput(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.options = value ? [value, value + value, value + value + value] : [];
+  }
   handleClose(removedTag: {}): void {
     this.tags = this.tags.filter(tag => tag !== removedTag);
     this.tagsChange.emit(this.tags);

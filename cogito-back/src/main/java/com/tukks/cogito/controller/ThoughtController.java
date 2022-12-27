@@ -50,6 +50,7 @@ public class ThoughtController {
 
 		return noteService.save(thingsRequest);
 	}
+
 	@PatchMapping("/{id}")
 	public Object editThings(@PathVariable UUID id, @RequestBody ThingsRequest thingsRequest) {
 		logger.info("Edit note, id : {}", id);

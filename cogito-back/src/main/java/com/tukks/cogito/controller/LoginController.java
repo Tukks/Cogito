@@ -1,9 +1,5 @@
 package com.tukks.cogito.controller;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,6 +18,9 @@ import com.tukks.cogito.entity.UserEntity;
 import com.tukks.cogito.service.LoginService;
 import com.tukks.cogito.utils.JwtTokenUtil;
 
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import static com.tukks.cogito.utils.JwtTokenUtil.createCookieWithToken;
 

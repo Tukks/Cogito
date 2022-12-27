@@ -2,13 +2,11 @@ package com.tukks.cogito.entity.tag;
 
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-import org.hibernate.annotations.Type;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,9 +24,8 @@ import lombok.extern.jackson.Jacksonized;
 public class Tag {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(columnDefinition = "uuid")
-	@Type(type = "org.hibernate.type.UUIDCharType")
 	private UUID id;
 
 	private String tag;
