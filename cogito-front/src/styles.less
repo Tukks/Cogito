@@ -42,6 +42,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 .flex-horizontal {
   display: flex;
   flex-direction: row;
@@ -50,8 +51,12 @@ body {
 // Markdown editor style
 
 .little {
+
+  border-radius: 8px;
+
   .s-block-link {
     color: var(--text-color);
+
     :hover {
       color: var(--background-color);
     }
@@ -61,11 +66,18 @@ body {
     color: var(--text-color) !important;
   }
 
-  border-radius: 8px;
 
   .s-btn:not(:hover) {
     color: var(--text-color) !important;
 
+  }
+
+  .s-block-link {
+    color: var(--text-color);
+  }
+
+  .s-block-link:hover, .s-block-link:active {
+    color: var(--background-color);
   }
 
   .s-textarea {
@@ -86,6 +98,7 @@ body {
     color: var(--text-color);
     border-color: var(--component-background);
   }
+
   .s-label {
     color: var(--text-color);
   }
@@ -96,9 +109,19 @@ body {
       background-color: var(--component-background);
     }
   }
+
   .s-popover {
     background-color: var(--component-background);
   }
+
+  .s-popover__tooltip {
+    color: var(--text-color);
+  }
+
+  .s-btn:hover {
+    color: var(--component-background) !important;
+  }
+
   .s-popover--arrow {
     color: var(--component-background);
   }
@@ -106,9 +129,12 @@ body {
 
 .big {
   --fc-medium: var(--text-color);
+  height: 100%;
+
   .s-block-link {
     color: var(--text-color);
   }
+
   .s-block-link:hover, .s-block-link:active {
     color: var(--background-color);
   }
@@ -116,24 +142,34 @@ body {
   .s-popover {
     background-color: var(--component-background);
   }
+
   .s-popover--arrow {
     color: var(--component-background);
   }
+
   .flex--item {
     display: flex;
   }
+
   .s-label {
     color: var(--text-color);
   }
+
   h1, h2, h3, h4, h5, h6 {
     color: var(--text-color) !important;
   }
 
   .s-btn:not(:hover) {
     color: var(--text-color) !important;
-
   }
-  height: 100%;
+
+  .s-btn:hover {
+    color: var(--component-background) !important;
+  }
+
+  .s-popover__tooltip {
+    color: var(--text-color);
+  }
 
   .s-textarea {
 
@@ -169,12 +205,14 @@ body {
   background-repeat: no-repeat;
   border-radius: 8px;
   position: relative;
+
   .tweet-image {
     height: 30px;
     object-fit: contain;
     align-self: start;
     margin: 10px;
   }
+
   blockquote {
     position: relative;
     font-weight: bold;
@@ -183,9 +221,11 @@ body {
     margin: 10px;
     color: var(--text-color);
   }
+
   blockquote:after {
     content: open-quote;
   }
+
   blockquote.twitter-tweet p {
     font-size: 1.2rem;
     font-weight: normal;
