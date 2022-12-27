@@ -50,7 +50,14 @@ body {
 // Markdown editor style
 
 .little {
-  h1 h2 h3 h4 h5 {
+  .s-block-link {
+    color: var(--text-color);
+    :hover {
+      color: var(--background-color);
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
     color: var(--text-color) !important;
   }
 
@@ -65,6 +72,7 @@ body {
     border-radius: 8px;
     background-color: var(--component-background);
     color: var(--text-color) !important;
+
   }
 
   .s-input, .s-textarea {
@@ -78,6 +86,9 @@ body {
     color: var(--text-color);
     border-color: var(--component-background);
   }
+  .s-label {
+    color: var(--text-color);
+  }
 
   .is-readonly {
     .ai-center {
@@ -85,13 +96,47 @@ body {
       background-color: var(--component-background);
     }
   }
+  .s-popover {
+    background-color: var(--component-background);
+  }
+  .s-popover--arrow {
+    color: var(--component-background);
+  }
 }
 
 .big {
+  --fc-medium: var(--text-color);
+  .s-block-link {
+    color: var(--text-color);
+  }
+  .s-block-link:hover, .s-block-link:active {
+    color: var(--background-color);
+  }
+
+  .s-popover {
+    background-color: var(--component-background);
+  }
+  .s-popover--arrow {
+    color: var(--component-background);
+  }
+  .flex--item {
+    display: flex;
+  }
+  .s-label {
+    color: var(--text-color);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color) !important;
+  }
+
+  .s-btn:not(:hover) {
+    color: var(--text-color) !important;
+
+  }
   height: 100%;
 
   .s-textarea {
-    border-radius: 8px;
+
     background-color: var(--component-background);
     color: var(--text-color);
   }
@@ -99,6 +144,7 @@ body {
   .s-input, .s-textarea {
     max-height: 100vh;
     height: 100%;
+    border-color: var(--component-background);
   }
 }
 

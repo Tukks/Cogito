@@ -17,6 +17,8 @@ export interface CardsLink {
   tags: Tag[],
   created: Date;
   modified: Date;
+
+  pinned: boolean;
 }
 
 export interface NoteCard extends CardsLink {

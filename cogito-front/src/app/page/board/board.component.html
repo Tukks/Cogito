@@ -4,7 +4,9 @@
   <input type="text" nz-input placeholder="Search cogito, shortcut : shift + f" [ngModel]="searchValue" (ngModelChange)="setSearchToStore($event)" class="input"
          #searchInput />
 </nz-input-group>
+<div>
 
+</div>
 <div class="container" appIntersectionObserverGrid>
 
   <app-markdown-card [cardMode]="true" [readonly]="false" class="first-child-container"></app-markdown-card>
