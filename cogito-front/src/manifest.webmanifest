@@ -14,7 +14,7 @@
     }
   },
   "scope": "./",
-  "start_url": "./board",
+  "start_url": "./",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",

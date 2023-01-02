@@ -68,4 +68,14 @@ export class ThoughtsService {
       this.httpClient.post('/api/image', data)
       .pipe(map(value => `/api/image/${value}`)));
   }
+
+  public test() {
+
+    const event = new EventSource('/api/stream-sse-mvc', {withCredentials: true});
+    // @ts-ignore
+    event.onmessage = message => {
+      console.log(message);
+    };
+
+  }
 }

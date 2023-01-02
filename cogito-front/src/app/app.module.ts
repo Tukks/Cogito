@@ -42,6 +42,7 @@ import { ModalEntryComponent } from "./components/modal-entry/modal-entry.compon
 import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 import { NzModalModule } from "ng-zorro-antd/modal";
 import { NzAutocompleteModule } from "ng-zorro-antd/auto-complete";
+import { HomeComponent } from "./page/home/home.component";
 
 registerLocaleData(fr);
 
@@ -60,6 +61,7 @@ registerLocaleData(fr);
     RegisterComponent,
     RoutableEditorComponent,
     ModalEntryComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

@@ -25,6 +25,6 @@ export class RoutableEditorComponent implements OnInit {
   }
 
   close() {
-    this.router.navigateByUrl('/board');
+    this.router.navigateByUrl('');
   }
 }

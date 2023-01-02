@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {LoginService} from "../../http-service/login.service";
-import {AuthService} from "../../internal-service/auth/auth.service";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { LoginService } from "../../http-service/login.service";
+import { AuthService } from "../../internal-service/auth/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   save() {
     this.loginService.login(this.register.getRawValue()).subscribe(() => {
-      this.router.navigateByUrl("/board");
+      this.router.navigateByUrl("/");
     });
   }
 

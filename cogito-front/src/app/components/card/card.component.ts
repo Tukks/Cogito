@@ -98,7 +98,7 @@ export class CardComponent implements OnInit {
 
   openNewTab() {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree(['/board/' + this.card.id])
+      this.router.createUrlTree(['/' + this.card.id])
     );
     window.open(url, '_blank');
   }
