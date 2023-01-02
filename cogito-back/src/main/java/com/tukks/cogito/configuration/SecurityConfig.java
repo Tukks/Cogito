@@ -30,7 +30,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// Enable CORS and disable CSRF
-		http = http.cors().and().csrf().disable();
+		http = http.cors().and().csrf().disable().anonymous().disable();
 		http.userDetailsService(username -> userRepository.findByUsername(username)
 			.orElseThrow(
 				() -> new UsernameNotFoundException("User " + username + " not found.")));
@@ -42,7 +42,8 @@ public class SecurityConfig {
 		http.authorizeHttpRequests()
 			.requestMatchers("/api/register").permitAll()
 			.requestMatchers("/api/login").permitAll()
-			.requestMatchers("/api/**").authenticated();
+			.requestMatchers("/api/**").authenticated()
+			.requestMatchers("/**").permitAll();
 
 		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
