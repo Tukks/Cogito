@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ConfigurationController {
 	@RequestMapping(value = "/{path:[^.]*}")
 	public String redirect() {
-		// Forward to home page so that route is preserved.(i.e forward:/intex.html)
+		// Forward to home page so that route is preserved.(i.e forward:/index.html)
 		return "forward:/";
 	}
 }

@@ -124,10 +124,12 @@ public class NoteService {
 
 	private List<Tag> createTagsEntityFromString(List<TagEditRequest> tags) {
 		if (tags != null) {
+			final String sub = getSub();
 			return tags.stream().map(s -> {
 				Tag newTag = new Tag();
 				newTag.setTag(s.getTag());
 				newTag.setHidden(s.isHidden());
+				newTag.setOidcSub(sub);
 				return newTag;
 			}).collect(Collectors.toList());
 		}

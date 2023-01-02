@@ -28,6 +28,9 @@ export class ThoughtsService {
     return this.httpClient.get<CardType>("/api/thoughts/" + id);
   }
 
+  public getTagsStartWith(val: string): Observable<string[]> {
+    return this.httpClient.get<string[]>("/api/tags?startWith=" + val);
+  }
   public save(thingRequest: {
     note?: string;
     tags?: Tag[];

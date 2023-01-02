@@ -33,4 +33,5 @@ public class Tag {
 	@Column(name = "hidden", columnDefinition = "bool default false")
 	private boolean hidden = false;
 
+	private String oidcSub;
 }

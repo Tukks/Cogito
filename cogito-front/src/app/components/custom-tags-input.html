@@ -1,0 +1,25 @@
+<nz-tag class="label"
+        *ngFor="let tag of tags; let i = index"
+        [nzMode]="'closeable'"
+        (nzOnClose)="handleClose(tag)"
+>
+  {{ sliceTagName(tag) }}
+</nz-tag>
+<nz-tag *ngIf="!inputVisible" nzNoAnimation (click)="showInput()" class="label">
+  <span nz-icon nzType="plus"></span>
+  New Tag
+</nz-tag>
+<input
+  #inputElement
+  nz-input
+  nzSize="small"
+  *ngIf="inputVisible"
+  type="text"
+  [(ngModel)]="inputValue"
+  class="tags-input"
+  (input)="onInput($event)"
+  (blur)="handleInputConfirm()"
+  (keydown.enter)="handleInputConfirm()"
+  [nzAutocomplete]="auto"
+/>
+<nz-autocomplete [nzDataSource]="options" nzBackfill #auto></nz-autocomplete>

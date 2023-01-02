@@ -1,34 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { ThoughtsService } from "../http-service/thoughts.service";
 
 @Component({
   selector: 'app-tags-input',
-  template: `
-    <nz-tag class="label"
-            *ngFor="let tag of tags; let i = index"
-            [nzMode]="'closeable'"
-            (nzOnClose)="handleClose(tag)"
-    >
-      {{ sliceTagName(tag) }}
-    </nz-tag>
-    <nz-tag *ngIf="!inputVisible" nzNoAnimation (click)="showInput()" class="label">
-      <span nz-icon nzType="plus"></span>
-      New Tag
-    </nz-tag>
-    <input
-      #inputElement
-      nz-input
-      nzSize="small"
-      *ngIf="inputVisible"
-      type="text"
-      [(ngModel)]="inputValue"
-      class="tags-input"
-      (input)="onInput($event)"
-      (blur)="handleInputConfirm()"
-      (keydown.enter)="handleInputConfirm()"
-      [nzAutocomplete]="auto"
-    />
-    <nz-autocomplete [nzDataSource]="options" nzBackfill #auto></nz-autocomplete>
-  `,
+  templateUrl: './custom-tags-input.html',
   styleUrls: ['./custom-tags-input.less']
 })
 export class CustomTagsInput {
@@ -43,9 +18,16 @@ export class CustomTagsInput {
   inputValue = '';
   @ViewChild('inputElement', {static: false}) inputElement?: ElementRef;
 
+  constructor(
+    public thoughtService: ThoughtsService
+  ) {}
   onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    this.options = value ? [value, value + value, value + value + value] : [];
+    if (value !== "" && value) {
+      this.thoughtService.getTagsStartWith(value).subscribe(val => {
+        this.options = val ? val : [];
+      });
+    }
   }
   handleClose(removedTag: {}): void {
     this.tags = this.tags.filter(tag => tag !== removedTag);
