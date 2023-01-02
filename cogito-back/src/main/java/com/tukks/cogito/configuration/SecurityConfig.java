@@ -29,8 +29,8 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		// Enable CORS and disable CSRF
-		http = http.cors().and().csrf().disable().anonymous().disable();
+		// TODO Enable CORS
+		http = http.cors().disable().csrf().disable().anonymous().disable();
 		http.userDetailsService(username -> userRepository.findByUsername(username)
 			.orElseThrow(
 				() -> new UsernameNotFoundException("User " + username + " not found.")));
