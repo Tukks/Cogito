@@ -1,9 +1,14 @@
 package com.tukks.cogito.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -11,44 +16,45 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Service
 public class EventSseManager {
 
-	HashMap<String, List<SseEmitter>> sseEmitters = new HashMap<>();
+	private final Logger logger = LogManager.getLogger(getClass());
+
+	final ConcurrentHashMap<String, Map<UUID, SseEmitter>> sseEmitters = new ConcurrentHashMap<>();
 
 	public SseEmitter registerSseEmitter(String sub) {
-
+		final UUID id = UUID.randomUUID();
 		SseEmitter emitter = new SseEmitter(-1L);
 
-		emitter.onCompletion(() -> sseEmitters.remove(sub));
-		emitter.onTimeout(() -> sseEmitters.remove(sub));
-		emitter.onError(throwable -> sseEmitters.remove(sub));
-
 		if (this.sseEmitters.get(sub) == null) {
-			List<SseEmitter> sseEmitterToAdd = new ArrayList<>();
-			sseEmitterToAdd.add(emitter);
+			Map<UUID, SseEmitter> sseEmitterToAdd = new HashMap<>();
+			sseEmitterToAdd.put(id, emitter);
 			this.sseEmitters.put(sub, sseEmitterToAdd);
 		} else {
-			List<SseEmitter> sseEmitterList = this.sseEmitters.get(sub);
-			sseEmitterList.add(emitter);
+			Map<UUID, SseEmitter> sseEmitterList = this.sseEmitters.get(sub);
+			sseEmitterList.put(id, emitter);
 		}
 
 		return emitter;
 
 	}
 
-	public void unregisterSseEmitter(String sub) {
-		// TODO
-		this.sseEmitters.remove(sub);
-	}
+//	public synchronized void unregisterSseEmitter(String sub, UUID id) {
+//		this.sseEmitters.get(sub).remove(id);
+//	}
 
-	public void sendEventToSseEmiter(String sub, Object data) {
-		List<SseEmitter> sseEmitters = this.sseEmitters.get(sub);
+	public void sendEventToSseEmitter(String sub, Object data) {
+		Map<UUID, SseEmitter> sseEmittersMap = this.sseEmitters.get(sub);
 
-		sseEmitters.forEach(sseEmitter -> {
+		List<UUID> toRemove = new ArrayList<>();
+
+		sseEmittersMap.forEach((id, sseEmitter) -> {
 			try {
 				sseEmitter.send(data);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
+			} catch (Exception e) {
+				toRemove.add(id);
 			}
 		});
+
+		toRemove.forEach(uuid -> this.sseEmitters.get(sub).remove(uuid));
 
 	}
 }

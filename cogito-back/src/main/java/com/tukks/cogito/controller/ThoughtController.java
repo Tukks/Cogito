@@ -51,7 +51,7 @@ public class ThoughtController {
 	public Object save(@RequestBody ThingsRequest thingsRequest) {
 		logger.info("Saving new note");
 		Object saved = noteService.save(thingsRequest);
-		eventSseManager.sendEventToSseEmiter(getSub(), thingsRepository.getAll(getSub()));
+		eventSseManager.sendEventToSseEmitter(getSub(), thingsRepository.getAll(getSub()));
 
 		return saved;
 	}
@@ -62,7 +62,7 @@ public class ThoughtController {
 
 		Object edited = noteService.editThings(id, thingsRequest);
 
-		eventSseManager.sendEventToSseEmiter(getSub(), thingsRepository.getAll(getSub()));
+		eventSseManager.sendEventToSseEmitter(getSub(), thingsRepository.getAll(getSub()));
 
 		return edited;
 	}
@@ -72,7 +72,7 @@ public class ThoughtController {
 		logger.info("Delete note, id : {}", id);
 		Integer removed = noteService.delete(id);
 
-		eventSseManager.sendEventToSseEmiter(getSub(), thingsRepository.getAll(getSub()));
+		eventSseManager.sendEventToSseEmitter(getSub(), thingsRepository.getAll(getSub()));
 
 		return removed;
 	}
