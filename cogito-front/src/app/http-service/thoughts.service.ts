@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, NgZone } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { lastValueFrom, Observable, tap } from "rxjs";
 import { CardType, Tag } from "../types/cards-link";
@@ -11,7 +11,8 @@ import { map } from "rxjs/operators";
 export class ThoughtsService {
   constructor(
     private httpClient: HttpClient,
-    private cogitoStoreService: CogitoStoreService) {
+    private cogitoStoreService: CogitoStoreService,
+    private zone: NgZone) {
 
   }
 
@@ -31,23 +32,35 @@ export class ThoughtsService {
   public getTagsStartWith(val: string): Observable<string[]> {
     return this.httpClient.get<string[]>("/api/tags?startWith=" + val);
   }
+
+  public testSSE(): Observable<any> {
+    return new Observable(observer => {
+      const test = new EventSource("/api/thought-event");
+      test.onmessage = ev => {
+        this.zone.run(() => {
+          console.log(ev);
+          observer.next(JSON.parse(ev.data));
+        });
+      };
+
+      test.onerror = ev => {
+        this.zone.run(() => {
+          console.log("ERROR" + ev);
+        });
+      };
+    });
+
+  }
+
   public save(thingRequest: {
     note?: string;
     tags?: Tag[];
   }): Observable<CardType> {
-    return this.httpClient.post<CardType>("/api/save", thingRequest).pipe(
-      tap((card) => {
-        this.cogitoStoreService.addCard(card);
-      })
-    );
+    return this.httpClient.post<CardType>("/api/save", thingRequest);
   }
 
   public delete(id: string): Observable<number> {
-    return this.httpClient.delete<number>(`/api/${id}`).pipe(
-      tap(() => {
-        this.cogitoStoreService.removeCard(id);
-      })
-    );
+    return this.httpClient.delete<number>(`/api/${id}`);
   }
 
   public editThing(
@@ -59,26 +72,13 @@ export class ThoughtsService {
       comment?: string;
     }
   ): Observable<CardType> {
-    return this.httpClient.patch<CardType>(`/api/${id}`, thingRequest).pipe(
-      tap((cardModified) => {
-        this.cogitoStoreService.editCard(cardModified);
-      })
-    );
+    return this.httpClient.patch<CardType>(`/api/${id}`, thingRequest);
   }
 
   public uploadImage(data: FormData): Promise<any> {
     return lastValueFrom(
-      this.httpClient.post('/api/image', data)
-      .pipe(map(value => `/api/image/${value}`)));
+      this.httpClient.post("/api/image", data)
+        .pipe(map(value => `/api/image/${value}`)));
   }
 
-  public test() {
-
-    const event = new EventSource('/api/stream-sse-mvc', {withCredentials: true});
-    // @ts-ignore
-    event.onmessage = message => {
-      console.log(message);
-    };
-
-  }
 }

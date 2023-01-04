@@ -56,7 +56,8 @@ export class MarkdownCardComponent implements AfterViewInit {
         defaultView: EditorType.RichText,
         imageUpload: {
           allowExternalUrls: false,
-          wrapImagesInLinks: true,
+          wrapImagesInLinks: false,
+          embedImagesAsLinks: false,
           handler: (file: File | string): Promise<any> => {
             const data: FormData = new FormData();
             data.append("image", file);

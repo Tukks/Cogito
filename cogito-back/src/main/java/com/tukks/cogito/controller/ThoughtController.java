@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.tukks.cogito.dto.request.ThingsRequest;
 import com.tukks.cogito.repository.ThingsRepository;
+import com.tukks.cogito.service.EventSseManager;
 import com.tukks.cogito.service.NoteService;
 
 import lombok.AllArgsConstructor;
@@ -31,6 +33,7 @@ public class ThoughtController {
 
 	private final ThingsRepository thingsRepository;
 	private final NoteService noteService;
+	private final EventSseManager eventSseManager;
 
 	@GetMapping("/thoughts")
 	public List<Object> getAllThoughts() {
@@ -47,21 +50,37 @@ public class ThoughtController {
 	@PostMapping("/save")
 	public Object save(@RequestBody ThingsRequest thingsRequest) {
 		logger.info("Saving new note");
+		Object saved = noteService.save(thingsRequest);
+		eventSseManager.sendEventToSseEmiter(getSub(), thingsRepository.getAll(getSub()));
 
-		return noteService.save(thingsRequest);
+		return saved;
 	}
 
 	@PatchMapping("/{id}")
 	public Object editThings(@PathVariable UUID id, @RequestBody ThingsRequest thingsRequest) {
 		logger.info("Edit note, id : {}", id);
-		return noteService.editThings(id, thingsRequest);
+
+		Object edited = noteService.editThings(id, thingsRequest);
+
+		eventSseManager.sendEventToSseEmiter(getSub(), thingsRepository.getAll(getSub()));
+
+		return edited;
 	}
 
 	@DeleteMapping("/{id}")
 	public Integer delete(@PathVariable UUID id) {
 		logger.info("Delete note, id : {}", id);
+		Integer removed = noteService.delete(id);
 
-		return noteService.delete(id);
+		eventSseManager.sendEventToSseEmiter(getSub(), thingsRepository.getAll(getSub()));
+
+		return removed;
+	}
+
+
+	@GetMapping("/thought-event")
+	public SseEmitter thoughtEvent() {
+		return eventSseManager.registerSseEmitter(getSub());
 	}
 
 }
