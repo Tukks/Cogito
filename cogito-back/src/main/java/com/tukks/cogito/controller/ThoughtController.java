@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -14,11 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.tukks.cogito.dto.request.ThingsRequest;
+import com.tukks.cogito.dto.response.ActionCard;
+import com.tukks.cogito.dto.response.ActionEvent;
+import com.tukks.cogito.dto.response.ActionType;
 import com.tukks.cogito.repository.ThingsRepository;
-import com.tukks.cogito.service.EventSseManager;
 import com.tukks.cogito.service.NoteService;
 
 import lombok.AllArgsConstructor;
@@ -30,10 +32,9 @@ import static com.tukks.cogito.service.SecurityUtils.getSub;
 public class ThoughtController {
 
 	private final Logger logger = LogManager.getLogger(getClass());
-
+	private ApplicationEventPublisher applicationEventPublisher;
 	private final ThingsRepository thingsRepository;
 	private final NoteService noteService;
-	private final EventSseManager eventSseManager;
 
 	@GetMapping("/thoughts")
 	public List<Object> getAllThoughts() {
@@ -51,7 +52,9 @@ public class ThoughtController {
 	public Object save(@RequestBody ThingsRequest thingsRequest) {
 		logger.info("Saving new note");
 		Object saved = noteService.save(thingsRequest);
-		eventSseManager.sendEventToSseEmitter(getSub(), thingsRepository.getAll(getSub()));
+
+		applicationEventPublisher.publishEvent(new ActionEvent(this,
+			ActionCard.builder().actionType(ActionType.ADD).id(null).card(saved).build()));
 
 		return saved;
 	}
@@ -62,7 +65,8 @@ public class ThoughtController {
 
 		Object edited = noteService.editThings(id, thingsRequest);
 
-		eventSseManager.sendEventToSseEmitter(getSub(), thingsRepository.getAll(getSub()));
+		applicationEventPublisher.publishEvent(new ActionEvent(this,
+			ActionCard.builder().actionType(ActionType.EDIT).id(id).card(edited).build()));
 
 		return edited;
 	}
@@ -72,15 +76,10 @@ public class ThoughtController {
 		logger.info("Delete note, id : {}", id);
 		Integer removed = noteService.delete(id);
 
-		eventSseManager.sendEventToSseEmitter(getSub(), thingsRepository.getAll(getSub()));
-
+		applicationEventPublisher.publishEvent(new ActionEvent(this,
+			ActionCard.builder().actionType(ActionType.DELETE).id(id).card(null).build()));
 		return removed;
 	}
 
-
-	@GetMapping("/thought-event")
-	public SseEmitter thoughtEvent() {
-		return eventSseManager.registerSseEmitter(getSub());
-	}
 
 }

@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.thoughtService.testSSE().subscribe(value => this.cogitoStoreService.addCards(value));
+    this.thoughtService.connectWebSocket();
     this.isExtraSmall.subscribe(value => this.showMenu = !value.matches);
     this.isExtraSmall.subscribe(value => this.isMobile = value.matches);
 

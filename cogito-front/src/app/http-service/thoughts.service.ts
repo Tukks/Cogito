@@ -1,9 +1,10 @@
 import { Injectable, NgZone } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { lastValueFrom, Observable, tap } from "rxjs";
+import { lastValueFrom, Observable, retry, tap } from "rxjs";
 import { CardType, Tag } from "../types/cards-link";
 import { CogitoStoreService } from "../internal-service/store/cogito-store.service";
 import { map } from "rxjs/operators";
+import { webSocket } from "rxjs/webSocket";
 
 @Injectable({
   providedIn: "root"
@@ -33,21 +34,25 @@ export class ThoughtsService {
     return this.httpClient.get<string[]>("/api/tags?startWith=" + val);
   }
 
-  public testSSE(): Observable<any> {
-    return new Observable(observer => {
-      const test = new EventSource("/api/thought-event");
-      test.onmessage = ev => {
-        this.zone.run(() => {
-          console.log(ev);
-          observer.next(JSON.parse(ev.data));
-        });
-      };
-
-      test.onerror = ev => {
-        this.zone.run(() => {
-          console.log("ERROR" + ev);
-        });
-      };
+  public connectWebSocket(): void {
+    webSocket<{
+      actionType: 'DELETE' | 'ADD' | 'EDIT',
+      id: string,
+      card: CardType
+    }>("ws://localhost:9191/ws/chat").pipe(
+      retry({ count: 4, delay: 4000 })
+    ).subscribe({
+      next: value => {
+        if (value.actionType === 'DELETE') {
+          this.cogitoStoreService.removeCard(value.id);
+        } else if (value.actionType === 'ADD') {
+          this.cogitoStoreService.addCard(value.card);
+        } else if (value.actionType === 'EDIT') {
+          this.cogitoStoreService.editCard(value.card);
+        }
+      },
+      error: err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
+      complete: () => console.log('complete') // Called when connection is closed (for whatever reason).
     });
 
   }

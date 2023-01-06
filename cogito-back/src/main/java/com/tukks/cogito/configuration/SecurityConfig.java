@@ -40,6 +40,7 @@ public class SecurityConfig {
 			.and();
 
 		http.authorizeHttpRequests()
+			.requestMatchers("/ws/**").authenticated()
 			.requestMatchers("/api/register").permitAll()
 			.requestMatchers("/api/login").permitAll()
 			.requestMatchers("/api/**").authenticated()
