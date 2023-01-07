@@ -35,24 +35,24 @@ export class ThoughtsService {
   }
 
   public connectWebSocket(): void {
-    webSocket<{
-      actionType: 'DELETE' | 'ADD' | 'EDIT',
+    const ws = webSocket<{
+      actionType: "DELETE" | "ADD" | "EDIT",
       id: string,
       card: CardType
-    }>("ws://localhost:9191/ws/chat").pipe(
+    }>(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws/cards").pipe(
       retry({ count: 4, delay: 4000 })
     ).subscribe({
       next: value => {
-        if (value.actionType === 'DELETE') {
+        if (value.actionType === "DELETE") {
           this.cogitoStoreService.removeCard(value.id);
-        } else if (value.actionType === 'ADD') {
+        } else if (value.actionType === "ADD") {
           this.cogitoStoreService.addCard(value.card);
-        } else if (value.actionType === 'EDIT') {
+        } else if (value.actionType === "EDIT") {
           this.cogitoStoreService.editCard(value.card);
         }
       },
       error: err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
-      complete: () => console.log('complete') // Called when connection is closed (for whatever reason).
+      complete: () => console.log("complete") // Called when connection is closed (for whatever reason).
     });
 
   }

@@ -17,7 +17,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	private ThoughtMessageHandler thoughtMessageHandler;
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-		webSocketHandlerRegistry.addHandler(thoughtMessageHandler, "/ws/chat").setAllowedOriginPatterns("*");
+		webSocketHandlerRegistry.addHandler(thoughtMessageHandler, "/ws/cards").setAllowedOriginPatterns("*");
 	}
 
 }

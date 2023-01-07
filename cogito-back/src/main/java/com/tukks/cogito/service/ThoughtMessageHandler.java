@@ -30,6 +30,7 @@ import static com.tukks.cogito.service.SecurityUtils.getSub;
 
 @Service
 public class ThoughtMessageHandler extends TextWebSocketHandler implements ApplicationListener<ActionEvent> {
+
 	private final Logger logger = LogManager.getLogger(getClass());
 
 	@Autowired
@@ -64,14 +65,17 @@ public class ThoughtMessageHandler extends TextWebSocketHandler implements Appli
 
 	private void sendMessageToAll(ActionEvent actionEvent) throws JsonProcessingException {
 		TextMessage textMessage = new TextMessage(objectMapper.writeValueAsString(actionEvent.getActionCard()));
+		List<WebSocketSession> webSocketSessions = webSocketSessionsEmitters.get(getSub());
+		if (webSocketSessions != null) {
+			webSocketSessions.forEach((value) -> {
+				try {
+					value.sendMessage(textMessage);
+				} catch (IOException e) {
+					logger.error("Problem sending message to WS", e);
+				}
+			});
+		}
 
-		webSocketSessionsEmitters.get(getSub()).forEach((value) -> {
-			try {
-				value.sendMessage(textMessage);
-			} catch (IOException e) {
-				logger.error("Problem sending message to WS", e);
-			}
-		});
 	}
 
 	@Override
