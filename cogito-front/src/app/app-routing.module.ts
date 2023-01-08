@@ -14,18 +14,20 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        component: BoardComponent
-      },
-      {
-        path: "board/:id",
-        component: RoutableEditorComponent
+        component: BoardComponent,
+        pathMatch: "full"
       },
       {
         path: "handle-share",
-        component: HandleShareComponent
+        component: HandleShareComponent,
+        pathMatch: "full"
+      },
+      {
+        path: ":id",
+        component: RoutableEditorComponent,
+        pathMatch: "full"
       }
-    ],
-    pathMatch: "full"
+    ]
   },
 
   {
