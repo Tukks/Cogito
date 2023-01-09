@@ -1,8 +1,8 @@
-import { Component, HostListener, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, HostListener, Input, OnDestroy, OnInit } from "@angular/core";
 import { CardsType, CardType, LinkCard, NoteCard, TweetCard } from "../../types/cards-link";
 import { Dialog } from "@angular/cdk/dialog";
 import { BreakpointObserver, Breakpoints, BreakpointState } from "@angular/cdk/layout";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { NzContextMenuService, NzDropdownMenuComponent } from "ng-zorro-antd/dropdown";
 import { ThoughtsService } from "../../http-service/thoughts.service";
 import { Clipboard } from "@angular/cdk/clipboard";
@@ -11,11 +11,12 @@ import { ModalEntryComponent } from "../modal-entry/modal-entry.component";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.less'],
+  selector: "app-card",
+  templateUrl: "./card.component.html",
+  styleUrls: ["./card.component.less"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnDestroy {
   public cardsType: typeof CardsType = CardsType;
 
   @Input()
@@ -25,14 +26,14 @@ export class CardComponent implements OnInit {
   isExtraSmall: Observable<BreakpointState> = this.breakpointObserver.observe(
     Breakpoints.XSmall
   );
-
+  $isExtraSmall: Subscription | undefined;
   contextMenu($event: MouseEvent, menu: NzDropdownMenuComponent): void {
     this.nzContextMenuService.create($event, menu);
   }
 
   @HostListener('click', ['$event'])
   onClick($event: any) {
-    this.isExtraSmall.subscribe((value) => {
+    this.$isExtraSmall = this.isExtraSmall.subscribe((value) => {
       if (value.matches) {
         this.dialog.open(ModalEntryComponent, {
           height: '100vh',
@@ -112,5 +113,11 @@ export class CardComponent implements OnInit {
         tags: this.card.tags.filter(value => value.tag.toLowerCase() != 'todo'),
       })
       .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    if (this.$isExtraSmall) {
+      this.$isExtraSmall.unsubscribe();
+    }
   }
 }

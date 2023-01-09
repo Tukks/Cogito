@@ -77,7 +77,14 @@ export class ThoughtsService {
       comment?: string;
     }
   ): Observable<CardType> {
-    return this.httpClient.patch<CardType>(`/api/${id}`, thingRequest);
+    return this.httpClient.patch<CardType>(`/api/${id}`, {
+      title: thingRequest.title,
+      note: thingRequest.note,
+      tags: thingRequest.tags?.map(value => {
+        return { tag: value.tag, hidden: value.hidden };
+      }),
+      comment: thingRequest.comment
+    });
   }
 
   public uploadImage(data: FormData): Promise<any> {

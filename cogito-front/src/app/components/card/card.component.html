@@ -5,7 +5,7 @@
     <img *ngIf="!!($any(card).imageId || $any(card).image)" class="card-image-element" src="{{$any(card).imageId ? '/api/image/'+$any(card).imageId : $any(card).image}}" loading="lazy"  alt="{{$any(card).imageAlt}}"/>
     <div class="description">
       <p nz-typography nzEllipsis nzEllipsisRows="3" class="card-image-desc link">{{$any(card).title}}</p>
-      <p nz-typography nzEllipsis nzEllipsisRows="10" class="card-image-desc">{{$any(card).desc}}</p>
+      <p nz-typography nzEllipsis nzEllipsisRows="8" class="card-image-desc">{{$any(card).desc}}</p>
       <a nz-typography nzEllipsis href="{{$any(card).url}}" target="_blank" class="card-image-desc link"
          (click)="$event.stopPropagation()">{{$any(card).domain ? $any(card).domain : $any(card).url}}</a>
     </div>

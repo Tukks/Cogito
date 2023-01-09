@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { EditorType, StacksEditor } from "@stackoverflow/stacks-editor";
 import "@stackoverflow/stacks";
 import { ThoughtsService } from "../../http-service/thoughts.service";
@@ -8,7 +8,8 @@ import { HotkeysService } from "../../internal-service/hotkeys/hotkeys.service";
 @Component({
   selector: "app-markdown-card",
   templateUrl: "./markdown-card.component.html",
-  styleUrls: ["./markdown-card.component.scss"]
+  styleUrls: ["./markdown-card.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarkdownCardComponent implements AfterViewInit {
   @Input()
