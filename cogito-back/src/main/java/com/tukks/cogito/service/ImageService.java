@@ -101,8 +101,8 @@ public class ImageService {
 
 		} catch (IOException e) {
 			logger.error("unsupported file", e);
-			// the image is unreachable or other problem, do something
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "problem with file");
+			// we can't have the image, don't bother
+			return Optional.empty();
 		}
 		ImageEntity imageEntity = ImageEntity.builder().oidcSub(getSub()).imagePath(filename).build();
 		var imageEntitySaved = imageRepository.save(imageEntity);
@@ -110,6 +110,7 @@ public class ImageService {
 	}
 
 	private HttpURLConnection createConnection(final String imageUrl) throws IOException {
+
 		final URL url = new URL(imageUrl);
 		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 		int status = connection.getResponseCode();
