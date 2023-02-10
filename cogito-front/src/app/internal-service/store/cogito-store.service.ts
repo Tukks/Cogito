@@ -8,6 +8,8 @@ import { map } from "rxjs/operators";
   providedIn: "root"
 })
 export class CogitoStoreService {
+  private readonly _websocketStatus = new BehaviorSubject<boolean>(false);
+
   private readonly _cards = new BehaviorSubject<CardType[]>([]);
   private readonly filters = new BehaviorSubject<string>("");
 
@@ -17,6 +19,8 @@ export class CogitoStoreService {
 
   readonly isLoggedIn$ = this.isLoggedIn.asObservable();
   readonly filters$ = this.filters.asObservable();
+  readonly websocketStatus$ = this._websocketStatus.asObservable();
+
   readonly cards$ = this._cards.asObservable().pipe(
     map((data) =>
       data.sort((a, b) => {
@@ -74,4 +78,9 @@ export class CogitoStoreService {
     this.cards = this.cards.filter((card) => card.id !== id);
   }
 
+  websocketStatus(isConnected: boolean, err: any) {
+    console.log(err);
+    console.log(isConnected);
+    this._websocketStatus.next(isConnected);
+  }
 }

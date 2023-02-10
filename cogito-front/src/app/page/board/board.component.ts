@@ -16,6 +16,8 @@ export class BoardComponent implements OnInit {
   public filteredResult: CardType[] = [];
   public searchValue: string = '';
   public index: any;
+
+  public websocketConnect: boolean = false;
   @ViewChild('searchInput') searchInput!: ElementRef;
 
   constructor(
@@ -29,6 +31,7 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.cogitoStoreService.websocketStatus$.subscribe(value => this.websocketConnect = value)
     // this.thoughtsService.test();
     this.hotkeys.addShortcut({ keys: 'shift.f' }).subscribe(() => {
       this.searchInput.nativeElement.blur();

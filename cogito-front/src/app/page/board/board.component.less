@@ -2,6 +2,7 @@
 :host {
   width: 100vw;
 }
+
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 768px) {
   .container {
@@ -27,6 +28,7 @@
     grid-template-columns: repeat(auto-fit, 16%);
     display: grid;
   }
+
   :host {
     flex: 1;
   }
@@ -47,6 +49,17 @@
   padding-right: 10px;
   padding-top: 20px;
   background-color: var(--background-color);
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  grid-gap: 10px;
+  .ws-status {
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+
+  }
+
   .input {
     border-radius: 8px;
     height: 40px;

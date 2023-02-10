@@ -9,35 +9,34 @@ import { HomeComponent } from "./page/home/home.component";
 
 const routes: Routes = [
   {
-    path: "",
-    component: HomeComponent,
-    pathMatch: "full",
-    children: [
-      {
-        path: "",
-        component: BoardComponent,
-        pathMatch: "full"
-      },
-      {
-        path: "handle-share",
-        component: HandleShareComponent,
-        pathMatch: "full"
-      },
-      {
-        path: ":id",
-        component: RoutableEditorComponent,
-        pathMatch: "full"
-      }
-    ]
-  },
-
-  {
     path: "login",
-    component: LoginComponent
+    component: LoginComponent,
+    pathMatch: "full"
   },
   {
     path: "register",
-    component: RegisterComponent
+    component: RegisterComponent,
+    pathMatch: "full"
+  },
+  {
+    path: "",
+    component: HomeComponent,
+    pathMatch: "prefix",
+    children: [
+      {
+        path: "",
+        component: BoardComponent
+      },
+      {
+        path: "handle-share",
+        component: HandleShareComponent
+
+      },
+      {
+        path: ":id",
+        component: RoutableEditorComponent
+      }
+    ]
   }
 ];
 

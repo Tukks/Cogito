@@ -236,7 +236,7 @@ public class LinkPreview {
 			} else {
 				try {
 					URL uri = new URL(url);
-					return uri.getProtocol() + "://" + uri.getHost() + src;
+					return uri.getProtocol() + "://" + uri.getHost() + '/' + src;
 				} catch (MalformedURLException e) {
 					// Pas dramatique, on a rien besoin de faire avec cette exception
 					return "";

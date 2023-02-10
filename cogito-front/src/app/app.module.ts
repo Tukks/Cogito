@@ -43,6 +43,7 @@ import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 import { NzModalModule } from "ng-zorro-antd/modal";
 import { NzAutocompleteModule } from "ng-zorro-antd/auto-complete";
 import { HomeComponent } from "./page/home/home.component";
+import { NzSwitchModule } from "ng-zorro-antd/switch";
 
 registerLocaleData(fr);
 
@@ -93,7 +94,8 @@ registerLocaleData(fr);
     NzRadioModule,
     NzToolTipModule,
     NzModalModule,
-    NzAutocompleteModule
+    NzAutocompleteModule,
+    NzSwitchModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: fr_FR },

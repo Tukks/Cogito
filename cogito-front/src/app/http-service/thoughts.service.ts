@@ -1,19 +1,19 @@
-import { Injectable, NgZone } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { lastValueFrom, Observable, retry, tap } from "rxjs";
 import { CardType, Tag } from "../types/cards-link";
 import { CogitoStoreService } from "../internal-service/store/cogito-store.service";
 import { map } from "rxjs/operators";
-import { webSocket } from "rxjs/webSocket";
+import { webSocket, WebSocketSubject } from "rxjs/webSocket";
 
 @Injectable({
   providedIn: "root"
 })
 export class ThoughtsService {
+  private ws: WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; id: string; card: CardType; }> | undefined;
   constructor(
     private httpClient: HttpClient,
-    private cogitoStoreService: CogitoStoreService,
-    private zone: NgZone) {
+    private cogitoStoreService: CogitoStoreService) {
 
   }
 
@@ -34,13 +34,21 @@ export class ThoughtsService {
     return this.httpClient.get<string[]>("/api/tags?startWith=" + val);
   }
 
-  public connectWebSocket(): void {
-    const ws = webSocket<{
-      actionType: "DELETE" | "ADD" | "EDIT",
-      id: string,
-      card: CardType
-    }>(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws/cards").pipe(
-      retry({ count: 4, delay: 4000 })
+  public connectWebsocket() {
+    if (this.ws) {
+      console.log("reconnecting websocket");
+
+      this.ws.complete();
+      this.ws.unsubscribe();
+      this.ws = this.createWebSocket();
+    }
+    if (this.ws === undefined) {
+      console.log("creating websocket");
+      this.ws = this.createWebSocket();
+    }
+
+    this.ws.pipe(
+      retry({ count: 99, delay: 1000, resetOnSuccess: true })
     ).subscribe({
       next: value => {
         if (value.actionType === "DELETE") {
@@ -51,9 +59,35 @@ export class ThoughtsService {
           this.cogitoStoreService.editCard(value.card);
         }
       },
-      error: err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
-      complete: () => console.log("complete") // Called when connection is closed (for whatever reason).
+      error: err => {
+        this.cogitoStoreService.websocketStatus(false, err);
+      }, // Called if at any point WebSocket API signals some kind of error.
+      complete: () => {
+        this.cogitoStoreService.websocketStatus(false, null);
+      }// Called when connection is closed (for whatever reason).
     });
+  }
+  public createWebSocket(): WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; id: string; card: CardType }> {
+    return webSocket<{
+      actionType: "DELETE" | "ADD" | "EDIT",
+      id: string,
+      card: CardType
+    }>({
+        url: ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws/cards",
+        openObserver: {
+          next: (val) => {
+            this.cogitoStoreService.websocketStatus(true, null);
+          }
+        },
+        closeObserver: {
+          next: (val) => {
+            this.cogitoStoreService.websocketStatus(false, val);
+            this.connectWebsocket();
+
+          }
+        }
+      }
+    )
 
   }
 

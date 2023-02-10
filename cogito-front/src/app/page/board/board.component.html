@@ -1,12 +1,13 @@
 <!--<app-vertical-menu></app-vertical-menu>-->
 
 <nz-input-group nzSearch nzSize="large" class="search">
+  <div class="ws-status" [ngStyle]="{'background-color': websocketConnect ? 'green' : 'red'}"></div>
+
   <input type="text" nz-input placeholder="Search cogito, shortcut : shift + f" [ngModel]="searchValue" (ngModelChange)="setSearchToStore($event)" class="input"
          #searchInput />
-</nz-input-group>
-<div>
 
-</div>
+</nz-input-group>
+
 <div class="container" appIntersectionObserverGrid>
 
   <app-markdown-card [cardMode]="true" [readonly]="false" class="first-child-container"></app-markdown-card>
