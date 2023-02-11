@@ -2,7 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
 import { BreakpointObserver, Breakpoints, BreakpointState } from "@angular/cdk/layout";
 import { CogitoStoreService } from "../../internal-service/store/cogito-store.service";
-import { ThoughtsService } from "../../http-service/thoughts.service";
+import { WebSocketService } from "../../http-service/web-socket.service";
 
 @Component({
   selector: "app-home",
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   subscription: Subscription | undefined;
 
   constructor(private cogitoStoreService: CogitoStoreService,
-              private thoughtService: ThoughtsService,
+              private webSocketService: WebSocketService,
               private breakpointObserver: BreakpointObserver) {
   }
 
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.thoughtService.connectWebsocket();
+    this.webSocketService.connectWebsocket();
     this.isExtraSmall.subscribe(value => this.showMenu = !value.matches);
     this.isExtraSmall.subscribe(value => this.isMobile = value.matches);
 

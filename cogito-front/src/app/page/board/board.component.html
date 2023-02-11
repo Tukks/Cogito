@@ -1,7 +1,7 @@
 <!--<app-vertical-menu></app-vertical-menu>-->
 
 <nz-input-group nzSearch nzSize="large" class="search">
-  <div class="ws-status" [ngStyle]="{'background-color': websocketConnect ? 'green' : 'red'}"></div>
+  <div class="ws-status" [nz-tooltip]="'Websocket status'" [ngStyle]="{'background-color': websocketConnect ? 'green' : 'red'}"></div>
 
   <input type="text" nz-input placeholder="Search cogito, shortcut : shift + f" [ngModel]="searchValue" (ngModelChange)="setSearchToStore($event)" class="input"
          #searchInput />
