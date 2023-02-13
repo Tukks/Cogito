@@ -42,7 +42,11 @@ export class BoardComponent implements OnInit {
       this.searchInput.nativeElement.blur();
       this.searchInput.nativeElement.focus();
     });
-
+    this.hotkeys.addShortcut({ keys: "esc" }).subscribe(() => {
+      this.setSearchToStore("");
+      this.tagValue = "";
+      this.selectedElement.clear();
+    });
     this.index = new Document({
       preset: "match",
       resolution: 1,
