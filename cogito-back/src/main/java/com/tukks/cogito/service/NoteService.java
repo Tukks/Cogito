@@ -3,6 +3,7 @@ package com.tukks.cogito.service;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -64,7 +65,6 @@ public class NoteService {
 
 			linkEntity.setTags(Stream.concat(tags.stream(), linkEntity.getTags().stream()).toList());
 
-
 			linkEntity.setImageId(imageService.uploadImageFromUrl(linkEntity.getImage()).orElse(null));
 
 			return linkRepository.save(linkEntity);
@@ -83,6 +83,12 @@ public class NoteService {
 	public Integer delete(final UUID id) {
 		// TODO delete associated image
 		return thingsRepository.deleteByIdAndOidcSub(id, getSub());
+	}
+
+	@Transactional
+	public void delete(final List<UUID> ids) {
+		// TODO delete associated image
+		thingsRepository.deleteAllByIdInAndOidcSub(ids, getSub());
 	}
 
 	@Transactional
@@ -122,6 +128,43 @@ public class NoteService {
 
 	}
 
+	@Transactional
+	public List<? super ThingsEntity> editBatchThings(final List<UUID> ids, final String tag) {
+		final String sub = getSub();
+		List<ThingsEntity> thingsEntity = thingsRepository.getThingsEntitiesByIdInAndOidcSub(ids, sub);
+
+		if (thingsEntity == null || thingsEntity.isEmpty() || tag == null) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Problem with id");
+		}
+
+		List<NoteEntity> noteEntities = new ArrayList<>();
+		List<ThingsEntity> thingsEntities = new ArrayList<>();
+
+		for (final ThingsEntity things : thingsEntity) {
+			if (things.getThingType() == ThingType.MARKDOWN) {
+				NoteEntity noteEntity = noteRepository.getByIdAndOidcSub(things.getId(), sub);
+				noteEntity.setTags(mergeTag(things.getTags(), tag));
+				noteEntities.add(noteEntity);
+			} else {
+				things.setTags(mergeTag(things.getTags(), tag));
+				thingsEntities.add(things);
+			}
+		}
+
+		if (!noteEntities.isEmpty()) {
+			noteRepository.saveAll(noteEntities);
+		}
+
+		if (!thingsEntities.isEmpty()) {
+			thingsRepository.saveAll(thingsEntities);
+
+		}
+		List<? super ThingsEntity> entities = new ArrayList<>();
+		entities.addAll(noteEntities);
+		entities.addAll(thingsEntities);
+		return entities;
+	}
+
 	private List<Tag> createTagsEntityFromString(List<TagEditRequest> tags) {
 		if (tags != null) {
 			final String sub = getSub();
@@ -134,6 +177,24 @@ public class NoteService {
 			}).collect(Collectors.toList());
 		}
 		return Collections.emptyList();
+	}
+
+	private List<Tag> mergeTag(List<Tag> tags, String tag) {
+		final String sub = getSub();
+
+		Tag newTag = new Tag();
+		newTag.setTag(tag);
+		newTag.setHidden(false);
+		newTag.setOidcSub(sub);
+
+		if (!tags.isEmpty()) {
+			tags.add(newTag);
+			return tags;
+		}
+
+		List<Tag> tagsToSave = new ArrayList<>();
+		tagsToSave.add(newTag);
+		return tagsToSave;
 	}
 
 	public boolean isTwitterUrl(String url) {

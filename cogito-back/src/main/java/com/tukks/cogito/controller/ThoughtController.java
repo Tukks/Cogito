@@ -20,6 +20,7 @@ import com.tukks.cogito.dto.request.ThingsRequest;
 import com.tukks.cogito.dto.response.ActionCard;
 import com.tukks.cogito.dto.response.ActionEvent;
 import com.tukks.cogito.dto.response.ActionType;
+import com.tukks.cogito.entity.ThingsEntity;
 import com.tukks.cogito.repository.ThingsRepository;
 import com.tukks.cogito.service.NoteService;
 
@@ -37,7 +38,7 @@ public class ThoughtController {
 	private final NoteService noteService;
 
 	@GetMapping("/thoughts")
-	public List<Object> getAllThoughts() {
+	public List<? super ThingsEntity> getAllThoughts() {
 		logger.info("Get all elements");
 		return thingsRepository.getAll(getSub());
 	}
@@ -71,6 +72,18 @@ public class ThoughtController {
 		return edited;
 	}
 
+	record BatchTagsUpdate(List<UUID> ids, String tag) {}
+	@PostMapping("/batch/tags")
+	public void batchTags(@RequestBody BatchTagsUpdate batchTagsUpdate) {
+		logger.info("Batch add tags to, id : {}, tag: {}", batchTagsUpdate.ids, batchTagsUpdate.tag);
+		List<? super ThingsEntity> edited = noteService.editBatchThings(batchTagsUpdate.ids, batchTagsUpdate.tag);
+
+		for(Object card: edited) {
+			applicationEventPublisher.publishEvent(new ActionEvent(this,
+				ActionCard.builder().actionType(ActionType.EDIT).id(((ThingsEntity)card).getId()).card(card).build()));
+		}
+	}
+
 	@DeleteMapping("/{id}")
 	public Integer delete(@PathVariable UUID id) {
 		logger.info("Delete note, id : {}", id);
@@ -79,6 +92,16 @@ public class ThoughtController {
 		applicationEventPublisher.publishEvent(new ActionEvent(this,
 			ActionCard.builder().actionType(ActionType.DELETE).id(id).card(null).build()));
 		return removed;
+	}
+
+	@PostMapping("/batch/delete")
+	public void batchDelete(@RequestBody List<UUID> ids) {
+		logger.info("Delete note, id : {}", ids);
+		noteService.delete(ids);
+		for(UUID id: ids) {
+			applicationEventPublisher.publishEvent(new ActionEvent(this,
+				ActionCard.builder().actionType(ActionType.DELETE).id(id).card(null).build()));
+		}
 	}
 
 

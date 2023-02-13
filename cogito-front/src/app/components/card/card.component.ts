@@ -32,7 +32,10 @@ export class CardComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('click', ['$event'])
-  onClick($event: any) {
+  onClick($event: MouseEvent) {
+    if($event.shiftKey) {
+      return;
+    }
     this.$isExtraSmall = this.isExtraSmall.subscribe((value) => {
       if (value.matches) {
         this.dialog.open(ModalEntryComponent, {

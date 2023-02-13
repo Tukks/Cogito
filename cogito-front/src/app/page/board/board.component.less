@@ -43,7 +43,39 @@
   background-color: var(--background-color);
   scroll-behavior: smooth;
 }
+.batch-action-wrapper {
+  pointer-events: initial;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(15px);
+  box-sizing: border-box;
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 
+  transition: 0.3s opacity ease-out, 0.3s visibility ease-out, 0.3s transform ease-out;
+  .batch-action {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    grid-gap: 10px;
+    align-items: center;
+    padding: 15px 30px;
+    border-radius: 8px;
+    background: var(--component-background);
+    box-shadow: 8px 8px 33px rgb(86 96 112 / 20%);
+    width: 80%;
+    border: 1px solid #B8C3D3;
+  }
+
+}
 .search {
   padding-left: 10px;
   padding-right: 10px;
@@ -76,7 +108,17 @@
 }
 
 .active-element {
-  height: var(--card-size);
+  height: 323px;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 7px;
+}
+.selected-element {
+  height: 323px;
+  border: 1px solid #FF5924;
+  border-radius: 7px;
+}
+.selected-element:hover {
+  height: 323px;
+  border: 1px solid #FF5924;
+  border-radius: 7px;
 }

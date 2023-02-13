@@ -44,6 +44,12 @@ export class ThoughtsService {
     return this.httpClient.delete<number>(`/api/${id}`);
   }
 
+  public batchDelete(ids: Set<string>): Observable<number> {
+    return this.httpClient.post<number>(`/api/batch/delete`, [...ids.values()]);
+  }
+  public batchAddTag(ids: Set<string>, tag: string): Observable<number> {
+    return this.httpClient.post<number>(`/api/batch/tags`, {ids: [...ids.values()], tag: tag});
+  }
   public editThing(
     id: string,
     thingRequest: {
