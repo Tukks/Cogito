@@ -59,14 +59,15 @@ export class CogitoStoreService {
     this.cards = cards;
   }
 
-  addCard(card: CardType) {
-    this.cards = [...this.cards, card];
+  addCard(card: CardType[]) {
+    this.cards = [...this.cards, ...card];
   }
 
-  editCard(cardModified: CardType) {
+  editCard(cardModified: CardType[]) {
     let newArray = this.cards.map((val) => {
-      if (val.id === cardModified.id) {
-        return cardModified;
+      const elementFind = cardModified.find(value => value.id === val.id);
+      if (elementFind) {
+        return elementFind;
       }
       return val;
     });
@@ -74,8 +75,8 @@ export class CogitoStoreService {
     this.cards = [...newArray];
   }
 
-  removeCard(id: string) {
-    this.cards = this.cards.filter((card) => card.id !== id);
+  removeCards(ids: string[]) {
+    this.cards = this.cards.filter((card) => !ids.includes(card.id));
   }
 
   websocketStatus(isConnected: boolean, err: any) {

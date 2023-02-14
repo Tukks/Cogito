@@ -86,6 +86,7 @@
   flex-direction: row;
   align-items: baseline;
   grid-gap: 10px;
+
   .ws-status {
     height: 10px;
     width: 10px;
@@ -97,7 +98,8 @@
     border-radius: 8px;
     height: 40px;
     border: 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 8px 8px 33px rgb(86 96 112 / 20%);
+
   }
 }
 
@@ -106,13 +108,16 @@
   border: 1px solid #B8C3D3;
   cursor: pointer; // pour overrider stack exchange il faut le important
   border-radius: 8px;
+  user-select: none;
 }
 
 .active-element {
   height: 323px;
   border: 1px solid transparent;
   border-radius: 7px;
+  user-select: none;
 }
+
 .selected-element {
   height: 323px;
   border: 1px solid #FF5924;

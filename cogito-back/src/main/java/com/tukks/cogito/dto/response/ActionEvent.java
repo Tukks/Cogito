@@ -9,8 +9,10 @@ public class ActionEvent extends ApplicationEvent {
 
 	ActionCard actionCard;
 
+
 	public ActionEvent(Object source, ActionCard actionCard) {
 		super(source);
 		this.actionCard = actionCard;
 	}
+
 }

@@ -55,7 +55,7 @@ public class ThoughtController {
 		Object saved = noteService.save(thingsRequest);
 
 		applicationEventPublisher.publishEvent(new ActionEvent(this,
-			ActionCard.builder().actionType(ActionType.ADD).id(null).card(saved).build()));
+			ActionCard.builder().actionType(ActionType.ADD).ids(null).cards(List.of(saved)).build()));
 
 		return saved;
 	}
@@ -67,21 +67,23 @@ public class ThoughtController {
 		Object edited = noteService.editThings(id, thingsRequest);
 
 		applicationEventPublisher.publishEvent(new ActionEvent(this,
-			ActionCard.builder().actionType(ActionType.EDIT).id(id).card(edited).build()));
+			ActionCard.builder().actionType(ActionType.EDIT).ids(List.of(id)).cards(List.of(edited)).build()));
 
 		return edited;
 	}
 
 	record BatchTagsUpdate(List<UUID> ids, String tag) {}
+
 	@PostMapping("/batch/tags")
 	public void batchTags(@RequestBody BatchTagsUpdate batchTagsUpdate) {
 		logger.info("Batch add tags to, id : {}, tag: {}", batchTagsUpdate.ids, batchTagsUpdate.tag);
 		List<? super ThingsEntity> edited = noteService.editBatchThings(batchTagsUpdate.ids, batchTagsUpdate.tag);
 
-		for(Object card: edited) {
-			applicationEventPublisher.publishEvent(new ActionEvent(this,
-				ActionCard.builder().actionType(ActionType.EDIT).id(((ThingsEntity)card).getId()).card(card).build()));
-		}
+		applicationEventPublisher.publishEvent(new ActionEvent(this,
+			ActionCard.builder().actionType(ActionType.EDIT)
+				.ids(edited.stream().map(o -> ((ThingsEntity)o).getId()).toList())
+				.cards(edited).build()));
+
 	}
 
 	@DeleteMapping("/{id}")
@@ -90,7 +92,7 @@ public class ThoughtController {
 		Integer removed = noteService.delete(id);
 
 		applicationEventPublisher.publishEvent(new ActionEvent(this,
-			ActionCard.builder().actionType(ActionType.DELETE).id(id).card(null).build()));
+			ActionCard.builder().actionType(ActionType.DELETE).ids(List.of(id)).cards(null).build()));
 		return removed;
 	}
 
@@ -98,11 +100,10 @@ public class ThoughtController {
 	public void batchDelete(@RequestBody List<UUID> ids) {
 		logger.info("Delete note, id : {}", ids);
 		noteService.delete(ids);
-		for(UUID id: ids) {
-			applicationEventPublisher.publishEvent(new ActionEvent(this,
-				ActionCard.builder().actionType(ActionType.DELETE).id(id).card(null).build()));
-		}
-	}
 
+		applicationEventPublisher.publishEvent(new ActionEvent(this,
+			ActionCard.builder().actionType(ActionType.DELETE).ids(ids).cards(null).build()));
+
+	}
 
 }

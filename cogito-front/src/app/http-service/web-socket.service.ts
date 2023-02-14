@@ -9,7 +9,7 @@ import { CogitoStoreService } from "../internal-service/store/cogito-store.servi
 })
 export class WebSocketService {
 
-  private ws: WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; id: string; card: CardType; }> | undefined;
+  private ws: WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; ids: string[]; cards: CardType[]; }> | undefined;
   private ws_subscription: Subscription | undefined;
   constructor(private cogitoStoreService: CogitoStoreService) { }
 
@@ -35,11 +35,11 @@ export class WebSocketService {
         next: value => {
           this.cogitoStoreService.websocketStatus(true, null);
           if (value.actionType === "DELETE") {
-            this.cogitoStoreService.removeCard(value.id);
+            this.cogitoStoreService.removeCards(value.ids);
           } else if (value.actionType === "ADD") {
-            this.cogitoStoreService.addCard(value.card);
+            this.cogitoStoreService.addCard(value.cards);
           } else if (value.actionType === "EDIT") {
-            this.cogitoStoreService.editCard(value.card);
+            this.cogitoStoreService.editCard(value.cards);
           }
         },
         error: err => {
@@ -53,11 +53,11 @@ export class WebSocketService {
     }
   }
 
-  public createWebSocket(): WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; id: string; card: CardType }> {
+  public createWebSocket(): WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; ids: string[]; cards: CardType[]; }> {
     return webSocket<{
       actionType: "DELETE" | "ADD" | "EDIT",
-      id: string,
-      card: CardType
+      ids: string[],
+      cards: CardType[]
     }>({
         url: ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws/cards",
         openObserver: {
