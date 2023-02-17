@@ -37,7 +37,7 @@ export class WebSocketService {
           if (value.actionType === "DELETE") {
             this.cogitoStoreService.removeCards(value.ids);
           } else if (value.actionType === "ADD") {
-            this.cogitoStoreService.addCard(value.cards);
+            this.cogitoStoreService.addCards(value.cards);
           } else if (value.actionType === "EDIT") {
             this.cogitoStoreService.editCard(value.cards);
           }

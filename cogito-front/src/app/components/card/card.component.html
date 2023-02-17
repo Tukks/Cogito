@@ -1,8 +1,8 @@
-
-<div class="card card-link"  *ngIf="$any(card).thingType === cardsType.LINK" (contextmenu)="contextMenu($event, menu)">
+<div class="card card-link" *ngIf="$any(card).thingType === cardsType.LINK" (contextmenu)="contextMenu($event, menu)">
   <!-- Image à la une -->
   <div class="card-image flex-vertical">
-    <img *ngIf="!!($any(card).imageId || $any(card).image)" class="card-image-element" src="{{$any(card).imageId ? '/api/image/'+$any(card).imageId : $any(card).image}}" loading="lazy"  alt="{{$any(card).imageAlt}}"/>
+    <img *ngIf="!!($any(card).imageId || $any(card).image)" class="card-image-element"
+         src="{{$any(card).imageId ? '/api/image/'+$any(card).imageId : $any(card).image}}" loading="lazy" alt="{{$any(card).imageAlt}}" />
     <div class="description">
       <p nz-typography nzEllipsis nzEllipsisRows="3" class="card-image-desc link">{{$any(card).title}}</p>
       <p nz-typography nzEllipsis nzEllipsisRows="8" class="card-image-desc">{{$any(card).desc}}</p>
@@ -10,7 +10,8 @@
          (click)="$event.stopPropagation()">{{$any(card).domain ? $any(card).domain : $any(card).url}}</a>
     </div>
   </div>
-  <button nz-button nzType="primary" nzShape="circle" class="todo-button" *ngIf="isTodo" nz-tooltip="" nzTooltipTitle="Mark as done" (click)="markAsDone($event)">
+  <button nz-button nzType="primary" nzShape="circle" class="todo-button" *ngIf="isTodo" nz-tooltip="" nzTooltipTitle="Mark as done"
+          (click)="markAsDone($event)">
     <span nz-icon nzType="check-circle" nzTheme="outline"></span>
   </button>
 </div>
@@ -34,13 +35,16 @@
 </div>
 
 
-
-
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
     <li nz-menu-item (click)="openNewTab()"><span nz-icon nzType="plus-square" nzTheme="outline"></span>&nbsp;Open new tab</li>
 
-    <li nz-menu-item (click)="copyContent()"><span nz-icon nzType="copy" nzTheme="outline"></span>&nbsp;Copy Content</li>
+    <li nz-menu-item *ngIf="$any(card).thingType == cardsType.MARKDOWN" (click)="copyContent()">
+      <span nz-icon nzType="copy" nzTheme="outline"></span>&nbsp;Copy Content
+    </li>
+    <li nz-menu-item *ngIf="$any(card).thingType !== cardsType.MARKDOWN"
+        (click)="copyContent()"><span nz-icon nzType="copy" nzTheme="outline"></span>&nbsp;Copy URI
+    </li>
     <li nz-menu-item *ngIf="$any(card).thingType !== cardsType.MARKDOWN" (click)="openLink($event)"><span nz-icon nzType="link" nzTheme="outline"></span>&nbsp;Open
       link
     </li>

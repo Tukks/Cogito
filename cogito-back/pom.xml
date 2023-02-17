@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.tukks</groupId>
 	<artifactId>cogito</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>cogito-back</name>
 	<description>cogito</description>
 	<properties>

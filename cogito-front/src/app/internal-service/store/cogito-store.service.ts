@@ -56,11 +56,7 @@ export class CogitoStoreService {
   }
 
   addCards(cards: CardType[]) {
-    this.cards = cards;
-  }
-
-  addCard(card: CardType[]) {
-    this.cards = [...this.cards, ...card];
+    this.cards = [...this.cards, ...cards];
   }
 
   editCard(cardModified: CardType[]) {

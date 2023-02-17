@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "front": {
+    "cogito": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -34,7 +34,7 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/theme.less",
               "src/styles.less"
             ],
@@ -79,10 +79,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "front:build:production"
+              "browserTarget": "cogito:build:production"
             },
             "development": {
-              "browserTarget": "front:build:development",
+              "browserTarget": "cogito:build:development",
               "proxyConfig": "src/proxy.conf.json"
             }
           },
@@ -91,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "front:build"
+            "browserTarget": "cogito:build"
           }
         },
         "test": {
