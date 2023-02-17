@@ -37,11 +37,11 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.cogitoStoreService.websocketStatus$.subscribe(value => this.websocketConnect = value);
-    // this.thoughtsService.test();
-    this.hotkeys.addShortcut({ keys: "shift.f" }).subscribe(() => {
-      this.searchInput.nativeElement.blur();
-      this.searchInput.nativeElement.focus();
-    });
+
+    // this.hotkeys.addShortcut({ keys: "shift.f" }).subscribe(() => {
+    //   this.searchInput.nativeElement.blur();
+    //   this.searchInput.nativeElement.focus();
+    // });
     this.hotkeys.addShortcut({ keys: "esc" }).subscribe(() => {
       this.setSearchToStore("");
       this.tagValue = "";
