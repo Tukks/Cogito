@@ -43,7 +43,7 @@ WORKDIR /app
 COPY --from=build /app/backend/target/*.jar ./
 
 RUN mkdir -p ./image
-RUN mkdir -p ./db
+RUN mkdir -p ./db/cogito
 
 # Expose the port used by the app
 EXPOSE 9191

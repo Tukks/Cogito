@@ -78,7 +78,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
 	private void setAuthenticationContext(String token, HttpServletRequest request, HttpServletResponse response) {
 		UserDetails userDetails = getUserDetails(token);
+		if (userDetails == null) {
+			// When token is valid BUT the user does not exist (removed old database for example)
+			return;
 
+		}
 		UsernamePasswordAuthenticationToken
 			authentication = new UsernamePasswordAuthenticationToken(userDetails, null, null);
 
@@ -92,11 +96,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	}
 
 	private UserDetails getUserDetails(String token) {
-		UserEntity userDetails;
+		Optional<UserEntity> userDetails;
 		String[] jwtSubject = jwtUtil.getSubject(token).split(",");
-
-		userDetails = userRepository.findByUsername(jwtSubject[0]).orElseThrow();
-
-		return userDetails;
+		userDetails = userRepository.findByUsername(jwtSubject[0]);
+		return userDetails.orElse(null);
 	}
 }
