@@ -1,6 +1,7 @@
 package com.tukks.cogito.service.external;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -25,23 +26,27 @@ import com.twitter.clientlib.model.ResourceUnauthorizedProblem;
 public class TwitterApiService {
 
 	Logger logger = LoggerFactory.getLogger(TwitterApiService.class);
-	@Value("${api.twitter.key}")
+	@Value("${api.twitter.key:}")
 	private String TWITTER_KEY;
-	@Value("${api.twitter.key.secret}")
+	@Value("${api.twitter.key.secret:}")
 	private String TWITTER_SECRET;
 
 	private OAuth2AccessToken getAccessToken() {
-		TwitterOAuth20AppOnlyService service = new TwitterOAuth20AppOnlyService(TWITTER_KEY, TWITTER_SECRET);
-		OAuth2AccessToken accessToken = null;
-		try {
-			accessToken = service.getAccessTokenClientCredentialsGrant();
-			logger.debug("Access token: " + accessToken.getAccessToken());
-			logger.debug("Token type: " + accessToken.getTokenType());
-		} catch (Exception e) {
-			logger.error("Error while getting the access token:\n " + e);
-			e.printStackTrace();
+		if (!Objects.equals(TWITTER_KEY, "") && !Objects.equals(TWITTER_SECRET, "")) {
+			TwitterOAuth20AppOnlyService service = new TwitterOAuth20AppOnlyService(TWITTER_KEY, TWITTER_SECRET);
+			OAuth2AccessToken accessToken = null;
+			try {
+				accessToken = service.getAccessTokenClientCredentialsGrant();
+				logger.debug("Access token: " + accessToken.getAccessToken());
+				logger.debug("Token type: " + accessToken.getTokenType());
+			} catch (Exception e) {
+				logger.error("Error while getting the access token:\n " + e);
+				e.printStackTrace();
+			}
+
+			return accessToken;
 		}
-		return accessToken;
+		return new OAuth2AccessToken("EMPTY");
 	}
 
 	public TweetDTO getTweetFields(String url) {

@@ -48,5 +48,8 @@ RUN mkdir -p ./db/cogito
 # Expose the port used by the app
 EXPOSE 9191
 
-# Start the app
-CMD ["java", "-jar", "cogito-1.0.0.jar"]
+ENV APP_JWT_SECRET=""
+ENV API_TWITTER_KEY_SECRET=""
+ENV API_TWITTER_KEY=""
+# Start the app  api.twiter.key.secret app.jwt.secret
+CMD ["java", "-jar", "cogito-1.0.0.jar", "--api.twitter.key=${API_TWITTER_KEY}", "--api.twiter.key.secret=${API_TWITTER_KEY_SECRET}", "--app.jwt.secret=${APP_JWT_SECRET}"]

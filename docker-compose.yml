@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  cogito:
+    image: tukks/cogito:v1.0-alpha
+    ports:
+      - "8585:9191"
+    volumes:
+      - ./db:/app/db
+      - ./image:/app/image
+    environment:
+      - APP_JWT_SECRET="YOUR_APP_GENERATE_SECRET"
+      - API_TWITTER_KEY_SECRET="YOUR_API_TWITTER_KEY_SECRET"
+      - API_TWITTER_KEY="YOUR_API_TWITTER_KEY"
