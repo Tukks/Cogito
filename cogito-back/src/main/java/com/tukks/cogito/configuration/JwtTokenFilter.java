@@ -24,7 +24,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import static com.tukks.cogito.utils.Constants.ACCESS_TOKEN;
-import static com.tukks.cogito.utils.JwtTokenUtil.createCookieWithToken;
 
 @Component
 @AllArgsConstructor
@@ -91,7 +90,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		createCookieWithToken(response, userDetails, jwtUtil);
+		jwtUtil.createCookieWithToken(response, userDetails, jwtUtil);
 
 	}
 

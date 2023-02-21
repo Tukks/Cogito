@@ -27,6 +27,20 @@ All you notes in one places
 - PWA app (with share to cogito option on Android)
 - Open to feature request
 
+# Installation via docker-compose
+
+- Create a folder named cogito
+- add docker-compose.yml
+- copy docker-compose.yml from project in the docker-compose.yml created
+- modify APP_JWT_SECRET with a string (with bitwarden for example) of almost 256bit (128 char long)
+- (optional) put your private and public key from twitter developer account
+- modify HTTPS_ONLY with true or false (false for test only environnement)
+- type in your shell `docker-compose up -d`
+- go to <SERVEUR-IP>:8585
+- click on register, put an email and a password
+- put your email and password on the login page
+- profit
+
 ## Launch dev
 
 ### Back

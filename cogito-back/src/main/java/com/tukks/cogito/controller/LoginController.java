@@ -22,7 +22,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
-import static com.tukks.cogito.utils.JwtTokenUtil.createCookieWithToken;
 
 @RestController
 @RequestMapping("/api")
@@ -50,7 +49,7 @@ public class LoginController {
 			);
 
 			UserEntity user = (UserEntity)authentication.getPrincipal();
-			createCookieWithToken(response, user, jwtUtil);
+			jwtUtil.createCookieWithToken(response, user, jwtUtil);
 
 			return ResponseEntity.ok().build();
 

@@ -34,7 +34,7 @@ public class JwtTokenUtil {
 	private String SECRET_KEY;
 
 	@Value("${app.https-only:true}")
-	private static Boolean HTTPS_ONLY;
+	private Boolean HTTPS_ONLY;
 
 	public String generateAccessToken(UserDetails user) {
 		SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
@@ -77,7 +77,7 @@ public class JwtTokenUtil {
 		return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
 	}
 
-	public static void createCookieWithToken(HttpServletResponse response, UserDetails userDetails, JwtTokenUtil jwtUtil) {
+	public void createCookieWithToken(HttpServletResponse response, UserDetails userDetails, JwtTokenUtil jwtUtil) {
 		String accessToken = jwtUtil.generateAccessToken(userDetails);
 		Cookie cookie = new Cookie(ACCESS_TOKEN, accessToken);
 		cookie.setPath("/");

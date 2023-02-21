@@ -2,7 +2,7 @@ version: "3"
 
 services:
   cogito:
-    image: tukks/cogito:v1.0-alpha
+    image: tukks/cogito:v1.1-alpha
     ports:
       - "8585:9191"
     volumes:
@@ -12,4 +12,4 @@ services:
       - APP_JWT_SECRET="YOUR_APP_GENERATE_SECRET"
       - API_TWITTER_KEY_SECRET="YOUR_API_TWITTER_KEY_SECRET"
       - API_TWITTER_KEY="YOUR_API_TWITTER_KEY"
-      - HTTPS_ONLY=false
+      - HTTPS_ONLY=true # true if you use https
