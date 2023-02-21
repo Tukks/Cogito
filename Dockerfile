@@ -51,5 +51,6 @@ EXPOSE 9191
 ENV APP_JWT_SECRET=""
 ENV API_TWITTER_KEY_SECRET=""
 ENV API_TWITTER_KEY=""
-# Start the app  api.twiter.key.secret app.jwt.secret
-CMD ["java", "-jar", "cogito-1.0.0.jar", "--api.twitter.key=${API_TWITTER_KEY}", "--api.twiter.key.secret=${API_TWITTER_KEY_SECRET}", "--app.jwt.secret=${APP_JWT_SECRET}"]
+ENV HTTPS_ONLY=true
+# Start the app
+CMD ["java", "-jar", "cogito-1.0.0.jar", "--api.twitter.key=${API_TWITTER_KEY}", "--api.twiter.key.secret=${API_TWITTER_KEY_SECRET}", "--app.jwt.secret=${APP_JWT_SECRET}", "--app.https-only=${HTTPS_ONLY}"]

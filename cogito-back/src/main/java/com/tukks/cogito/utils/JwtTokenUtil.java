@@ -33,12 +33,15 @@ public class JwtTokenUtil {
 	@Value("${app.jwt.secret}")
 	private String SECRET_KEY;
 
+	@Value("${app.https-only:true}")
+	private static Boolean HTTPS_ONLY;
+
 	public String generateAccessToken(UserDetails user) {
 		SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
 		return Jwts.builder()
 			.setSubject(user.getUsername())
-			.setIssuer("CodeJava")
+			.setIssuer("cogito")
 			.setIssuedAt(new Date())
 			.setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
 			.signWith(key).compact();
@@ -78,7 +81,7 @@ public class JwtTokenUtil {
 		String accessToken = jwtUtil.generateAccessToken(userDetails);
 		Cookie cookie = new Cookie(ACCESS_TOKEN, accessToken);
 		cookie.setPath("/");
-		cookie.setSecure(true);
+		cookie.setSecure(HTTPS_ONLY);
 		cookie.setHttpOnly(true);
 		cookie.setMaxAge(24 * 12 * 60 * 60);
 		response.addCookie(cookie);
