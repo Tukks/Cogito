@@ -2,9 +2,12 @@
 
 
 ## TODO :
- - Replace H2 database
  - add notification support for forgotten todo card ?
- - finish docker support
+ - add docker armv7 support ? 
+ - update screenshot of README
+ - add quick documentation
+ - take a screenshot of webpage saved
+ - disable new account creation if needed
 
 ## Screenshot 
 ![image](https://user-images.githubusercontent.com/5930169/206248167-ff68d6e7-197a-4785-afa8-4b9b8c534f84.png)
@@ -27,7 +30,7 @@ All you notes in one places
 - PWA app (with share to cogito option on Android)
 - Open to feature request
 
-# Installation via docker-compose
+## Installation via docker-compose
 
 - Create a folder named cogito
 - add docker-compose.yml
@@ -36,8 +39,8 @@ All you notes in one places
 - (optional) put your private and public key from twitter developer account
 - modify HTTPS_ONLY with true or false (false for test only environnement)
 - type in your shell `docker-compose up -d`
-- go to <SERVEUR-IP>:8585
-- click on register, put an email and a password
+- go to SERVEUR-IP:8585
+- click on new account, put an email and a password
 - put your email and password on the login page
 - profit
 
