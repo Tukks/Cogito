@@ -90,6 +90,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.webSocketService.unsubscribe();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

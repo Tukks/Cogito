@@ -53,6 +53,10 @@ export class WebSocketService {
     }
   }
 
+  public unsubscribe() {
+    this.ws?.unsubscribe();
+    this.ws_subscription?.unsubscribe();
+  }
   public createWebSocket(): WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; ids: string[]; cards: CardType[]; }> {
     return webSocket<{
       actionType: "DELETE" | "ADD" | "EDIT",
@@ -67,8 +71,11 @@ export class WebSocketService {
         },
         closeObserver: {
           next: (val) => {
+
             this.cogitoStoreService.websocketStatus(false, val);
-            this.connectWebsocket();
+            if (val.code !== 1006) {
+              this.connectWebsocket();
+            }
 
           }
         }
