@@ -4,6 +4,7 @@ import { CardType } from "../../types/cards-link";
 import { HotkeysService } from "../../internal-service/hotkeys/hotkeys.service";
 import { CogitoStoreService } from "../../internal-service/store/cogito-store.service";
 import Document from "flexsearch/dist/module/document";
+import { AppUpdateService } from "../../internal-service/service-worker/update-service.service";
 
 @Component({
   selector: "app-board",
@@ -27,7 +28,8 @@ export class BoardComponent implements OnInit {
   constructor(
     private thoughtsService: ThoughtsService,
     private hotkeys: HotkeysService,
-    private cogitoStoreService: CogitoStoreService
+    private cogitoStoreService: CogitoStoreService,
+    private updateService: AppUpdateService
   ) {
   }
 
@@ -38,10 +40,6 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.cogitoStoreService.websocketStatus$.subscribe(value => this.websocketConnect = value);
 
-    // this.hotkeys.addShortcut({ keys: "shift.f" }).subscribe(() => {
-    //   this.searchInput.nativeElement.blur();
-    //   this.searchInput.nativeElement.focus();
-    // });
     this.hotkeys.addShortcut({ keys: "esc" }).subscribe(() => {
       this.setSearchToStore("");
       this.tagValue = "";

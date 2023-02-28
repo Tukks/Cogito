@@ -5,13 +5,15 @@ import { retry, Subscription } from "rxjs";
 import { CogitoStoreService } from "../internal-service/store/cogito-store.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class WebSocketService {
 
   private ws: WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; ids: string[]; cards: CardType[]; }> | undefined;
   private ws_subscription: Subscription | undefined;
-  constructor(private cogitoStoreService: CogitoStoreService) { }
+
+  constructor(private cogitoStoreService: CogitoStoreService) {
+  }
 
 
   public connectWebsocket() {
@@ -57,6 +59,7 @@ export class WebSocketService {
     this.ws?.unsubscribe();
     this.ws_subscription?.unsubscribe();
   }
+
   public createWebSocket(): WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; ids: string[]; cards: CardType[]; }> {
     return webSocket<{
       actionType: "DELETE" | "ADD" | "EDIT",

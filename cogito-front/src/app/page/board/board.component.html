@@ -1,11 +1,9 @@
-<!--<app-vertical-menu></app-vertical-menu>-->
 
+<nz-alert nzBanner nzMessage="You are currently offline" *ngIf="!websocketConnect" nzType="error"></nz-alert>
 <nz-input-group nzSearch nzSize="large" class="search">
   <div class="ws-status" [nz-tooltip]="'Websocket status'" [ngStyle]="{'background-color': websocketConnect ? 'green' : 'red'}"></div>
-
-  <input type="text" nz-input placeholder="Search cogito, shortcut : shift + f" [ngModel]="searchValue" (ngModelChange)="setSearchToStore($event)" class="input"
+  <input type="text" nz-input placeholder="Search cogito" [ngModel]="searchValue" (ngModelChange)="setSearchToStore($event)" class="input"
          #searchInput />
-
 </nz-input-group>
 
 <!--TODO make a component-->

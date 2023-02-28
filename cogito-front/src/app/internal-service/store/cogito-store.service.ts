@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { CardType, Tag } from "../../types/cards-link";
+import { CardType } from "../../types/cards-link";
 import { map } from "rxjs/operators";
 
 // TODO add offline support
@@ -13,11 +13,8 @@ export class CogitoStoreService {
   private readonly _cards = new BehaviorSubject<CardType[]>([]);
   private readonly filters = new BehaviorSubject<string>("");
 
-  private readonly _tags = new BehaviorSubject<Tag[]>([]);
-
   private readonly isLoggedIn = new BehaviorSubject<boolean>(true);
 
-  readonly isLoggedIn$ = this.isLoggedIn.asObservable();
   readonly filters$ = this.filters.asObservable();
   readonly websocketStatus$ = this._websocketStatus.asObservable();
 
