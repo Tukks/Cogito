@@ -3,11 +3,12 @@
   <button nz-button nzType="primary" nzShape="circle" (click)="markAsDone.emit($event)" *ngIf="isTodo" class="add-items">
     <span nz-icon nzType="check-circle" nzTheme="outline"></span>
   </button>
+  <button [disabled]="stackEditor?.content === ''" [nzLoading]="isSaving" nz-button nzType="primary" nzShape="circle" (click)="create()" *ngIf="!readonly && cardMode" class="add-items">
+    <span nz-icon nzType="file-add" nzTheme="outline"></span>
+  </button>
 </div>
 
-<button [disabled]="stackEditor?.content === ''" nz-button nzType="primary" nzShape="circle" (click)="create()" *ngIf="!readonly && cardMode" class="add-items">
-  <span nz-icon nzType="file-add" nzTheme="outline"></span>
-</button>
+
 
 
 

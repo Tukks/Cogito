@@ -74,7 +74,6 @@ export class CogitoStoreService {
 
   websocketStatus(isConnected: boolean, err: any) {
     console.log(err);
-    console.log(isConnected);
     this._websocketStatus.next(isConnected);
   }
 }

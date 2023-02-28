@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { EditorType, StacksEditor } from "@stackoverflow/stacks-editor";
 import "@stackoverflow/stacks";
 import { ThoughtsService } from "../../http-service/thoughts.service";
@@ -12,6 +12,9 @@ import { HotkeysService } from "../../internal-service/hotkeys/hotkeys.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarkdownCardComponent implements AfterViewInit {
+
+  public isSaving = false;
+
   @Input()
   id: string | undefined;
 
@@ -37,12 +40,10 @@ export class MarkdownCardComponent implements AfterViewInit {
 
   @ViewChild("editorContainer") editorContainer!: ElementRef;
 
-  /**
-   * TODO image uploader
-   */
   constructor(
     private service: ThoughtsService,
-    private hotkeys: HotkeysService
+    private hotkeys: HotkeysService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -79,7 +80,11 @@ export class MarkdownCardComponent implements AfterViewInit {
   }
 
   create() {
-    this.service.save({ note: this.stackEditor?.content! }).subscribe();
+    this.isSaving = true;
+    this.service.save({ note: this.stackEditor?.content! }).subscribe(() => {
+      this.isSaving = false;
+      this.cdr.markForCheck();
+    });
     this.stackEditor!.content = "";
   }
 
