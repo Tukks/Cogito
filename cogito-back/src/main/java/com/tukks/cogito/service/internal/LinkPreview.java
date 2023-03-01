@@ -47,6 +47,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class LinkPreview {
+	private record HtmlPageInfo(String realUrl, String htmlPageString) {}
 
 	private record ArticleExtract(String title, String article) {}
 
@@ -63,19 +64,17 @@ public class LinkPreview {
 	public LinkEntity extractLinkPreviewInfo(String url) {
 		try (WebClient webClient = new WebClient(BrowserVersion.CHROME)) {
 
-			webClient.getOptions().setCssEnabled(false);
-			webClient.getOptions().setJavaScriptEnabled(false);
-			Page htmlPage = webClient.getPage(url);
-			Document document = Jsoup.parse(htmlPage.getWebResponse().getContentAsString());
+			HtmlPageInfo htmlPage = getHtmlPage(url, webClient);
+			Document document = Jsoup.parse(htmlPage.htmlPageString);
 
-			LinkEntity linkEntity = extractInformationFromWebPage(url, document);
+			LinkEntity linkEntity = extractInformationFromWebPage(htmlPage.realUrl, document);
 			ArticleExtract articleExtract = getArticleFromHtml(document, linkEntity);
 
 			createTagFromNLPAnalyse(linkEntity, articleExtract);
 
 			return linkEntity;
 
-		} catch (IOException | SAXException | TikaException | FailingHttpStatusCodeException e) {
+		} catch (IOException | SAXException | TikaException e) {
 			logger.warn("Unable to connect to extract domain name from : {}", url);
 			// if something not working, with save it as markdnow note
 			LinkEntity linkEntity = new LinkEntity();
@@ -84,6 +83,29 @@ public class LinkPreview {
 			return linkEntity;
 
 		}
+	}
+
+
+	private HtmlPageInfo getHtmlPage(String url, WebClient webClient) throws IOException {
+		HtmlPageInfo htmlPageInfo;
+		try {
+			logger.info("trying with htmlunit");
+
+			webClient.getOptions().setCssEnabled(false);
+			webClient.getOptions().setJavaScriptEnabled(false);
+			Page htmlPage = webClient.getPage(url);
+			htmlPageInfo = new HtmlPageInfo(htmlPage.getUrl().toString(), htmlPage.getWebResponse().getContentAsString());
+		} catch (FailingHttpStatusCodeException e) {
+			logger.info("trying with jsoup instead of htmlunit", e);
+			// Try with jsoup instead
+			Document document = Jsoup.connect(url)
+				.userAgent("Mozilla")
+				.get();
+
+			htmlPageInfo = new HtmlPageInfo(document.location(), document.html());
+
+		}
+		return htmlPageInfo;
 	}
 
 	private void createTagFromNLPAnalyse(LinkEntity linkEntity, ArticleExtract articleExtract) {

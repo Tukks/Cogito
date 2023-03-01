@@ -3,6 +3,7 @@ import { EditorType, StacksEditor } from "@stackoverflow/stacks-editor";
 import "@stackoverflow/stacks";
 import { ThoughtsService } from "../../http-service/thoughts.service";
 import { HotkeysService } from "../../internal-service/hotkeys/hotkeys.service";
+import { finalize } from "rxjs";
 
 // TODO replace with tiptap editor https://tiptap.dev
 @Component({
@@ -81,10 +82,10 @@ export class MarkdownCardComponent implements AfterViewInit {
 
   create() {
     this.isSaving = true;
-    this.service.save({ note: this.stackEditor?.content! }).subscribe(() => {
+    this.service.save({ note: this.stackEditor?.content! }).pipe(finalize(() => {
       this.isSaving = false;
       this.cdr.markForCheck();
-    });
+    })).subscribe();
     this.stackEditor!.content = "";
   }
 
