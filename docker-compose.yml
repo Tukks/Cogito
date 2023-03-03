@@ -2,7 +2,7 @@ version: "3"
 
 services:
   cogito:
-    image: tukks/cogito:v1.3-alpha
+    image: tukks/cogito:latest
     ports:
       - "8585:9191"
     volumes:

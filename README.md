@@ -3,7 +3,6 @@
 
 ## TODO :
  - add notification support for forgotten todo card ?
- - add docker armv7 support ? 
  - update screenshot of README
  - add quick documentation
  - take a screenshot of webpage saved
@@ -34,15 +33,16 @@ All you notes in one places
 
 - Create a folder named cogito
 - add docker-compose.yml
-- copy docker-compose.yml from project in the docker-compose.yml created
+- copy docker-compose.yml from project in the docker-compose.yml created (if raspberry use tukks/cogito-armv7:latest image instead of tukks/cogito:latest)
 - modify APP_JWT_SECRET with a string (with bitwarden for example) of almost 256bit (128 char long)
 - (optional) put your private and public key from twitter developer account
 - modify HTTPS_ONLY with true or false (false for test only environnement)
 - type in your shell `docker-compose up -d`
-- go to SERVEUR-IP:8585
+- go to SERVER-IP:8585
 - click on new account, put an email and a password
 - put your email and password on the login page
 - profit
+- feel free to open an issue
 
 ## Launch dev
 
