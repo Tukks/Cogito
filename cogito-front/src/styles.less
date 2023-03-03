@@ -34,7 +34,7 @@ body {
 }
 
 .card {
-  height: var(--card-size);
+  height: var(--card-height);
   margin: 0px auto;
   background-color: var(--component-background);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
@@ -57,6 +57,10 @@ body {
 .little {
 
   border-radius: 8px;
+
+  .hmn2 {
+    min-height: initial !important; // Override stack.css
+  }
 
   .s-block-link {
     color: var(--text-color);
@@ -92,8 +96,8 @@ body {
   }
 
   .s-input, .s-textarea {
-    max-height: var(--card-size);
-    height: var(--card-size);
+    max-height: var(--card-height);
+    height: var(--card-height);
   }
 
   .s-textarea.is-readonly {

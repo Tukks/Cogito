@@ -6,7 +6,7 @@
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 768px) {
   .container {
-    grid-template-columns: repeat(auto-fit, 48%);
+    grid-template-columns: repeat(auto-fit, calc(var(--card-width) * 3));
 
   }
 
@@ -18,14 +18,14 @@
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .container {
-    grid-template-columns: repeat(auto-fit, 32%);
+    grid-template-columns: repeat(auto-fit, calc(var(--card-width) * 2));
   }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
   .container {
-    grid-template-columns: repeat(auto-fit, 16%);
+    grid-template-columns: repeat(auto-fit, var(--card-width));
     display: grid;
   }
 
@@ -112,19 +112,19 @@
 }
 
 .active-element {
-  height: 323px;
+  height: calc(var(--card-height) + 3px);
   border: 1px solid transparent;
   border-radius: 7px;
   user-select: none;
 }
 
 .selected-element {
-  height: 323px;
+  height: calc(var(--card-height) + 3px);
   border: 1px solid #FF5924;
   border-radius: 7px;
 }
 .selected-element:hover {
-  height: 323px;
+  height: calc(var(--card-height) + 3px);
   border: 1px solid #FF5924;
   border-radius: 7px;
 }
