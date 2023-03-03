@@ -4,5 +4,6 @@ public enum ActionType {
 
 	DELETE,
 	ADD,
-	EDIT
+	EDIT,
+	KEEP_ALIVE
 }

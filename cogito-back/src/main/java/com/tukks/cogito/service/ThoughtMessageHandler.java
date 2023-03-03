@@ -2,6 +2,7 @@ package com.tukks.cogito.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.CloseStatus;
@@ -23,7 +25,9 @@ import org.jetbrains.annotations.NotNull;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tukks.cogito.dto.response.ActionCard;
 import com.tukks.cogito.dto.response.ActionEvent;
+import com.tukks.cogito.dto.response.ActionType;
 import com.tukks.cogito.entity.UserEntity;
 
 import static com.tukks.cogito.service.SecurityUtils.getSub;
@@ -87,6 +91,26 @@ public class ThoughtMessageHandler extends TextWebSocketHandler implements Appli
 
 		}
 
+	}
+
+	@Scheduled(cron = "0 */1 * ? * *")
+	public void keepAliveWS() throws JsonProcessingException {
+		ActionCard actionCard = ActionCard.builder().actionType(ActionType.KEEP_ALIVE).build();
+		TextMessage textMessage = new TextMessage(objectMapper.writeValueAsString(actionCard));
+
+		List<WebSocketSession> webSocketSessions =  webSocketSessionsEmitters
+			.values()
+			.stream()
+			.flatMap(Collection::stream)
+			.toList();
+
+		webSocketSessions.forEach((value) -> {
+			try {
+				value.sendMessage(textMessage);
+			} catch (IOException e) {
+				logger.error("Problem sending message to WS", e);
+			}
+		});
 	}
 
 	private String getSubFromSession(WebSocketSession webSocketSession) {

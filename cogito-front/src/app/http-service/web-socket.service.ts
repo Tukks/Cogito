@@ -46,10 +46,10 @@ export class WebSocketService {
         },
         error: err => {
           this.cogitoStoreService.websocketStatus(false, err);
-        }, // Called if at any point WebSocket API signals some kind of error.
+        },
         complete: () => {
           this.cogitoStoreService.websocketStatus(false, null);
-        }// Called when connection is closed (for whatever reason).
+        }
       });
 
     }
@@ -60,7 +60,7 @@ export class WebSocketService {
     this.ws_subscription?.unsubscribe();
   }
 
-  public createWebSocket(): WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; ids: string[]; cards: CardType[]; }> {
+  private createWebSocket(): WebSocketSubject<{ actionType: "DELETE" | "ADD" | "EDIT"; ids: string[]; cards: CardType[]; }> {
     return webSocket<{
       actionType: "DELETE" | "ADD" | "EDIT",
       ids: string[],
@@ -74,7 +74,6 @@ export class WebSocketService {
         },
         closeObserver: {
           next: (val) => {
-
             this.cogitoStoreService.websocketStatus(false, val);
             if (val.code !== 1006) {
               this.connectWebsocket();
