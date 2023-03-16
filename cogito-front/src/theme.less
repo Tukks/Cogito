@@ -2,6 +2,7 @@
 // For more information: https://ng.ant.design/docs/customize-theme/en
 @import "../node_modules/ng-zorro-antd/style/color/colorPalette.less";
 @import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
 :root {
   --background-color: white;
   --component-background: white;
@@ -10,6 +11,7 @@
   --news-background: #eef0f4;
   --card-height: 320px;
   --card-width: 16%;
+  --border-shadow: 5px 5px 12px -3px rgba(0, 0, 0, 0.59);
 }
 
 :root {
@@ -19,13 +21,17 @@
     --text-color: white;
     --tweet-background: #004277;
     --news-background: #282A3A;
+    --border-shadow: 8px 8px 33px rgb(86 96 112 / 20%);
   }
+
   .ant-typography {
     color: var(--text-color);
   }
+
   .ant-modal-title {
     color: var(--text-color);
   }
+
   .ant-modal-close {
     color: var(--text-color);
 
@@ -35,6 +41,7 @@
 @card-size: 400px;
 @tweet-color: var(--tweet-background);
 @news-color: var(--news-background);
+
 
 // Override less variables to here
 // View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
@@ -67,15 +74,15 @@
 @label-color: var(--text-color);
 @text-color: var(--text-color);
 @text-color-secondary: @rose-9;
-
+@divider-color: var(--text-color);
+@border-radius-base: 8px;
 //@note-color: #BCE29E;
 
 .ant-btn-circle {
-  height: 48px;
-  width: 48px;
-
-  .anticon {
-    font-size: 24px;
-  }
+  height: 42px;
+  width: 42px;
 }
 
+.anticon {
+  font-size: 18px;
+}

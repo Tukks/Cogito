@@ -1,32 +1,6 @@
-<div [ngClass]="showMenu ? 'flex-horizontal' : ''">
-  <div class="sidebar-menu" *ngIf="showMenu">
-    <ul>
-      <li *ngFor="let val of filtersMenu" (click)="setSearch(val.value)" nz-tooltip="" nzTooltipTitle="{{val.value}}">
-        <span>
-          <span *ngIf="removeMode" nz-icon nzType="delete" nzTheme="outline"></span>
-          {{val.value}}
-        </span>
-      </li>
-      <li (click)="setSearch('')" nz-tooltip="" nzTooltipTitle="Clear filter"><span nz-icon nzType="clear" nzTheme="outline"></span></li>
-      <li (click)="showModal()" nz-tooltip="" nzTooltipTitle="Add filter"><span nz-icon nzType="plus" nzTheme="outline"></span></li>
-      <li (click)="activateRemoveMode()" nz-tooltip="" nzTooltipTitle="Activate remove mode"><span nz-icon nzType="delete" nzTheme="outline"></span></li>
-      <li (click)="changeTheme()" nz-tooltip="" nzTooltipTitle="Change Theme"><span nz-icon nzType="bg-colors" nzTheme="outline"></span></li>
-    </ul>
-  </div>
+<div>
   <router-outlet></router-outlet>
-  <nz-affix [nzOffsetBottom]="0" class="menu" *ngIf="isMobile">
-    <button nz-button nzType="primary" (click)="showMenuMobile()"><span nz-icon nzType="menu" nzTheme="outline"></span></button>
-  </nz-affix>
-
 </div>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Add filter shortcut" (nzOnCancel)="handleCancel()" (nzOnOk)="handleAdd()">
-  <ng-container *nzModalContent>
-    <nz-input-group nzSearch nzSize="large" class="search">
-      <input type="text" nz-input placeholder="Write the filter you want to save" [(ngModel)]="filterToAdd" class="input"
-      />
-    </nz-input-group>
-  </ng-container>
-</nz-modal>
 
 

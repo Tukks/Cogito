@@ -34,7 +34,7 @@ export class HandleShareComponent implements OnInit {
             window.open('', '_self')!.close();
 
           });
-        }, 2000);
+        }, 1000);
       } else if (param.url && param.url != '') {
         this.currentNote = param.url;
 
@@ -44,7 +44,7 @@ export class HandleShareComponent implements OnInit {
             window.open('', '_self')!.close();
 
           });
-        }, 2500);
+        }, 1000);
       } else {
         this.currentNote = param.title;
 
@@ -54,7 +54,7 @@ export class HandleShareComponent implements OnInit {
             window.open('', '_self')!.close();
 
           });
-        }, 2500);
+        }, 1000);
       }
     });
   }

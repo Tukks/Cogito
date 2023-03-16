@@ -45,6 +45,8 @@ import { NzAutocompleteModule } from "ng-zorro-antd/auto-complete";
 import { HomeComponent } from "./page/home/home.component";
 import { NzSwitchModule } from "ng-zorro-antd/switch";
 import { NzAlertModule } from "ng-zorro-antd/alert";
+import { ToolboxComponent } from "./page/board/toolbox/toolbox.component";
+import { NzDividerModule } from "ng-zorro-antd/divider";
 
 registerLocaleData(fr);
 
@@ -64,6 +66,7 @@ registerLocaleData(fr);
     RoutableEditorComponent,
     ModalEntryComponent,
     HomeComponent,
+    ToolboxComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,7 +100,8 @@ registerLocaleData(fr);
     NzModalModule,
     NzAutocompleteModule,
     NzSwitchModule,
-    NzAlertModule
+    NzAlertModule,
+    NzDividerModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: fr_FR },

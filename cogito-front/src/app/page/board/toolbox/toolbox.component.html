@@ -1,0 +1,30 @@
+<div class="wrapper">
+  <div class="item add" (click)="changeTheme()">
+    <span nz-icon nzType="bulb" nzTheme="outline" nz-tooltip="" nzTooltipTitle="Change Theme"></span>
+  </div>
+  <nz-divider nzType="vertical"></nz-divider>
+  <div class="item add">
+    <span (click)="showModal()" nz-tooltip="" nzTooltipTitle="Add filter to toolbar" nz-icon nzType="plus-circle" nzTheme="outline"></span>
+  </div>
+  <div class="item add">
+    <span (click)="activateRemoveMode()" nz-tooltip="" [nzTooltipTitle]="removeMode ? 'Exit edit mode': 'Edit toolbar shortcut'" nz-icon nzType="edit"
+          [nzTheme]="removeMode ? 'twotone' : 'outline'"></span>
+  </div>
+  <div *ngFor="let val of filtersMenu" (click)="setSearch(val.value)" nz-tooltip="" nzTooltipTitle="{{removeMode ? 'Click to delete' : val.value}}"
+       class="item menu">
+    {{val.value}}
+    <span *ngIf="removeMode" nz-icon nzType="delete" nzTheme="outline"></span>
+
+  </div>
+
+
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Add filter to toolbar" (nzOnCancel)="handleCancel()" (nzOnOk)="handleAdd()">
+  <ng-container *nzModalContent>
+    <nz-input-group nzSearch nzSize="large" class="input-group">
+      <input type="text" nz-input placeholder="Write the filter you want to save" [(ngModel)]="filterToAdd" class="input"
+      />
+    </nz-input-group>
+  </ng-container>
+</nz-modal>

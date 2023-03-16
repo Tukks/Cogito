@@ -46,10 +46,11 @@ export class BoardComponent implements OnInit {
       this.selectedElement.clear();
     });
     this.index = new Document({
-      preset: "match",
+        preset: "match",
       resolution: 1,
       tokenize: "forward",
       language: "fr",
+      suggest: true,
       document: {
         id: "id",
         index: ["markdown", "title", "url", "desc", "thingType", "tags[]:tag"]
@@ -73,7 +74,7 @@ export class BoardComponent implements OnInit {
 
   search($event: any) {
     if ($event !== "") {
-      const searched = this.index.search($event);
+      const searched = this.index.search($event, {suggest: true, enrich: true});
       let ids: string[] = [];
       searched.forEach((res: { field: string; result: string[] }) => {
         ids = ids.concat(res.result);

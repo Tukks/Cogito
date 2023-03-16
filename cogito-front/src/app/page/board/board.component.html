@@ -1,25 +1,28 @@
-
 <nz-alert nzBanner nzMessage="You are currently offline" *ngIf="!websocketConnect" nzType="error"></nz-alert>
-<nz-input-group nzSearch nzSize="large" class="search">
+<div class="head">
   <div class="ws-status" [nz-tooltip]="'Websocket status'" [ngStyle]="{'background-color': websocketConnect ? 'green' : 'red'}"></div>
-  <input type="text" nz-input placeholder="Search cogito" [ngModel]="searchValue" (ngModelChange)="setSearchToStore($event)" class="input"
-         #searchInput />
-</nz-input-group>
+
+  <nz-input-group nzSearch nzSize="large" class="input-group">
+    <input type="text" nz-input placeholder="Search cogito" [ngModel]="searchValue" (ngModelChange)="setSearchToStore($event)" class="input" #searchInput />
+
+  </nz-input-group>
+  <app-toolbox class="toolbox"></app-toolbox>
+</div>
 
 <!--TODO make a component-->
 <div class="batch-action-wrapper" *ngIf="selectedElement.size !== 0">
-    <div class="batch-action">
-      <button nz-button nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" >Add Tags</button>
-      <button nz-button (click)="removeAll()">Remove</button>
-      <nz-dropdown-menu #menu="nzDropdownMenu">
-        <nz-input-group [nzSuffix]="suffixIconSearch">
-          <input type="text" nz-input placeholder="enter tag" [(ngModel)]="tagValue" />
-        </nz-input-group>
-        <ng-template #suffixIconSearch>
-          <button nz-icon nzType="tag" nzTheme="twotone" [disabled]="tagValue === ''" (click)="addtagsToAll()"></button>
-        </ng-template>
-      </nz-dropdown-menu>
-    </div>
+  <div class="batch-action">
+    <button nz-button nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">Add Tags</button>
+    <button nz-button (click)="removeAll()">Remove</button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="enter tag" [(ngModel)]="tagValue" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <button nz-icon nzType="tag" nzTheme="twotone" [disabled]="tagValue === ''" (click)="addtagsToAll()"></button>
+      </ng-template>
+    </nz-dropdown-menu>
+  </div>
 </div>
 
 
