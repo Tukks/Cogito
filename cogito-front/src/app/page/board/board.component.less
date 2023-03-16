@@ -84,13 +84,10 @@
   border-radius: 10px;
 }
 .head {
-  display: grid;
-  grid-template-columns: repeat(1, min-content auto);
-  grid-template-rows: repeat(2, 1fr);
-  grid-row-gap: 5px;
-  align-items: center;
-  grid-column-gap: 10px;
-  margin: 0 10px 0 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 10px 0 10px;
+  grid-gap: 10px;
 }
 
 .active-element:hover {
@@ -119,6 +116,5 @@
 }
 
 .toolbox {
-  grid-area: 2 / 2 / 3 / 3;
   overflow-y: auto;
 }

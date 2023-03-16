@@ -1,4 +1,6 @@
 <div class="wrapper">
+  <div class="item add ws-status" [nz-tooltip]="'Websocket status'" [ngStyle]="{'background-color': websocketConnect ? 'green' : 'red'}"></div>
+
   <div class="item add" (click)="changeTheme()">
     <span nz-icon nzType="bulb" nzTheme="outline" nz-tooltip="" nzTooltipTitle="Change Theme"></span>
   </div>

@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { WebSocketService } from "../../http-service/web-socket.service";
 
 @Component({
   selector: "app-home",
@@ -6,10 +7,10 @@ import { Component } from "@angular/core";
   styleUrls: ["./home.component.less"]
 })
 export class HomeComponent {
-  // When user close tab
 
+  constructor(private webSocketService: WebSocketService) {
+    this.webSocketService.connectWebsocket();
 
-  constructor() {
     if (localStorage.getItem("theme")) {
       document.body.classList.add(localStorage.getItem("theme")!);
     }

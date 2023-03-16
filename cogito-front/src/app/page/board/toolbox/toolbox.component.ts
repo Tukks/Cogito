@@ -14,6 +14,7 @@ export class ToolboxComponent implements OnInit {
 
   isVisible: boolean = false;
   filterToAdd: any = "";
+  public websocketConnect: boolean = true;
 
   @HostListener("document:visibilitychange", ["$event"])
   visibilityChange() {
@@ -27,7 +28,7 @@ export class ToolboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.webSocketService.connectWebsocket();
+    this.cogitoStoreService.websocketStatus$.subscribe(value => this.websocketConnect = value);
 
     const filtersList = localStorage.getItem("filtersList");
     if (filtersList) {
