@@ -1,13 +1,15 @@
 <nz-alert nzBanner nzMessage="You are currently offline" *ngIf="!websocketConnect" nzType="error"></nz-alert>
 <div class="head">
 
-  <nz-input-group nzSearch nzSize="large" class="input-group">
+  <nz-input-group nzSearch nzSize="large" class="input-group" [nzAddOnAfter]="suffixIconButton">
     <input type="text" nz-input placeholder="Search cogito" [ngModel]="searchValue" (ngModelChange)="setSearchToStore($event)" class="input" #searchInput />
 
   </nz-input-group>
   <app-toolbox class="toolbox"></app-toolbox>
 </div>
-
+<ng-template #suffixIconButton>
+  <button nz-button nzType="primary" [disabled]="searchValue === ''" (click)="setSearchToStore('')" nzSearch><span nz-icon nzType="close"></span></button>
+</ng-template>
 <!--TODO make a component-->
 <div class="batch-action-wrapper" *ngIf="selectedElement.size !== 0">
   <div class="batch-action">
