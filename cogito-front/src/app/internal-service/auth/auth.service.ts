@@ -19,7 +19,7 @@ export class AuthService {
   public logout() {
     this.webSocketService.unsubscribe();
     this.loginService.logout().subscribe();
-    this.cogitoStoreService.setLoggedIn(false);
+    this.cogitoStoreService.cleanStore();
     this.router.navigateByUrl(`/login`).then();
   }
 }

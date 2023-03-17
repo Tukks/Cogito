@@ -72,6 +72,12 @@ export class CogitoStoreService {
     this.cards = this.cards.filter((card) => !ids.includes(card.id));
   }
 
+  cleanStore() {
+    this.cards = [];
+    this._websocketStatus.next(false);
+    this.setLoggedIn(false);
+    this.setFilter("");
+  }
   websocketStatus(isConnected: boolean, err: any) {
     console.log(err);
     this._websocketStatus.next(isConnected);
