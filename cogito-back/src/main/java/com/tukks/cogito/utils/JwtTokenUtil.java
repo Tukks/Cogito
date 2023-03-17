@@ -87,4 +87,14 @@ public class JwtTokenUtil {
 		response.addCookie(cookie);
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 	}
+
+	public void removeCookieOnLogout(HttpServletResponse response) {
+		Cookie cookie = new Cookie(ACCESS_TOKEN, null);
+		cookie.setPath("/");
+		cookie.setSecure(HTTPS_ONLY);
+		cookie.setHttpOnly(true);
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+	}
 }

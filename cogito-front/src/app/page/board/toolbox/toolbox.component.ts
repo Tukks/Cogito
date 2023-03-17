@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { WebSocketService } from "../../../http-service/web-socket.service";
 import { CogitoStoreService } from "../../../internal-service/store/cogito-store.service";
+import { AuthService } from "../../../internal-service/auth/auth.service";
 
 @Component({
   selector: "app-toolbox",
@@ -24,7 +25,8 @@ export class ToolboxComponent implements OnInit {
   }
 
   constructor(private webSocketService: WebSocketService,
-              private cogitoStoreService: CogitoStoreService) {
+              private cogitoStoreService: CogitoStoreService,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -73,5 +75,8 @@ export class ToolboxComponent implements OnInit {
     }
   }
 
+  doLogout() {
+   this.authService.logout();
+  }
 
 }

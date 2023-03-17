@@ -1,15 +1,25 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import { CogitoStoreService } from "../store/cogito-store.service";
+import { WebSocketService } from "../../http-service/web-socket.service";
+import { LoginService } from "../../http-service/login.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() {
+  constructor(private router: Router,
+              private cogitoStoreService: CogitoStoreService,
+              private webSocketService: WebSocketService, private loginService: LoginService) {
   }
 
-  public removeCookie() {
-    document.cookie = "accessToken= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
-  }
 
+
+  public logout() {
+    this.webSocketService.unsubscribe();
+    this.loginService.logout().subscribe();
+    this.cogitoStoreService.setLoggedIn(false);
+    this.router.navigateByUrl(`/login`).then();
+  }
 }

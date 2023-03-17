@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {LoginService} from "../../http-service/login.service";
-import {Router} from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { LoginService } from "../../http-service/login.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -27,6 +27,10 @@ export class RegisterComponent implements OnInit {
       this.router.navigateByUrl("/login");
     });
 
+  }
+
+  backToLogin() {
+    this.router.navigateByUrl("/login");
   }
 
 }
