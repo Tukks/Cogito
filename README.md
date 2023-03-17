@@ -3,8 +3,6 @@
 
 ## TODO :
  - add notification support for forgotten todo card ?
- - update screenshot of README
- - add quick documentation
  - take a screenshot of webpage saved
  - disable new account creation if needed
 
