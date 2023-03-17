@@ -127,7 +127,6 @@ public class LinkPreview {
 
 		ArticleExtract articleExtract = parseNews(document.html());
 		linkEntity.setContent(articleExtract.article);
-		linkEntity.setTitle(articleExtract.title);
 		return articleExtract;
 	}
 
