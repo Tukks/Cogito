@@ -47,6 +47,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class LinkPreview {
+
 	private record HtmlPageInfo(String realUrl, String htmlPageString) {}
 
 	private record ArticleExtract(String title, String article) {}
@@ -84,7 +85,6 @@ public class LinkPreview {
 
 		}
 	}
-
 
 	private HtmlPageInfo getHtmlPage(String url, WebClient webClient) throws IOException {
 		HtmlPageInfo htmlPageInfo;
@@ -276,7 +276,11 @@ public class LinkPreview {
 	private String getMetaTagContent(Document document, String cssQuery) {
 		Element elm = document.select(cssQuery).first();
 		if (elm != null) {
-			return elm.attr("content");
+			String altText = elm.attr("content");
+			if (altText.length() > 255) {
+				return altText.substring(0, 254);
+			}
+			return altText;
 		}
 		return "";
 	}

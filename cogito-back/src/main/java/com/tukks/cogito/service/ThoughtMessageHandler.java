@@ -30,8 +30,6 @@ import com.tukks.cogito.dto.response.ActionEvent;
 import com.tukks.cogito.dto.response.ActionType;
 import com.tukks.cogito.entity.UserEntity;
 
-import static com.tukks.cogito.service.SecurityUtils.getSub;
-
 @Service
 public class ThoughtMessageHandler extends TextWebSocketHandler implements ApplicationListener<ActionEvent> {
 
@@ -69,7 +67,7 @@ public class ThoughtMessageHandler extends TextWebSocketHandler implements Appli
 
 	private void sendMessageToAll(ActionEvent actionEvent) throws JsonProcessingException {
 		TextMessage textMessage = new TextMessage(objectMapper.writeValueAsString(actionEvent.getActionCard()));
-		List<WebSocketSession> webSocketSessions = webSocketSessionsEmitters.get(getSub());
+		List<WebSocketSession> webSocketSessions = webSocketSessionsEmitters.get(actionEvent.getSub());
 		if (webSocketSessions != null) {
 			webSocketSessions.forEach((value) -> {
 				try {
