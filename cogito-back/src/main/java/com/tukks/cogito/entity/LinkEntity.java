@@ -40,6 +40,8 @@ public class LinkEntity extends ThingsEntity {
 
 	private UUID imageId;
 
+	private String screenshot;
+
 	public LinkEntity(String domain, String url, String title, String desc, String ogImage, String ogImageAlt) {
 
 		this.domain = domain;

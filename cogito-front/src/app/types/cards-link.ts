@@ -44,8 +44,9 @@ export interface LinkCard extends CardsLink {
   imageAlt: string,
   domain: string,
 
-  imageId: string
+  imageId: string,
 
+  screenshot: string
 }
 
 export type CardType =

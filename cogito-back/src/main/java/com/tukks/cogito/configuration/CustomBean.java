@@ -36,4 +36,7 @@ public class CustomBean {
 		objectMapper.findAndRegisterModules();
 		return objectMapper;
 	}
+
+
+
 }
