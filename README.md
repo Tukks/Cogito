@@ -46,6 +46,19 @@ All you notes in one places
 - profit
 - feel free to open an issue
 
+## Bookmarklet 
+
+To save easily link on desktop, add this javascript line to a bookmark.
+replace Cogito_URL by your url of cogito.
+
+```javascript
+javascript:(function(){window.open('https://<COGITO_URL>/handle-share?text='+encodeURIComponent(window.location.href));})()
+
+```
+
+Example in firefox :
+![img_5.png](img_5.png)
+
 ## Launch dev
 
 ### Back
