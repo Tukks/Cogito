@@ -3,6 +3,7 @@ package com.tukks.cogito.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,21 +31,24 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// TODO Enable CORS
-		http = http.cors().disable().csrf().disable().anonymous().disable();
+		http
+			.cors(AbstractHttpConfigurer::disable)
+			.csrf(AbstractHttpConfigurer::disable)
+			.anonymous(AbstractHttpConfigurer::disable);
 		http.userDetailsService(username -> userRepository.findByUsername(username)
 			.orElseThrow(
 				() -> new UsernameNotFoundException("User " + username + " not found.")));
-		http = http
-			.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and();
+		http
+			.sessionManagement(
+				httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-		http.authorizeHttpRequests()
-			.requestMatchers("/ws/**").authenticated()
-			.requestMatchers("/api/register").permitAll()
-			.requestMatchers("/api/login").permitAll()
-			.requestMatchers("/api/**").authenticated()
-			.requestMatchers("/**").permitAll();
+		http.authorizeHttpRequests(
+			authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.requestMatchers("/ws/**").authenticated()
+				.requestMatchers("/api/register").permitAll()
+				.requestMatchers("/api/login").permitAll()
+				.requestMatchers("/api/logout").permitAll()
+				.requestMatchers("/api/**").authenticated()
+				.requestMatchers("/**").permitAll());
 
 		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
