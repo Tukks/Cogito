@@ -32,6 +32,7 @@ import com.tukks.cogito.repository.NoteRepository;
 import com.tukks.cogito.repository.ThingsRepository;
 import com.tukks.cogito.service.internal.LinkPreview;
 import com.tukks.cogito.service.internal.TweetService;
+import com.tukks.cogito.service.internal.screenshottools.ScreenshotService;
 
 import lombok.AllArgsConstructor;
 import static com.tukks.cogito.service.SecurityUtils.getSub;
@@ -48,6 +49,7 @@ public class NoteService {
 	private final NoteRepository noteRepository;
 	private final ThingsRepository thingsRepository;
 	private final TweetService tweetService;
+	private final ScreenshotService screenshotService;
 
 	public Object save(final ThingsRequest thingsRequest) {
 		final String noteCleaned = thingsRequest.getNote().trim();
@@ -66,8 +68,11 @@ public class NoteService {
 			linkEntity.setTags(Stream.concat(tags.stream(), linkEntity.getTags().stream()).toList());
 
 			linkEntity.setImageId(imageService.uploadImageFromUrl(linkEntity.getImage()).orElse(null));
+			LinkEntity linkEntitySaved = linkRepository.save(linkEntity);
+			// async call
+			screenshotService.takeScreenshot(noteCleaned, getSub(), linkEntitySaved.getId());
 
-			return linkRepository.save(linkEntity);
+			return linkEntitySaved;
 		} else {
 			logger.info("Added note");
 

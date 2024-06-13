@@ -33,4 +33,5 @@ public class ImageEntity {
 	@Lob
 	@Column(name = "imagePath")
 	private String imagePath;
+
 }

@@ -10,6 +10,8 @@
   <ng-container *ngIf="$any(card).thingType === cardsType.LINK">
     <div class="modal-editor-left-column" [ngStyle]="{'background': 'url('+ $any(card).image + ') no-repeat center center, linear-gradient(#00467f, #a5cc82) fixed',
        'background-size': 'cover'}">
+
+      <img *ngIf="$any(card).screenshot" [src]="'api/image/'+$any(card).screenshot">
       <div class="description">
         <p nz-typography nzEllipsis nzEllipsisRows="20">{{$any(card).desc}}</p>
         <a nz-typography nzEllipsis href="{{$any(card).url}}" target="_blank" (click)="$event.stopPropagation()" class="link">{{$any(card).url}}</a>

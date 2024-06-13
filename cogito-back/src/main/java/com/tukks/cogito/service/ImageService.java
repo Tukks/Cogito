@@ -1,5 +1,6 @@
 package com.tukks.cogito.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -107,6 +108,20 @@ public class ImageService {
 		ImageEntity imageEntity = ImageEntity.builder().oidcSub(getSub()).imagePath(filename).build();
 		var imageEntitySaved = imageRepository.save(imageEntity);
 		return Optional.of(imageEntitySaved.getId());
+	}
+
+	public Optional<UUID> saveImageToDatabase(final String filename, final byte[] imageBytes, String oidcSub) {
+		try {
+			writeImageToFile(imageUploadFolder + File.separator + filename,  new ByteArrayInputStream(imageBytes));
+
+		} catch (IOException e) {
+			logger.error("Problem saving file", e);
+			return Optional.empty();
+		}
+		ImageEntity imageEntity = ImageEntity.builder().oidcSub(oidcSub).imagePath(filename).build();
+		var imageEntitySaved = imageRepository.save(imageEntity);
+		return Optional.of(imageEntitySaved.getId());
+
 	}
 
 	private HttpURLConnection createConnection(final String imageUrl) throws IOException {
